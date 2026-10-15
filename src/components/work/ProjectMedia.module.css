@@ -1,0 +1,40 @@
+.frame {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--bg-sunken);
+  /* Fixes Safari leaking corners while the inner layer scales. */
+  isolation: isolate;
+  transition:
+    box-shadow 0.6s var(--ease-out),
+    transform 0.6s var(--ease-out);
+}
+
+.inner {
+  position: absolute;
+  inset: 0;
+  transition: transform 1.2s var(--ease-out);
+}
+
+.asset {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+:global(.project-card:hover) .frame {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 50px -28px rgba(40, 36, 28, 0.35);
+}
+
+:global(.project-card:hover) .inner {
+  transform: scale(1.02);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :global(.project-card:hover) .frame,
+  :global(.project-card:hover) .inner {
+    transform: none;
+  }
+}

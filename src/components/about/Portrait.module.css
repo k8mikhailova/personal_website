@@ -1,0 +1,49 @@
+.figure {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+}
+
+/* Offset sage panel behind the photo; slides a little on hover. */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  border-radius: calc(var(--radius) + 4px);
+  background: var(--accent-wash);
+  transform: translate(14px, 14px) rotate(1.5deg);
+  transition: transform 0.8s var(--ease-out);
+}
+
+.figure:hover .backdrop {
+  transform: translate(18px, 20px) rotate(2.5deg);
+}
+
+.frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: calc(var(--radius) + 4px);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--bg-sunken);
+  isolation: isolate;
+}
+
+/* Taller than the frame so the scroll drift never shows an edge. */
+.inner {
+  position: absolute;
+  inset: -6% 0;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .figure:hover .backdrop {
+    transform: translate(14px, 14px);
+    transition: none;
+  }
+}

@@ -1,0 +1,29 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding-block: 2rem 2.5rem;
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.top {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.25s ease;
+}
+
+.top:hover {
+  color: var(--ink);
+}
+
+.arrow {
+  transform-origin: center;
+  transition: translate 0.35s var(--ease-out);
+}
+
+.top:hover .arrow {
+  translate: 0 -2px;
+}

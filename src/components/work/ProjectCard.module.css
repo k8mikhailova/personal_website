@@ -1,0 +1,150 @@
+.card {
+  display: grid;
+  gap: 1.5rem;
+}
+
+/* ---------- Wide: media across the top, text split beneath ---------- */
+
+.wide {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(1.75rem, 1rem + 3vw, 4.5rem);
+}
+
+.wide .media {
+  grid-column: 1 / -1;
+  margin-bottom: 0.75rem;
+}
+
+.wide .head {
+  grid-column: 1 / span 5;
+}
+
+.wide .body {
+  grid-column: 6 / span 7;
+}
+
+/* ---------- Stacked: a single column card ---------- */
+
+.stacked {
+  align-content: start;
+}
+
+.stacked .media {
+  margin-bottom: 0.25rem;
+}
+
+.stacked .head,
+.stacked .body {
+  max-width: 34rem;
+}
+
+/* ---------- Shared ---------- */
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.85rem;
+  margin-bottom: 0.75rem;
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.number {
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-ink);
+}
+
+.title {
+  font-size: var(--text-h3);
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.titleLink {
+  transition: color 0.3s ease;
+}
+
+.titleLink:hover {
+  color: var(--accent-ink);
+}
+
+.highlight {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: 1.25rem;
+  padding-left: 1rem;
+  border-left: 1px solid var(--accent);
+}
+
+.highlightValue {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.375rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.highlightLabel {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.summary {
+  color: var(--ink-soft);
+}
+
+.note {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: -0.4rem;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.note::before {
+  content: '';
+  flex: none;
+  width: 5px;
+  height: 5px;
+  margin-top: 0.62em;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+}
+
+.tags li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.tags li::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.7;
+}
+
+@media (max-width: 860px) {
+  .wide .head,
+  .wide .body {
+    grid-column: 1 / -1;
+  }
+}

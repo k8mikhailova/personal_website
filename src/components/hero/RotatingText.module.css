@@ -1,0 +1,22 @@
+.root {
+  display: grid;
+}
+
+.ghost,
+.phrase {
+  grid-area: 1 / 1;
+}
+
+.ghost {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.phrase {
+  display: block;
+}
+
+.word {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
