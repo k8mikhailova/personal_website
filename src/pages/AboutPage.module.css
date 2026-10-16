@@ -2,14 +2,14 @@
 
 .hero {
   display: grid;
-  grid-template-columns: 15rem minmax(0, 1fr);
+  grid-template-columns: 16rem minmax(0, 1fr);
   gap: clamp(2rem, 1rem + 4vw, 3.5rem);
   align-items: center;
   padding-top: calc(var(--nav-height) + clamp(3rem, 2rem + 4vw, 5.5rem));
 }
 
 .portrait {
-  max-width: 15rem;
+  max-width: 16rem;
 }
 
 .introText {
@@ -22,102 +22,25 @@
   letter-spacing: -0.04em;
 }
 
-.lead {
-  font-family: var(--font-display);
-  font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
-  letter-spacing: -0.025em;
-  line-height: 1.35;
-}
-
 .paragraph,
 .age {
   color: var(--ink-soft);
 }
 
-/* ---------- Notes ---------- */
-
-.notes {
-  margin-top: var(--section-space);
-}
-
-.note {
-  display: grid;
-  grid-template-columns: 11rem minmax(0, 1fr);
-  gap: 0.5rem 2rem;
-  padding-block: 1.5rem;
-  border-top: 1px solid var(--line);
-}
-
-.noteTitle {
-  font-size: 1.0625rem;
-  letter-spacing: -0.02em;
-  line-height: 1.4;
-}
-
-.noteBody {
-  display: grid;
-  gap: 1.1rem;
-  color: var(--ink-soft);
-}
-
-.aside {
-  padding: 0.9rem 1rem;
+/* Dashed box marking where Kate's own paragraph will go. */
+.writeHere {
+  padding: 1.1rem 1.25rem;
+  border: 1px dashed var(--line-strong);
   border-radius: 12px;
-  background: var(--surface);
-  border: 1px solid var(--line);
+  color: var(--muted);
+  background: color-mix(in srgb, var(--surface) 60%, transparent);
 }
 
-.asideLabel {
-  margin-bottom: 0.6rem;
+.writeHereLabel {
+  margin-bottom: 0.3rem;
   font-size: var(--text-xs);
   font-weight: 500;
   color: var(--accent-ink);
-}
-
-.tried {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.25rem;
-  font-size: var(--text-sm);
-  color: var(--ink);
-}
-
-.tried li {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.tried svg {
-  color: var(--accent);
-}
-
-.currently {
-  margin-top: 1rem;
-  padding: 1.1rem 1.25rem;
-  border-radius: 14px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-}
-
-.currentRow {
-  display: grid;
-  grid-template-columns: 11rem minmax(0, 1fr);
-  gap: 0.25rem 1.5rem;
-  padding-block: 0.55rem;
-  font-size: var(--text-sm);
-}
-
-.currentRow + .currentRow {
-  border-top: 1px dashed var(--line);
-}
-
-.currentRow dt {
-  color: var(--muted);
-}
-
-.currentRow dd {
-  margin: 0;
 }
 
 /* ---------- Photos ---------- */
@@ -147,11 +70,7 @@
   }
 
   .portrait {
-    max-width: 12rem;
-  }
-
-  .note,
-  .currentRow {
-    grid-template-columns: 1fr;
+    max-width: 14rem;
+    margin-left: 0.5rem;
   }
 }
