@@ -1,9 +1,9 @@
 export const intro = {
   greeting: "Hi, I'm Kate.",
-  lead: 'I like building',
-  phrases: ['useful little tools.', 'things that save time.', 'small automations.', 'with data and AI.'],
+  lead: 'I work with',
+  phrases: ['software and data.', 'AI and automation.', 'APIs and connected systems.'],
   paragraph:
-    "I just finished a B.S. in Computer Science at UC Santa Cruz. I'm most interested in software development, data engineering, AI, and automation, and I like figuring out how things work by building them.",
+    'I’ve worked across software, data, and AI through internships, independent projects, and my own business. I’m especially interested in building things that make messy problems easier to understand and easier to work with.',
   degree: {
     title: 'B.S. Computer Science',
     school: 'Baskin School of Engineering, UC Santa Cruz',
