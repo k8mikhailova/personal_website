@@ -1,5 +1,6 @@
 import { motion } from 'motion/react'
 import { Reveal } from '../../components/ui/Reveal'
+import { ZoomablePhoto } from '../../components/ui/ZoomablePhoto'
 import { education, type EducationItem } from '../../content/education'
 import styles from './Education.module.css'
 
@@ -43,20 +44,33 @@ export function Education() {
 function EducationCard({ item }: { item: EducationItem }) {
   return (
     <article className={styles.card}>
-      <div className={styles.head}>
-        <div>
-          <p className={styles.place}>{item.place}</p>
-          <h3 className={styles.institution}>{item.institution}</h3>
+      <div className={styles.top}>
+        <div className={styles.info}>
+          <div className={styles.head}>
+            <div>
+              <p className={styles.place}>{item.place}</p>
+              <h3 className={styles.institution}>{item.institution}</h3>
+            </div>
+            <p className={styles.dates}>{item.dates}</p>
+          </div>
+
+          <p className={styles.program}>
+            <span className={styles.programName}>{item.program}</span>
+            <span className={styles.school}>{item.school}</span>
+          </p>
+
+          {item.detail && <p className={styles.detail}>{item.detail}</p>}
         </div>
-        <p className={styles.dates}>{item.dates}</p>
+
+        <div className={styles.photo}>
+          <ZoomablePhoto
+            src={item.photo.src}
+            alt={item.photo.alt}
+            focus={item.photo.focus}
+            placeholderLabel="Photo coming soon"
+          />
+        </div>
       </div>
-
-      <p className={styles.program}>
-        <span className={styles.programName}>{item.program}</span>
-        <span className={styles.school}>{item.school}</span>
-      </p>
-
-      {item.detail && <p className={styles.detail}>{item.detail}</p>}
 
       {item.projects && (
         <div className={styles.projects}>

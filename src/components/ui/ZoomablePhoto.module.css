@@ -1,0 +1,142 @@
+.frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--bg-sunken);
+  isolation: isolate;
+}
+
+.button {
+  padding: 0;
+  border: 0;
+  cursor: zoom-in;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.1s var(--ease-out);
+}
+
+.button:hover .image,
+.button:focus-visible .image {
+  transform: scale(1.04);
+}
+
+/* Small pill that fades in on hover/focus. */
+.hint {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  color: var(--ink);
+  font-size: 0.75rem;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 0.35s var(--ease-out),
+    transform 0.35s var(--ease-out);
+}
+
+.button:hover .hint,
+.button:focus-visible .hint {
+  opacity: 1;
+  transform: none;
+}
+
+/* Touch screens have no hover, so keep the hint visible there. */
+@media (hover: none) {
+  .hint {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Lightbox ---------- */
+
+.dialog {
+  /* The global reset zeroes margins; dialogs need auto margins to center. */
+  margin: auto;
+  max-width: min(92vw, 1100px);
+  max-height: 92vh;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+.dialog::backdrop {
+  background: rgba(29, 28, 26, 0.72);
+  backdrop-filter: blur(4px);
+}
+
+.dialog[open] {
+  animation: zoom-in 0.35s var(--ease-out);
+}
+
+.dialog[open]::backdrop {
+  animation: fade-in 0.35s ease-out;
+}
+
+.full {
+  display: block;
+  max-width: min(92vw, 1100px);
+  max-height: 84vh;
+  width: auto;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.6);
+}
+
+.close {
+  display: block;
+  margin: 0.85rem auto 0;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: var(--text-sm);
+}
+
+.close:hover {
+  background: var(--bg);
+}
+
+@keyframes zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image,
+  .hint {
+    transition: none;
+  }
+
+  .button:hover .image,
+  .button:focus-visible .image {
+    transform: none;
+  }
+
+  .dialog[open],
+  .dialog[open]::backdrop {
+    animation: none;
+  }
+}
