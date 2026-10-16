@@ -26,7 +26,7 @@ export function WorkLinks({ links }: { links: ProjectLinks }) {
               <a
                 href={href}
                 className={styles.link}
-                {...(/^https?:\/\//.test(href) ? { target: '_blank', rel: 'noreferrer' } : {})}
+                {...(/^https?:\/\//.test(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               >
                 {labels[key]}
                 <ArrowIcon direction="up-right" className={styles.arrow} />
