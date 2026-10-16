@@ -6,6 +6,7 @@ import { WindField } from '../components/about/WindField'
 import { Reveal } from '../components/ui/Reveal'
 import { about, photos } from '../content/about'
 import { site } from '../content/site'
+import { AboutQuestions } from '../sections/about/AboutQuestions'
 import styles from './AboutPage.module.css'
 
 export function AboutPage() {
@@ -38,18 +39,7 @@ export function AboutPage() {
               </h1>
             </Reveal>
 
-            <Reveal delay={0.14}>
-              {about.paragraph ? (
-                <p className={styles.paragraph}>{about.paragraph}</p>
-              ) : (
-                <div className={styles.writeHere}>
-                  <p className={styles.writeHereLabel}>Placeholder</p>
-                  <p>Kate’s About paragraph goes here.</p>
-                </div>
-              )}
-            </Reveal>
-
-            <Reveal delay={0.22}>
+            <Reveal delay={0.16}>
               <p className={styles.age}>
                 I’m <AgeCounter birthDate={about.birthDate} /> years old.
               </p>
@@ -57,6 +47,9 @@ export function AboutPage() {
           </div>
         </section>
       </div>
+
+      {/* ---------- Q&A: calmer, no animated background ---------- */}
+      <AboutQuestions />
 
       {/* ---------- Photo diary: wider than the reading column ---------- */}
       <section className={`container-wide ${styles.photos}`} aria-labelledby="photos-title">

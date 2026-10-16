@@ -8,12 +8,51 @@ export const about = {
     focus: '50% 40%',
   },
 
-  // Kate will write this. Leave empty to show the placeholder.
-  paragraph: '',
-
   // Drives the live age counter (local midnight, since no birth time is given). Not shown on the page.
   birthDate: '2003-12-28T00:00:00',
 }
+
+/**
+ * How a question sits in the Q&A layout:
+ * - 'statement': full width, the answer set large (best for a very short answer)
+ * - 'wide': full width, question beside a longer answer
+ * - 'half': half width; two in a row sit side by side
+ */
+export type QuestionLayout = 'statement' | 'wide' | 'half'
+
+export type Question = {
+  question: string
+  /** Supports **bold** and [link text](https://url). */
+  answer: string
+  layout: QuestionLayout
+}
+
+// Draft answers, still being refined.
+export const questions: Question[] = [
+  {
+    question: 'Three words to describe myself?',
+    answer: 'Curious, reliable, spontaneous.',
+    layout: 'statement',
+  },
+  {
+    question: 'How did marketing fit into computer science?',
+    answer:
+      'I started a small marketing business while I was in college. A lot of my work eventually involved building automations, connecting different platforms, and figuring out how to make the systems behind campaigns work better. It gave me a chance to use my CS skills on real business problems, and I found myself much more interested in that technical side of the work.',
+    layout: 'wide',
+  },
+  {
+    question: 'What’s my favorite thing I’ve built?',
+    answer:
+      'Probably my [Marketing Intelligence Hub](https://github.com/k8mikhailova/marketing_hub). I wanted to see what would happen if customer feedback, advertising performance, and ideas for new experiments could all be brought into one place. I built a prototype to explore that, and it turned into one of my favorite projects to work on.',
+    layout: 'half',
+  },
+  {
+    question: 'What am I like to work with?',
+    answer:
+      'I like working with people and being part of a team where everyone can share ideas and ask questions. I’m pretty detail-oriented, and if I say I’ll take care of something, I make sure I follow through.',
+    layout: 'half',
+  },
+]
 
 export type Photo = {
   /** Path under /public. Empty shows a placeholder. */

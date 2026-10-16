@@ -37,25 +37,9 @@
   letter-spacing: -0.04em;
 }
 
-.paragraph,
 .age {
-  color: var(--ink-soft);
-}
-
-/* Dashed box marking where Kate's own paragraph will go. */
-.writeHere {
-  padding: 1.1rem 1.25rem;
-  border: 1px dashed var(--line-strong);
-  border-radius: 12px;
+  font-size: var(--text-sm);
   color: var(--muted);
-  background: color-mix(in srgb, var(--surface) 60%, transparent);
-}
-
-.writeHereLabel {
-  margin-bottom: 0.3rem;
-  font-size: var(--text-xs);
-  font-weight: 500;
-  color: var(--accent-ink);
 }
 
 /* ---------- Photos ---------- */
@@ -69,7 +53,6 @@
   margin-inline: auto;
   margin-bottom: 2.5rem;
 }
-
 
 @media (max-width: 640px) {
   .hero {
