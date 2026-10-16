@@ -59,7 +59,16 @@ function EducationCard({ item }: { item: EducationItem }) {
             <span className={styles.school}>{item.school}</span>
           </p>
 
-          {item.detail && <p className={styles.detail}>{item.detail}</p>}
+          {item.coursework && (
+            <div className={styles.coursework}>
+              <h4 className={styles.courseworkLabel}>Selected coursework</h4>
+              <ul className={styles.courseList}>
+                {item.coursework.map((course) => (
+                  <li key={course}>{course}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         <div className={styles.photo}>
@@ -67,29 +76,12 @@ function EducationCard({ item }: { item: EducationItem }) {
             src={item.photo.src}
             alt={item.photo.alt}
             focus={item.photo.focus}
+            fullSrc={item.photo.fullSrc}
             placeholderLabel="Photo coming soon"
           />
         </div>
       </div>
 
-      {item.projects && (
-        <div className={styles.projects}>
-          <p className={styles.projectsLabel}>A few college projects</p>
-          <ul className={styles.projectGrid}>
-            {item.projects.map((project) => (
-              <li key={project.title} className={styles.project}>
-                <span className={styles.projectTitle}>
-                  {project.href ? <a href={project.href}>{project.title}</a> : project.title}
-                </span>
-                <span className={styles.projectTech}>
-                  {project.tech || <span className="placeholder">[language]</span>}
-                </span>
-                {!project.href && <span className={styles.projectSoon}>Details coming soon</span>}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
     </article>
   )
 }

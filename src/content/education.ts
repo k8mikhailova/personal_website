@@ -1,16 +1,11 @@
-export type CollegeProject = {
-  title: string
-  /** Language or area, if known. Leave empty to show a placeholder. */
-  tech: string
-  href: string
-}
-
 export type EducationPhoto = {
   /** Path under /public, e.g. '/images/graduation-photo.jpg'. Empty shows a placeholder. */
   src: string
   alt: string
   /** Crop focus as CSS object-position, e.g. '50% 30%'. Adjust to keep the subject centered. */
   focus?: string
+  /** Larger, uncropped version shown when the photo is opened. Defaults to `src`. */
+  fullSrc?: string
 }
 
 export type EducationItem = {
@@ -19,9 +14,8 @@ export type EducationItem = {
   program: string
   school: string
   dates: string
-  detail?: string
   photo: EducationPhoto
-  projects?: CollegeProject[]
+  coursework?: string[]
 }
 
 export const education: EducationItem[] = [
@@ -32,16 +26,12 @@ export const education: EducationItem[] = [
     school: 'Baskin School of Engineering',
     dates: 'Graduated June 2026',
     photo: {
+      // Cropped around Kate for the card; the full frame opens on click.
       src: '/images/graduation-photo.jpg',
-      alt: 'Kate at her UC Santa Cruz graduation',
-      focus: '50% 30%',
+      fullSrc: '/images/graduation-photo-full.jpg',
+      alt: 'Kate in her UC Santa Cruz class of 2026 stole, holding her graduation cap on the lawn outside a campus building',
+      focus: '50% 12%',
     },
-    // Still deciding which of these to feature.
-    projects: [
-      { title: 'Banana Emulator', tech: 'C++', href: '' },
-      { title: 'AI Pacman', tech: 'Python', href: '' },
-      { title: 'Few-Shot Image Classification', tech: '', href: '' },
-    ],
   },
   {
     institution: 'University of Manchester',
@@ -49,8 +39,17 @@ export const education: EducationItem[] = [
     program: 'Study Abroad',
     school: 'Alliance Manchester Business School',
     dates: 'September 2024 – January 2025',
-    detail: 'Business subjects, including operations, analytics, and strategy.',
-    // Add a Manchester photo here later.
-    photo: { src: '', alt: '' },
+    photo: {
+      src: '/images/manchester-photo.jpg',
+      alt: 'Kate in a big scarf outside on an autumn day in Manchester',
+      focus: '50% 30%',
+    },
+    coursework: [
+      'Operations Management',
+      'Business Analytics',
+      'Strategy',
+      'Digital Transformation',
+      'Marketing Analytics',
+    ],
   },
 ]

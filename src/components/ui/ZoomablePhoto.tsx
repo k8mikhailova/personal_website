@@ -7,6 +7,8 @@ type ZoomablePhotoProps = {
   alt: string
   /** CSS object-position for the crop, e.g. '50% 30%' keeps the upper middle in frame. */
   focus?: string
+  /** Larger or uncropped version for the full-size view. Defaults to `src`. */
+  fullSrc?: string
   /** Shown when there's no photo yet (or the file fails to load). */
   placeholderLabel?: string
   className?: string
@@ -20,6 +22,7 @@ export function ZoomablePhoto({
   src,
   alt,
   focus = '50% 50%',
+  fullSrc,
   placeholderLabel = 'Photo coming soon',
   className,
 }: ZoomablePhotoProps) {
@@ -67,7 +70,7 @@ export function ZoomablePhoto({
           if (event.target === dialogRef.current) close()
         }}
       >
-        <img className={styles.full} src={src} alt={alt} />
+        <img className={styles.full} src={fullSrc || src} alt={alt} loading="lazy" />
         <button type="button" className={styles.close} onClick={close}>
           Close
         </button>

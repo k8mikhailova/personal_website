@@ -45,15 +45,7 @@ export type VideoPreview = {
   links: ProjectLinks
 }
 
-/** A short list of smaller pieces of work, no media. */
-export type WorkList = {
-  kind: 'list'
-  label: string
-  items: { title: string; detail: string }[]
-  note?: string
-}
-
-export type NestedWork = ProjectPreview | CaseStudyPreview | VideoPreview | WorkList
+export type NestedWork = ProjectPreview | CaseStudyPreview | VideoPreview
 
 export type ExperienceItem = {
   org: string
@@ -61,7 +53,10 @@ export type ExperienceItem = {
   start: string
   end: string
   type: 'work' | 'volunteer'
-  summary: string
+  /** 2–3 bullets. Wrap words in **double asterisks** to bold them. */
+  bullets: string[]
+  /** Small clarifying note under the bullets. */
+  note?: string
   work?: NestedWork[]
 }
 
@@ -72,8 +67,11 @@ export const experience: ExperienceItem[] = [
     start: 'Jan 2024',
     end: 'Jul 2026',
     type: 'work',
-    summary:
-      'A small marketing business I started in college. Most of my work ended up on the technical side: CRM integrations, automations, AI agents, and getting different systems to talk to each other.',
+    bullets: [
+      'Built and maintained **CRM systems and automations**, connecting different tools through APIs and Zapier.',
+      'Set up **email and SMS workflows**, managed integrations, and tested everything to make sure data moved correctly between systems.',
+      'Built and experimented with **AI agents** for ad performance reporting and checking email sequences for errors.',
+    ],
     work: [
       {
         kind: 'project',
@@ -93,18 +91,12 @@ export const experience: ExperienceItem[] = [
     start: 'Mar 2026',
     end: 'Jun 2026',
     type: 'work',
-    summary: 'AI-related work, including two projects:',
-    work: [
-      {
-        kind: 'list',
-        label: 'Projects',
-        items: [
-          { title: 'Marketing Hub', detail: 'Content and SEO workflows' },
-          { title: 'Analytics dashboard', detail: '[Add a short line about the dashboard]' },
-        ],
-        note: 'Separate from the Marketing Intelligence Hub above.',
-      },
+    bullets: [
+      'Worked on an **AI-powered Marketing Hub** that helped with content creation and SEO/GEO workflows, including organizing the information and context used by the system.',
+      'Built a **live analytics dashboard** that my manager used daily, making reporting turnaround approximately **4x faster**.',
+      'Worked on internal **AI productivity tools**, including automated meeting summaries, executive-assistant agents using OpenClaw, and reusable Claude skills.',
     ],
+    note: 'Done with the team at Antforce. Separate from my independent Marketing Intelligence Hub.',
   },
   {
     org: 'Overture Maps Foundation',
@@ -112,7 +104,11 @@ export const experience: ExperienceItem[] = [
     start: 'Jan 2026',
     end: 'Mar 2026',
     type: 'work',
-    summary: 'Data quality work on Overture’s open map data.',
+    bullets: [
+      'Analyzed large datasets using **Python, DuckDB, pandas, and SQL** to investigate inconsistencies in place information.',
+      'Tested different **rule-based and machine learning-assisted approaches** to improve how conflicting attributes were resolved.',
+      "Led parts of the testing process and helped improve our team's accuracy from **64% to 83%**.",
+    ],
     work: [
       {
         kind: 'case-study',
@@ -122,7 +118,7 @@ export const experience: ExperienceItem[] = [
           'How we went from 64% to 83% accuracy by investigating conflicting datasets and testing different approaches.',
         metric: { name: 'Accuracy', before: 64, after: 83 },
         tags: ['Python', 'DuckDB', 'pandas', 'SQL'],
-        links: { caseStudy: '' },
+        links: { github: '', caseStudy: '' },
       },
     ],
   },
@@ -132,8 +128,11 @@ export const experience: ExperienceItem[] = [
     start: 'Jul 2024',
     end: 'Sep 2024',
     type: 'work',
-    summary:
-      'Built StockAdvisor, a Python app that pulls financial API data, scores stocks, and shows the results in Streamlit.',
+    bullets: [
+      'Built **StockAdvisor**, a Python application that retrieves financial market data through an API.',
+      'Developed stock scoring and historical strategy simulations, with a **Streamlit interface** for exploring the results.',
+      'Added **automated email reports** to reduce manual financial analysis and reporting work.',
+    ],
     work: [
       {
         kind: 'video',
@@ -152,7 +151,9 @@ export const experience: ExperienceItem[] = [
     start: 'Oct 2026',
     end: 'Present',
     type: 'volunteer',
-    summary:
-      "I recently started volunteering here. I'm using it to learn more about cybersecurity and how to protect systems and data.",
+    bullets: [
+      'Recently started volunteering as a **Security Analyst** to learn more about protecting software, systems, and data.',
+      'Want to apply that knowledge to the applications, integrations, and automation tools I build myself.',
+    ],
   },
 ]

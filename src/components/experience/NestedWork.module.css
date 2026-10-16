@@ -117,41 +117,6 @@
   padding-inline: 0.5rem;
 }
 
-/* ---------- List: no card, just quiet rows ---------- */
-
-.list {
-  display: grid;
-  gap: 0.6rem;
-}
-
-.listItem {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.25rem 0.75rem;
-  padding-block: 0.65rem;
-  border-bottom: 1px solid var(--line);
-  font-size: var(--text-sm);
-}
-
-.listItem:first-child {
-  border-top: 1px solid var(--line);
-}
-
-.listTitle {
-  font-weight: 500;
-}
-
-.listTitle::after {
-  content: '—';
-  margin-left: 0.75rem;
-  color: var(--muted);
-}
-
-.listDetail {
-  color: var(--ink-soft);
-}
-
 @media (max-width: 560px) {
   .project {
     grid-template-columns: 1fr;

@@ -2,6 +2,7 @@ import { motion, useReducedMotion, useScroll } from 'motion/react'
 import { useRef } from 'react'
 import { NestedWork } from '../../components/experience/NestedWork'
 import { Reveal } from '../../components/ui/Reveal'
+import { RichText } from '../../components/ui/RichText'
 import { experience, type ExperienceItem } from '../../content/experience'
 import styles from './ExperienceTimeline.module.css'
 
@@ -46,15 +47,22 @@ function Timeline({ items }: { items: ExperienceItem[] }) {
         <li key={item.org} className={styles.item}>
           <span className={styles.dot} aria-hidden="true" />
           <Reveal y={16}>
+            <h3 className={styles.org}>{item.org}</h3>
+            <p className={styles.role}>{item.role}</p>
             <p className={styles.dates}>
               <span>
                 {item.start} – {item.end}
               </span>
               {item.type === 'volunteer' && <span className={styles.volunteer}>Volunteer</span>}
             </p>
-            <h3 className={styles.org}>{item.org}</h3>
-            <p className={styles.role}>{item.role}</p>
-            <p className={styles.summary}>{item.summary}</p>
+            <ul className={styles.bullets}>
+              {item.bullets.map((bullet, i) => (
+                <li key={i}>
+                  <RichText text={bullet} />
+                </li>
+              ))}
+            </ul>
+            {item.note && <p className={styles.note}>{item.note}</p>}
           </Reveal>
 
           {item.work && (

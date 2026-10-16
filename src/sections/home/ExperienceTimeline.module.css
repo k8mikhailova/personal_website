@@ -56,7 +56,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem 0.75rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.4rem;
   font-size: var(--text-xs);
   color: var(--muted);
   font-variant-numeric: tabular-nums;
@@ -82,10 +82,36 @@
   color: var(--ink-soft);
 }
 
-.summary {
-  margin-top: 0.85rem;
-  max-width: 36rem;
+.bullets {
+  display: grid;
+  gap: 0.6rem;
+  max-width: 38rem;
+  margin-top: 1rem;
+  padding-left: 1.15rem;
+  list-style: disc;
   color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.bullets li {
+  padding-left: 0.25rem;
+}
+
+.bullets li::marker {
+  color: var(--accent);
+  font-size: 0.9em;
+}
+
+/* Bold picks out tools and results without shouting. */
+.bullets strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.note {
+  margin-top: 0.85rem;
+  font-size: var(--text-xs);
+  color: var(--muted);
 }
 
 .nested {
