@@ -15,18 +15,21 @@
 
 .question {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.6rem;
   margin-bottom: 0.75rem;
   font-size: var(--text-sm);
+  line-height: 1.45;
   color: var(--muted);
 }
 
+/* Lines up with the first line of the label, even when it wraps. */
 .question::before {
   content: '';
   flex: none;
   width: 1rem;
   height: 1px;
+  margin-top: 0.7em;
   background: var(--accent);
 }
 
@@ -84,11 +87,6 @@
   align-items: flex-start;
   margin-bottom: 0;
   padding-top: 0.25rem;
-  line-height: 1.45;
-}
-
-.wide .question::before {
-  margin-top: 0.7em;
 }
 
 .wide .answer {

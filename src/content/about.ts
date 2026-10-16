@@ -8,6 +8,13 @@ export const about = {
     focus: '50% 40%',
   },
 
+  // Short line under the age counter.
+  intro: 'A few things about me that don’t really fit on a resume.',
+
+  // Shown under "From the photo diary", above the grid.
+  photoDiaryIntro:
+    'I’m usually the one taking pictures when I’m with friends. I’ve always had a strangely specific memory for little details, even from years ago, and looking through old photos takes me right back to those days. Here are a few moments from my photo diary.',
+
   // Drives the live age counter (local midnight, since no birth time is given). Not shown on the page.
   birthDate: '2003-12-28T00:00:00',
 }
@@ -52,6 +59,18 @@ export const questions: Question[] = [
       'I like working with people and being part of a team where everyone can share ideas and ask questions. I’m pretty detail-oriented, and if I say I’ll take care of something, I make sure I follow through.',
     layout: 'half',
   },
+  {
+    question: 'Something people might not expect about me?',
+    answer:
+      'I plan out pretty much every day, but I’m also really spontaneous. I like having a schedule, but I’m always up for something last-minute.',
+    layout: 'half',
+  },
+  {
+    question: 'What do I enjoy most about building something?',
+    answer:
+      'Seeing something go from an idea to something that actually works. I like figuring out how all the pieces fit together, and it’s even better when someone else gets to use what I’ve built.',
+    layout: 'half',
+  },
 ]
 
 export type Photo = {
@@ -90,7 +109,7 @@ export const photos: Photo[] = [
   {
     src: '/images/about/sailing.jpg',
     alt: 'View from a small sailboat with a green and white sail, other dinghies on the water',
-    caption: 'Giving dinghy sailing a try',
+    caption: 'Learning to sail a dinghy.',
     width: 1050,
     height: 1400,
     shape: 'tall',

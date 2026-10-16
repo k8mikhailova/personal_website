@@ -44,6 +44,10 @@ export function AboutPage() {
                 I’m <AgeCounter birthDate={about.birthDate} /> years old.
               </p>
             </Reveal>
+
+            <Reveal delay={0.24}>
+              <p className={styles.intro}>{about.intro}</p>
+            </Reveal>
           </div>
         </section>
       </div>
@@ -57,6 +61,7 @@ export function AboutPage() {
           <h2 id="photos-title" className="section-label">
             From the photo diary
           </h2>
+          <p className={styles.photosIntro}>{about.photoDiaryIntro}</p>
         </div>
         <PhotoGrid photos={photos} />
       </section>
