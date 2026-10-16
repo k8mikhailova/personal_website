@@ -3,6 +3,8 @@
 // Empty link/video values render as clearly marked placeholders.
 
 export type ProjectLinks = {
+  /** Demo video URL, shown as "Watch demo". */
+  video?: string
   github?: string
   demo?: string
   caseStudy?: string
@@ -13,12 +15,14 @@ export type ProjectPreview = {
   kind: 'project'
   title: string
   /** Small label above the title, e.g. "Independent project". */
-  label: string
+  label?: string
   summary: string
   /** Clarifying note, shown with an accent marker. */
   note?: string
   tags: string[]
   image?: { src: string; alt: string }
+  /** Set false for a compact text-only card with no screenshot slot. */
+  showThumbnail?: boolean
   links: ProjectLinks
 }
 
@@ -33,19 +37,7 @@ export type CaseStudyPreview = {
   links: ProjectLinks
 }
 
-/** A project with a YouTube demo. */
-export type VideoPreview = {
-  kind: 'video'
-  title: string
-  label: string
-  summary: string
-  /** The YouTube video ID (the part after `v=` in the URL). */
-  youtubeId: string
-  tags: string[]
-  links: ProjectLinks
-}
-
-export type NestedWork = ProjectPreview | CaseStudyPreview | VideoPreview
+export type NestedWork = ProjectPreview | CaseStudyPreview
 
 export type ExperienceItem = {
   org: string
@@ -135,13 +127,13 @@ export const experience: ExperienceItem[] = [
     ],
     work: [
       {
-        kind: 'video',
+        kind: 'project',
         title: 'StockAdvisor',
-        label: 'Video demo',
-        summary: 'A short demo of the app.',
-        youtubeId: 'vEshZVmSw44',
-        tags: ['Python', 'Financial APIs', 'Streamlit'],
-        links: { github: 'https://github.com/k8mikhailova/StockAdvisor' },
+        summary:
+          'A Python application for analyzing stocks, comparing investment strategies, and automating financial reports.',
+        tags: ['Python', 'Streamlit', 'Financial APIs'],
+        showThumbnail: false,
+        links: { video: 'https://youtu.be/vEshZVmSw44', github: 'https://github.com/k8mikhailova/StockAdvisor' },
       },
     ],
   },

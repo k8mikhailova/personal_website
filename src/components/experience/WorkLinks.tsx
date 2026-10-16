@@ -3,6 +3,7 @@ import { ArrowIcon } from '../ui/ArrowIcon'
 import styles from './WorkLinks.module.css'
 
 const labels: Record<keyof ProjectLinks, string> = {
+  video: 'Watch demo',
   github: 'GitHub',
   demo: 'Demo',
   caseStudy: 'Case study',
