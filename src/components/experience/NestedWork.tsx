@@ -20,18 +20,15 @@ export function NestedWork({ work }: { work: NestedWorkData }) {
 }
 
 function ProjectCard({ work }: { work: ProjectPreview }) {
-  const showThumbnail = work.showThumbnail ?? true
   return (
-    <article className={`lift-card ${styles.card} ${showThumbnail ? styles.project : ''}`}>
-      {showThumbnail && (
-        <div className={styles.thumb}>
-          {work.image ? (
-            <img src={work.image.src} alt={work.image.alt} loading="lazy" />
-          ) : (
-            <MediaPlaceholder label="Screenshot coming soon" seed={work.title} />
-          )}
-        </div>
-      )}
+    <article className={`lift-card ${styles.card} ${styles.project}`}>
+      <div className={styles.thumb}>
+        {work.image ? (
+          <img src={work.image.src} alt={work.image.alt} loading="lazy" />
+        ) : (
+          <MediaPlaceholder label="Screenshot coming soon" seed={work.title} />
+        )}
+      </div>
       <div className={styles.content}>
         {work.label && <p className={styles.label}>{work.label}</p>}
         <h4 className={styles.title}>{work.title}</h4>

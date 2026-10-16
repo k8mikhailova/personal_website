@@ -21,8 +21,6 @@ export type ProjectPreview = {
   note?: string
   tags: string[]
   image?: { src: string; alt: string }
-  /** Set false for a compact text-only card with no screenshot slot. */
-  showThumbnail?: boolean
   links: ProjectLinks
 }
 
@@ -132,7 +130,6 @@ export const experience: ExperienceItem[] = [
         summary:
           'A Python application for analyzing stocks, comparing investment strategies, and automating financial reports.',
         tags: ['Python', 'Streamlit', 'Financial APIs'],
-        showThumbnail: false,
         links: { video: 'https://youtu.be/vEshZVmSw44', github: 'https://github.com/k8mikhailova/StockAdvisor' },
       },
     ],
