@@ -1,11 +1,26 @@
 /* ---------- Intro ---------- */
 
+/* Full-width band so the field can spread past the narrow text column. */
+.heroWrap {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: clamp(3rem, 2rem + 4vw, 6rem);
+}
+
+.field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
 .hero {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 16rem minmax(0, 1fr);
   gap: clamp(2rem, 1rem + 4vw, 3.5rem);
   align-items: center;
-  padding-top: calc(var(--nav-height) + clamp(3rem, 2rem + 4vw, 5.5rem));
+  padding-top: calc(var(--nav-height) + clamp(3.5rem, 2rem + 5vw, 6.5rem));
 }
 
 .portrait {
@@ -46,7 +61,7 @@
 /* ---------- Photos ---------- */
 
 .photos {
-  margin-top: var(--section-space);
+  margin-top: clamp(2rem, 1rem + 4vw, 4.5rem);
 }
 
 .photosHead {

@@ -1,47 +1,41 @@
 .figure {
+  --arch: 999px 999px 22px 22px;
   position: relative;
   width: 100%;
   max-width: 360px;
 }
 
-/* Offset sage panel behind the photo; shifts a little on hover. */
-.backdrop {
+/* Thin arch outline offset behind the photo, like a sketch line. */
+.outline {
   position: absolute;
   inset: 0;
-  border-radius: 18px;
-  background: var(--accent-wash);
-  transform: translate(14px, 14px) rotate(3deg);
-  transition: transform 0.8s var(--ease-out);
+  border: 1px solid var(--accent);
+  border-radius: var(--arch);
+  opacity: 0.55;
+  transform: translate(14px, -14px);
+  transition:
+    transform 0.8s var(--ease-out),
+    opacity 0.8s var(--ease-out);
 }
 
-.figure:hover .backdrop {
-  transform: translate(18px, 18px) rotate(4.5deg);
-}
-
-/* The photo itself sits like a print: light border, slight tilt. */
-.print {
-  position: relative;
-  padding: 0.5rem;
-  border-radius: 16px;
-  background: var(--surface);
-  box-shadow:
-    0 1px 0 rgba(40, 36, 28, 0.05),
-    0 20px 40px -28px rgba(40, 36, 28, 0.5);
-  transform: rotate(-2.5deg);
-  transition: transform 0.7s var(--ease-out);
-}
-
-.figure:hover .print {
-  transform: rotate(-0.5deg) translateY(-3px);
+.figure:hover .outline {
+  opacity: 0.8;
+  transform: translate(8px, -8px);
 }
 
 .frame {
   position: relative;
   aspect-ratio: 4 / 5;
-  border-radius: 10px;
+  border-radius: var(--arch);
   overflow: hidden;
   background: var(--bg-sunken);
+  box-shadow: 0 24px 50px -32px rgba(40, 36, 28, 0.55);
   isolation: isolate;
+  transition: transform 0.7s var(--ease-out);
+}
+
+.figure:hover .frame {
+  transform: translateY(-3px);
 }
 
 /* Taller than the frame so the scroll drift never shows an edge. */
@@ -71,16 +65,16 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .backdrop,
-  .print {
+  .outline,
+  .frame {
     transition: none;
   }
 
-  .figure:hover .backdrop {
-    transform: translate(14px, 14px) rotate(3deg);
+  .figure:hover .outline {
+    transform: translate(14px, -14px);
   }
 
-  .figure:hover .print {
-    transform: rotate(-2.5deg);
+  .figure:hover .frame {
+    transform: none;
   }
 }

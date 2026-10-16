@@ -14,7 +14,8 @@ type PortraitProps = {
 }
 
 /**
- * A tilted, print-like photo on an offset sage panel. It drifts a few pixels
+ * Arch-shaped photo with a thin offset outline, so it reads as part of the
+ * animated field around it rather than a card. The image drifts a few pixels
  * as the page scrolls and opens full size on click. Shows a placeholder until
  * `src` is set.
  */
@@ -26,13 +27,11 @@ export function Portrait({ src, alt, focus, caption, className }: PortraitProps)
 
   return (
     <figure ref={ref} className={`${styles.figure} ${className ?? ''}`}>
-      <div className={styles.backdrop} aria-hidden="true" />
-      <div className={styles.print}>
-        <div className={styles.frame}>
-          <motion.div className={styles.inner} style={reduceMotion ? undefined : { y }}>
-            <ZoomablePhoto src={src} alt={alt} focus={focus} />
-          </motion.div>
-        </div>
+      <span className={styles.outline} aria-hidden="true" />
+      <div className={styles.frame}>
+        <motion.div className={styles.inner} style={reduceMotion ? undefined : { y }}>
+          <ZoomablePhoto src={src} alt={alt} focus={focus} />
+        </motion.div>
       </div>
       {caption !== undefined && (
         <figcaption className={styles.tag}>{caption || <span className="placeholder">[caption]</span>}</figcaption>
