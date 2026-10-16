@@ -71,6 +71,10 @@ export const experience: ExperienceItem[] = [
           'A prototype that brings marketing and customer data together, looks for patterns, and uses AI agent workflows to suggest experiments worth trying.',
         note: 'A personal prototype I built for a separate opportunity, not something made for an InfoMomentum client. All of the data is simulated.',
         tags: ['Python', 'Streamlit', 'AI agent workflows', 'Simulated data'],
+        image: {
+          src: '/images/projects/marketing-hub.jpg',
+          alt: 'Marketing Intelligence Hub overview: a dashboard of customer signals, insights, creative tests and experiments',
+        },
         links: { github: 'https://github.com/k8mikhailova/marketing_hub', demo: '' },
       },
     ],
@@ -130,6 +134,10 @@ export const experience: ExperienceItem[] = [
         summary:
           'A Python application for analyzing stocks, comparing investment strategies, and automating financial reports.',
         tags: ['Python', 'Streamlit', 'Financial APIs'],
+        image: {
+          src: '/images/projects/stockadvisor.jpg',
+          alt: 'StockAdvisor overview: portfolio simulation chart, strategy comparison table and stock scores',
+        },
         links: { video: 'https://youtu.be/vEshZVmSw44', github: 'https://github.com/k8mikhailova/StockAdvisor' },
       },
     ],

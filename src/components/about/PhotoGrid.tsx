@@ -4,7 +4,8 @@ import styles from './PhotoGrid.module.css'
 
 /**
  * Loose, photo-diary style grid. Each photo sits in a light paper frame with a
- * slight tilt that straightens on hover. Empty `src` shows a labeled placeholder.
+ * slight tilt that straightens on hover. Real photos keep their own proportions;
+ * an empty `src` shows a labeled placeholder in the given `shape`.
  */
 export function PhotoGrid({ photos }: { photos: Photo[] }) {
   return (
@@ -12,10 +13,10 @@ export function PhotoGrid({ photos }: { photos: Photo[] }) {
       {photos.map((photo, i) => (
         <li key={i} className={styles.cell}>
           <Reveal delay={(i % 3) * 0.08} y={18}>
-            <figure className={`${styles.figure} ${styles[photo.shape]}`}>
+            <figure className={`${styles.figure} ${photo.src ? '' : styles[photo.shape]}`}>
               <div className={styles.frame}>
                 {photo.src ? (
-                  <img src={photo.src} alt={photo.alt} loading="lazy" />
+                  <img src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} loading="lazy" />
                 ) : (
                   <div className={styles.placeholder}>
                     <CameraIcon />

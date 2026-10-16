@@ -18,23 +18,89 @@ export const about = {
 }
 
 export type Photo = {
+  /** Path under /public. Empty shows a placeholder. */
   src: string
   alt: string
-  /** Short caption under the photo. */
   caption: string
-  /** Shown on the placeholder until a real photo exists. */
-  placeholder: string
+  /** Pixel size of the web image, so the grid reserves the right space before it loads. */
+  width?: number
+  height?: number
+  /** Placeholder shape and label, used only while `src` is empty. */
   shape: 'tall' | 'wide' | 'square'
+  placeholder: string
 }
 
-// Placeholder slots. The placeholder text only suggests what could go there.
+// Ordered so portrait and landscape photos alternate down each grid column.
 export const photos: Photo[] = [
-  { src: '', alt: '', caption: '', placeholder: 'Sailing', shape: 'tall' },
-  { src: '', alt: '', caption: '', placeholder: 'A picnic with a book', shape: 'square' },
-  { src: '', alt: '', caption: '', placeholder: 'Movie night with friends', shape: 'wide' },
-  { src: '', alt: '', caption: '', placeholder: 'An early morning walk', shape: 'square' },
-  { src: '', alt: '', caption: '', placeholder: 'Surfing', shape: 'tall' },
-  { src: '', alt: '', caption: '', placeholder: 'A page from the photo diary', shape: 'wide' },
-  { src: '', alt: '', caption: '', placeholder: 'Whitewater rafting', shape: 'square' },
-  { src: '', alt: '', caption: '', placeholder: 'Volleyball', shape: 'tall' },
+  {
+    src: '/images/about/surfing.jpg',
+    alt: 'Kate in a wetsuit, seen from behind, carrying a surfboard on her head',
+    caption: "You can't live in Santa Cruz and not give surfing a try",
+    width: 1050,
+    height: 1400,
+    shape: 'tall',
+    placeholder: 'Surfing',
+  },
+  {
+    src: '/images/about/camping.jpg',
+    alt: 'Kate and a friend sitting in the doorway of a tent at a campsite',
+    caption: 'Camping in the middle of nowhere',
+    width: 1400,
+    height: 1050,
+    shape: 'wide',
+    placeholder: 'Camping',
+  },
+  {
+    src: '/images/about/sailing.jpg',
+    alt: 'View from a small sailboat with a green and white sail, other dinghies on the water',
+    caption: 'Giving dinghy sailing a try',
+    width: 1050,
+    height: 1400,
+    shape: 'tall',
+    placeholder: 'Sailing',
+  },
+  {
+    src: '/images/about/reading.jpg',
+    alt: 'An open book held up on a sandy beach, with a coffee cup in the sand',
+    caption: 'Brought a book to the beach and actually read it',
+    width: 1400,
+    height: 1050,
+    shape: 'wide',
+    placeholder: 'Reading',
+  },
+  {
+    src: '/images/about/whales.jpg',
+    alt: 'People on a boat watching a whale surface in Monterey Bay',
+    caption: 'Saying hi to the whales in Monterey',
+    width: 1050,
+    height: 1400,
+    shape: 'tall',
+    placeholder: 'Whales',
+  },
+  {
+    src: '/images/about/hiking.jpg',
+    alt: 'A hiker on a forest trail in Yosemite with granite cliffs behind',
+    caption: 'Exploring Yosemite on foot',
+    width: 1400,
+    height: 788,
+    shape: 'wide',
+    placeholder: 'Hiking',
+  },
+  {
+    src: '/images/about/running.jpg',
+    alt: 'Kate and friends in matching race shirts on a lawn after a 5K, one friend lying in front in a banana costume',
+    caption: 'First 5K in the books',
+    width: 1050,
+    height: 1400,
+    shape: 'tall',
+    placeholder: 'Running',
+  },
+  {
+    // Waiting on the purchased (unwatermarked) photo from the rafting company.
+    src: '',
+    alt: 'Kate and friends whitewater rafting through class III rapids',
+    caption: 'Class III rafting. Would absolutely do it again',
+    shape: 'wide',
+    placeholder: 'Rafting',
+  },
 ]

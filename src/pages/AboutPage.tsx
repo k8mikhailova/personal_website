@@ -65,7 +65,6 @@ export function AboutPage() {
           <h2 id="photos-title" className="section-label">
             From the photo diary
           </h2>
-          <p className={styles.photosNote}>Placeholders for now. Real photos and captions are coming.</p>
         </div>
         <PhotoGrid photos={photos} />
       </section>

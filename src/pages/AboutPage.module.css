@@ -70,14 +70,6 @@
   margin-bottom: 2.5rem;
 }
 
-.photosHead :global(.section-label) {
-  margin-bottom: 0.75rem;
-}
-
-.photosNote {
-  font-size: var(--text-sm);
-  color: var(--muted);
-}
 
 @media (max-width: 640px) {
   .hero {
