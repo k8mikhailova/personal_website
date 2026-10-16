@@ -17,7 +17,7 @@ export function Intro() {
           <Reveal as="span" delay={0.12} y={24}>
             <span className={styles.headline}>
               <span className={styles.lead}>{intro.lead} </span>
-              <RotatingText phrases={intro.phrases} className={styles.rotating} />
+              <RotatingText phrases={intro.phrases} className={styles.rotating} interval={2650} />
             </span>
           </Reveal>
         </h1>
