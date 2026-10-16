@@ -30,7 +30,7 @@ export type Photo = {
   placeholder: string
 }
 
-// Ordered so portrait and landscape photos alternate down each grid column.
+// Ordered so the four grid columns come out roughly the same height on desktop.
 export const photos: Photo[] = [
   {
     src: '/images/about/surfing.jpg',
@@ -78,15 +78,6 @@ export const photos: Photo[] = [
     placeholder: 'Whales',
   },
   {
-    src: '/images/about/hiking.jpg',
-    alt: 'A hiker on a forest trail in Yosemite with granite cliffs behind',
-    caption: 'Exploring Yosemite on foot',
-    width: 1400,
-    height: 788,
-    shape: 'wide',
-    placeholder: 'Hiking',
-  },
-  {
     src: '/images/about/running.jpg',
     alt: 'Kate and friends in matching race shirts on a lawn after a 5K, one friend lying in front in a banana costume',
     caption: 'First 5K in the books',
@@ -96,11 +87,21 @@ export const photos: Photo[] = [
     placeholder: 'Running',
   },
   {
-    // Waiting on the purchased (unwatermarked) photo from the rafting company.
-    src: '',
-    alt: 'Kate and friends whitewater rafting through class III rapids',
+    src: '/images/about/rafting.jpg',
+    alt: 'Kate and friends in helmets and life jackets sitting in a raft on a river, smiling at the camera',
     caption: 'Class III rafting. Would absolutely do it again',
-    shape: 'wide',
+    width: 788,
+    height: 1400,
+    shape: 'tall',
     placeholder: 'Rafting',
+  },
+  {
+    src: '/images/about/hiking.jpg',
+    alt: 'A hiker on a forest trail in Yosemite with granite cliffs behind',
+    caption: 'Exploring Yosemite on foot',
+    width: 1400,
+    height: 788,
+    shape: 'wide',
+    placeholder: 'Hiking',
   },
 ]
