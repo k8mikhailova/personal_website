@@ -8,8 +8,6 @@ type PortraitProps = {
   alt: string
   /** Crop focus as CSS object-position. */
   focus?: string
-  /** Small tag pinned to the corner of the photo. Empty shows a placeholder. */
-  caption?: string
   className?: string
 }
 
@@ -19,7 +17,7 @@ type PortraitProps = {
  * as the page scrolls and opens full size on click. Shows a placeholder until
  * `src` is set.
  */
-export function Portrait({ src, alt, focus, caption, className }: PortraitProps) {
+export function Portrait({ src, alt, focus, className }: PortraitProps) {
   const ref = useRef<HTMLElement>(null)
   const reduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
@@ -33,9 +31,6 @@ export function Portrait({ src, alt, focus, caption, className }: PortraitProps)
           <ZoomablePhoto src={src} alt={alt} focus={focus} />
         </motion.div>
       </div>
-      {caption !== undefined && (
-        <figcaption className={styles.tag}>{caption || <span className="placeholder">[caption]</span>}</figcaption>
-      )}
     </figure>
   )
 }

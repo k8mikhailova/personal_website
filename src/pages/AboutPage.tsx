@@ -27,7 +27,6 @@ export function AboutPage() {
                 src={about.photo.src}
                 alt={about.photo.alt}
                 focus={about.photo.focus}
-                caption={about.photo.caption}
               />
             </div>
           </Reveal>

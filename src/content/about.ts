@@ -6,15 +6,13 @@ export const about = {
     alt: 'Kate',
     // Crop focus as CSS object-position. Adjust if the crop cuts off the wrong part.
     focus: '50% 40%',
-    // Short tag pinned to the photo. Leave empty for a placeholder.
-    caption: '',
   },
 
   // Kate will write this. Leave empty to show the placeholder.
   paragraph: '',
 
-  // ISO date and time of birth, e.g. '2003-05-14T08:30:00'. Left empty, the counter shows a placeholder.
-  birthDate: '',
+  // Drives the live age counter (local midnight, since no birth time is given). Not shown on the page.
+  birthDate: '2003-12-28T00:00:00',
 }
 
 export type Photo = {
