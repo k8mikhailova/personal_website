@@ -15,9 +15,13 @@ export const site = {
 
   links: {
     // For email, put the plain address in both href and display.
-    email: { label: 'Email', href: '', display: '[your email]' },
-    github: { label: 'GitHub', href: '', display: '[GitHub URL]' },
-    linkedin: { label: 'LinkedIn', href: '', display: '[LinkedIn URL]' },
+    email: { label: 'Email', href: 'katemo03el@gmail.com', display: 'katemo03el@gmail.com' },
+    github: { label: 'GitHub', href: 'https://github.com/k8mikhailova', display: 'github.com/k8mikhailova' },
+    linkedin: {
+      label: 'LinkedIn',
+      href: 'https://www.linkedin.com/in/katemikhailova/',
+      display: 'linkedin.com/in/katemikhailova',
+    },
     // Drop a PDF into /public (e.g. /public/resume.pdf) and set href to '/resume.pdf'.
     resume: { label: 'Resume', href: '', display: '[resume PDF]' },
   } satisfies Record<string, SiteLink>,

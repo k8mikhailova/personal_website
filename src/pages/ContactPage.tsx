@@ -44,7 +44,7 @@ export function ContactPage() {
                       {...(row.download
                         ? { download: '' }
                         : /^https?:\/\//.test(row.href)
-                          ? { target: '_blank', rel: 'noreferrer' }
+                          ? { target: '_blank', rel: 'noopener noreferrer' }
                           : {})}
                     >
                       <span>{row.download ? 'Download PDF' : row.display}</span>
