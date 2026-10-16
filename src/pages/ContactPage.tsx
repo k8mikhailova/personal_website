@@ -42,7 +42,7 @@ export function ContactPage() {
                       href={row.href}
                       className={styles.value}
                       {...(row.download
-                        ? { download: '' }
+                        ? { download: 'Kate-Mikhailova-Resume.pdf' }
                         : /^https?:\/\//.test(row.href)
                           ? { target: '_blank', rel: 'noopener noreferrer' }
                           : {})}

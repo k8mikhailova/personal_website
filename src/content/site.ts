@@ -22,8 +22,8 @@ export const site = {
       href: 'https://www.linkedin.com/in/katemikhailova/',
       display: 'linkedin.com/in/katemikhailova',
     },
-    // Drop a PDF into /public (e.g. /public/resume.pdf) and set href to '/resume.pdf'.
-    resume: { label: 'Resume', href: '', display: '[resume PDF]' },
+    // The PDF lives at /public/resume.pdf; replace that file to update it.
+    resume: { label: 'Resume', href: '/resume.pdf', display: 'Download PDF' },
   } satisfies Record<string, SiteLink>,
 }
 
