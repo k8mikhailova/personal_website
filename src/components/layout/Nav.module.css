@@ -9,70 +9,42 @@
     backdrop-filter 0.4s var(--ease-out);
 }
 
-.scrolled,
-.menuOpen {
-  background: color-mix(in srgb, var(--bg) 82%, transparent);
+.scrolled {
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
   backdrop-filter: blur(14px) saturate(1.2);
   -webkit-backdrop-filter: blur(14px) saturate(1.2);
   border-bottom-color: var(--line);
 }
 
 .nav {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   height: var(--nav-height);
 }
 
 .name {
   font-family: var(--font-display);
-  font-size: 1.1875rem;
+  font-size: 1.0625rem;
   font-weight: 500;
   letter-spacing: -0.03em;
-  line-height: 1;
-}
-
-.right {
-  display: flex;
-  align-items: center;
-  gap: clamp(1.25rem, 3vw, 2.5rem);
-}
-
-.resume {
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  font-size: var(--text-sm);
-  transition:
-    background-color 0.3s var(--ease-out),
-    color 0.3s var(--ease-out),
-    border-color 0.3s var(--ease-out);
-}
-
-a.resume:hover {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--bg);
-}
-
-.mobileOnly {
-  display: none;
+  white-space: nowrap;
 }
 
 .links {
   display: flex;
-  gap: clamp(1.25rem, 3vw, 2.5rem);
+  gap: clamp(1rem, 4vw, 2rem);
 }
 
 .link {
   position: relative;
   font-size: var(--text-sm);
-  color: var(--ink-soft);
+  color: var(--muted);
   transition: color 0.25s ease;
 }
 
-/* Small dot that slides in under the hovered link. */
+/* Small dot under the current page (and on hover). */
 .link::after {
   content: '';
   position: absolute;
@@ -89,102 +61,23 @@ a.resume:hover {
     transform 0.3s var(--ease-out);
 }
 
-.link:hover {
+.link:hover,
+.active {
   color: var(--ink);
 }
 
-.link:hover::after {
+.link:hover::after,
+.active::after {
   opacity: 1;
   transform: translate(-50%, 0);
 }
 
-.toggle {
-  display: none;
-  width: 44px;
-  height: 44px;
-  margin-right: -10px;
-  place-items: center;
-}
-
-.toggleLines,
-.toggleLines::before {
-  display: block;
-  width: 22px;
-  height: 1.5px;
-  background: var(--ink);
-  border-radius: 2px;
-  transition: transform 0.35s var(--ease-out);
-}
-
-.toggleLines {
-  position: relative;
-  transform: translateY(-3.5px);
-}
-
-.toggleLines::before {
-  content: '';
-  position: absolute;
-  top: 7px;
-}
-
-.menuOpen .toggleLines {
-  transform: translateY(0) rotate(45deg);
-}
-
-.menuOpen .toggleLines::before {
-  transform: translateY(-7px) rotate(-90deg);
-}
-
-@media (max-width: 640px) {
-  .toggle {
-    display: grid;
+@media (max-width: 380px) {
+  .name {
+    font-size: 1rem;
   }
 
   .links {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    gap: 0;
-    padding: 0.5rem var(--gutter) 1.5rem;
-    background: color-mix(in srgb, var(--bg) 96%, transparent);
-    border-bottom: 1px solid var(--line);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-8px);
-    transition:
-      opacity 0.3s var(--ease-out),
-      transform 0.3s var(--ease-out),
-      visibility 0s linear 0.3s;
-  }
-
-  .menuOpen .links {
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    transition-delay: 0s;
-  }
-
-  .link {
-    display: block;
-    padding: 0.75rem 0;
-    font-family: var(--font-display);
-    font-size: 1.625rem;
-    font-weight: 500;
-    letter-spacing: -0.03em;
-    color: var(--ink);
-  }
-
-  .resumeSlot {
-    display: none;
-  }
-
-  .mobileOnly {
-    display: block;
-  }
-
-  .link::after {
-    display: none;
+    gap: 0.9rem;
   }
 }

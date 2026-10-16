@@ -1,33 +1,40 @@
+export type CollegeProject = {
+  title: string
+  /** Language or area, if known. Leave empty to show a placeholder. */
+  tech: string
+  href: string
+}
+
 export type EducationItem = {
   institution: string
-  shortName: string
   place: string
-  school: string
   program: string
+  school: string
   dates: string
-  /** Large background year on the card. */
-  marker: string
-  details?: string[]
+  detail?: string
+  projects?: CollegeProject[]
 }
 
 export const education: EducationItem[] = [
   {
     institution: 'University of California, Santa Cruz',
-    shortName: 'UC Santa Cruz',
     place: 'Santa Cruz, California',
-    school: 'Baskin School of Engineering',
     program: 'B.S. Computer Science',
+    school: 'Baskin School of Engineering',
     dates: 'Graduated June 2026',
-    marker: '2026',
+    // Still deciding which of these to feature.
+    projects: [
+      { title: 'Banana Emulator', tech: 'C++', href: '' },
+      { title: 'AI Pacman', tech: 'Python', href: '' },
+      { title: 'Few-Shot Image Classification', tech: '', href: '' },
+    ],
   },
   {
     institution: 'University of Manchester',
-    shortName: 'Manchester',
     place: 'Manchester, United Kingdom',
-    school: 'Alliance Manchester Business School',
     program: 'Study Abroad',
+    school: 'Alliance Manchester Business School',
     dates: 'September 2024 – January 2025',
-    marker: '2024',
-    details: ['Operations', 'Analytics', 'Strategy'],
+    detail: 'Business subjects, including operations, analytics, and strategy.',
   },
 ]

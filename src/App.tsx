@@ -1,32 +1,24 @@
 import { MotionConfig } from 'motion/react'
-import { Footer } from './components/layout/Footer'
-import { Nav } from './components/layout/Nav'
-import { About } from './sections/About'
-import { Contact } from './sections/Contact'
-import { Education } from './sections/Education'
-import { Experience } from './sections/Experience'
-import { Hero } from './sections/Hero'
-import { Projects } from './sections/Projects'
-import { Skills } from './sections/Skills'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Layout } from './components/layout/Layout'
+import { AboutPage } from './pages/AboutPage'
+import { ContactPage } from './pages/ContactPage'
+import { HomePage } from './pages/HomePage'
 
 export default function App() {
   return (
     // "user" tones animations down to simple fades when the OS asks for reduced motion.
     <MotionConfig reducedMotion="user">
-      <a href="#main" className="skip-link">
-        Skip to content
-      </a>
-      <Nav />
-      <main id="main">
-        <Hero />
-        <About />
-        <Experience />
-        <Education />
-        <Projects />
-        <Skills />
-        <Contact />
-      </main>
-      <Footer />
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route index element={<HomePage />} />
+            <Route path="about" element={<AboutPage />} />
+            <Route path="contact" element={<ContactPage />} />
+            <Route path="*" element={<HomePage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </MotionConfig>
   )
 }

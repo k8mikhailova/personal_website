@@ -1,17 +1,33 @@
 .footer {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  padding-block: 2rem 2.5rem;
+  gap: 0.5rem 1rem;
+  margin-top: var(--section-space);
+  position: relative;
+  padding-block: 1.75rem 2.25rem;
   font-size: var(--text-xs);
   color: var(--muted);
+}
+
+/* Divider limited to the text column (the container's padding sits outside it). */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--gutter);
+  right: var(--gutter);
+  height: 1px;
+  background: var(--line);
 }
 
 .top {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  font-size: inherit;
+  color: inherit;
   transition: color 0.25s ease;
 }
 
@@ -20,7 +36,6 @@
 }
 
 .arrow {
-  transform-origin: center;
   transition: translate 0.35s var(--ease-out);
 }
 

@@ -1,0 +1,66 @@
+.section {
+  padding-top: calc(var(--nav-height) + clamp(3.5rem, 2rem + 6vw, 7rem));
+}
+
+.title {
+  font-size: var(--text-display);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  margin-bottom: 1.5rem;
+}
+
+.intro {
+  max-width: 32rem;
+  font-size: var(--text-lg);
+  color: var(--ink-soft);
+}
+
+.list {
+  margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  border-top: 1px solid var(--line);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 1.15rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.label {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.value {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  transition: color 0.3s ease;
+}
+
+.value:hover {
+  color: var(--accent-ink);
+}
+
+.arrow {
+  flex: none;
+  transition: translate 0.35s var(--ease-out);
+}
+
+.value:hover .arrow {
+  translate: 2px -2px;
+}
+
+/* A thin band of the homepage lines, so the page doesn't end abruptly. */
+.band {
+  height: 180px;
+  margin-top: clamp(3rem, 2rem + 4vw, 5rem);
+  margin-bottom: calc(var(--section-space) * -1);
+  mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
+}

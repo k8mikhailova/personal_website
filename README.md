@@ -13,13 +13,19 @@ npm run preview  # serve the production build
 
 ## Where things live
 
-- `src/content/` — all copy and data (site links, hero, about, experience, education, projects, skills). Edit text here, not in components.
-- `src/sections/` — homepage sections, in order: Hero, About, Experience, Education, Projects, Skills, Contact.
-- `src/components/` — reusable pieces (`ui/`, `layout/`, `hero/`, `work/`).
-- `public/` — static files. Put the resume at `public/resume.pdf`, your photo at e.g. `public/kate.jpg`, and project assets in `public/projects/<slug>/`.
+Three pages, routed with React Router: Home (`/`), About (`/about`), Contact (`/contact`).
 
-Empty links and dates render as dashed placeholders until real values are added.
+- `src/content/` — all copy and data. Edit text here, not in components.
+  - `home.ts` intro, `experience.ts` timeline (projects are nested inside each role), `education.ts`
+  - `about.ts` About page notes, age counter birth date, photo grid slots
+  - `site.ts` name, nav, email/GitHub/LinkedIn/resume links
+- `src/pages/` — one file per page.
+- `src/sections/home/` — the homepage sections (Intro, ExperienceTimeline, Education).
+- `src/components/` — reusable pieces (`hero/` lines + rotating headline, `experience/` nested project previews, `about/`, `layout/`, `ui/`).
+- `public/` — static files: `resume.pdf`, photos, project screenshots.
+
+Empty links, dates and photos render as dashed placeholders until real values are added.
 
 ## Deploy
 
-Vercel: import the repo, framework preset "Vite", no extra config needed.
+Vercel: import the repo, framework preset "Vite". `vercel.json` rewrites all paths to `index.html` so `/about` and `/contact` work on refresh.

@@ -5,6 +5,10 @@ type FlowFieldProps = {
   className?: string
   /** Number of strands in the ribbon. */
   lineCount?: number
+  /** Vertical position of the ribbon as a fraction of the canvas height. */
+  center?: number
+  /** Same, for narrow screens. */
+  mobileCenter?: number
 }
 
 /**
@@ -15,7 +19,7 @@ type FlowFieldProps = {
  * Pauses when off-screen or in a background tab, and renders a single still
  * frame for people who prefer reduced motion.
  */
-export function FlowField({ className, lineCount = 26 }: FlowFieldProps) {
+export function FlowField({ className, lineCount = 26, center = 0.56, mobileCenter = 0.63 }: FlowFieldProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -57,7 +61,7 @@ export function FlowField({ className, lineCount = 26 }: FlowFieldProps) {
 
       const narrow = width < 720
       const step = narrow ? 12 : 9
-      const centerY = height * (narrow ? 0.63 : 0.56)
+      const centerY = height * (narrow ? mobileCenter : center)
       const amplitude = height * (narrow ? 0.06 : 0.15)
       const bandWidth = Math.min(height * 0.32, narrow ? 150 : 260)
       const radius = narrow ? 90 : 150
@@ -194,7 +198,7 @@ export function FlowField({ className, lineCount = 26 }: FlowFieldProps) {
       document.removeEventListener('visibilitychange', onVisibilityChange)
       motionQuery.removeEventListener('change', onMotionPreferenceChange)
     }
-  }, [lineCount])
+  }, [lineCount, center, mobileCenter])
 
   return (
     <canvas ref={canvasRef} className={`${styles.canvas} ${className ?? ''}`} aria-hidden="true" />

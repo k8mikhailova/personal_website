@@ -1,0 +1,115 @@
+.section {
+  position: relative;
+}
+
+.subLabel {
+  margin-top: 4rem;
+}
+
+.timeline {
+  --rail-x: 5px;
+  position: relative;
+  display: grid;
+  gap: clamp(3rem, 2.25rem + 2.5vw, 4.25rem);
+  padding-left: 2rem;
+}
+
+/* Vertical rail behind the dots, with an accent fill that tracks scroll. */
+.rail {
+  position: absolute;
+  left: var(--rail-x);
+  top: 0.55rem;
+  bottom: 0.5rem;
+  width: 1px;
+  background: var(--line);
+}
+
+.railFill {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform-origin: top;
+}
+
+.item {
+  position: relative;
+}
+
+.dot {
+  position: absolute;
+  left: calc(var(--rail-x) - 2rem - 4.5px);
+  top: 0.4rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent);
+  background: var(--bg);
+  transition: background-color 0.4s var(--ease-out);
+}
+
+.item:hover .dot {
+  background: var(--accent);
+}
+
+.dates {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  font-size: var(--text-xs);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.volunteer {
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  background: var(--accent-wash);
+  color: var(--accent-ink);
+  font-weight: 500;
+}
+
+.org {
+  font-size: var(--text-h3);
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+}
+
+.role {
+  margin-top: 0.2rem;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.summary {
+  margin-top: 0.85rem;
+  max-width: 36rem;
+  color: var(--ink-soft);
+}
+
+.nested {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* On wide screens the dates move out into the left margin, like a side note. */
+@media (min-width: 1240px) {
+  .dates {
+    position: absolute;
+    right: calc(100% + 2rem + 1.75rem);
+    top: 0.3rem;
+    width: 9.5rem;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.4rem;
+    text-align: right;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    transition: none;
+  }
+}

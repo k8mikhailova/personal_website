@@ -1,6 +1,6 @@
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { useRef } from 'react'
-import { MediaPlaceholder } from '../work/MediaPlaceholder'
+import { MediaPlaceholder } from '../ui/MediaPlaceholder'
 import styles from './Portrait.module.css'
 
 type PortraitProps = {

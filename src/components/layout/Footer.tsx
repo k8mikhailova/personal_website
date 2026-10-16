@@ -10,9 +10,9 @@ export function Footer() {
       <p>
         © {year} {site.name}
       </p>
-      <a href="#top" className={styles.top}>
+      <button type="button" className={styles.top} onClick={() => window.scrollTo({ top: 0 })}>
         Back to top <ArrowIcon direction="up" className={styles.arrow} />
-      </a>
+      </button>
     </footer>
   )
 }

@@ -1,0 +1,76 @@
+.figure {
+  display: grid;
+  gap: 1rem;
+}
+
+.rows {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr 3rem;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.label {
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.track {
+  position: relative;
+  height: 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-sunken) 80%, transparent);
+  overflow: hidden;
+}
+
+/* Tick marks every 25% so the bars read as a scale. */
+.track::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent calc(25% - 1px),
+    color-mix(in srgb, var(--bg) 90%, transparent) calc(25% - 1px),
+    color-mix(in srgb, var(--bg) 90%, transparent) 25%
+  );
+  pointer-events: none;
+}
+
+.bar {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.before {
+  background: var(--line-strong);
+}
+
+.after {
+  background: var(--accent);
+}
+
+.value {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.delta {
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.deltaValue {
+  color: var(--accent-ink);
+  font-weight: 600;
+}
