@@ -1,0 +1,83 @@
+/* Only on screens wide enough to sit left of the timeline dates without touching them. */
+.nav {
+  display: none;
+}
+
+@media (min-width: 1420px) {
+  .nav {
+    --width: 7.75rem;
+    position: fixed;
+    top: 50%;
+    z-index: 40;
+    display: block;
+    width: var(--width);
+    /* Hug the content on very wide screens, but never closer than the date column allows. */
+    left: max(1.5rem, calc(50% - var(--column) / 2 - 11.25rem - 2.5rem - var(--width)));
+    transform: translateY(-50%);
+  }
+}
+
+/* Thin vertical rail the dots sit on. */
+.list {
+  position: relative;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.list::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 0.8rem;
+  bottom: 0.8rem;
+  width: 1px;
+  background: var(--line);
+}
+
+.link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-block: 0.35rem;
+  font-size: var(--text-xs);
+  line-height: 1.3;
+  color: var(--muted);
+  transition: color 0.35s var(--ease-out);
+}
+
+.link:hover {
+  color: var(--ink-soft);
+}
+
+.dot {
+  position: relative;
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  transition:
+    background-color 0.35s var(--ease-out),
+    border-color 0.35s var(--ease-out),
+    transform 0.35s var(--ease-out);
+}
+
+.active {
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.active .dot {
+  border-color: var(--accent);
+  background: var(--accent);
+  transform: scale(1.15);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link,
+  .dot {
+    transition: none;
+  }
+}

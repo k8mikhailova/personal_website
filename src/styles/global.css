@@ -218,6 +218,16 @@ p {
 }
 
 /* Small label used to open each section: a short accent rule and quiet text. */
+/* Sections the homepage section nav jumps to: a little air below the sticky
+   top bar, and no focus ring when focus moves there after a jump. */
+.spy-target {
+  scroll-margin-top: 1.5rem;
+}
+
+.spy-target:focus {
+  outline: none;
+}
+
 .section-label {
   display: flex;
   align-items: center;

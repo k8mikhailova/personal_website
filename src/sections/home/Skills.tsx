@@ -5,7 +5,7 @@ import styles from './Skills.module.css'
 /** Compact skills overview: four groups in a two-column grid on desktop. */
 export function Skills() {
   return (
-    <section className={`container ${styles.section}`} aria-labelledby="skills-title">
+    <section id="skills" className={`container spy-target ${styles.section}`} aria-labelledby="skills-title">
       <h2 id="skills-title" className="section-label">
         Skills &amp; Tools
       </h2>

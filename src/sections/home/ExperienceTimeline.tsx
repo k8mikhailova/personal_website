@@ -12,17 +12,19 @@ export function ExperienceTimeline() {
 
   return (
     <section className={`container ${styles.section}`} aria-labelledby="experience-title">
-      <h2 id="experience-title" className="section-label">
-        Experience
-      </h2>
-
-      <Timeline items={work} />
+      {/* Two blocks so the homepage section nav can track them separately. */}
+      <div id="experience" className="spy-target">
+        <h2 id="experience-title" className="section-label">
+          Experience
+        </h2>
+        <Timeline items={work} />
+      </div>
 
       {volunteer.length > 0 && (
-        <>
-          <h3 className={`section-label ${styles.subLabel}`}>Volunteering</h3>
+        <div id="volunteering" className={`spy-target ${styles.volunteering}`}>
+          <h3 className="section-label">Volunteering</h3>
           <Timeline items={volunteer} />
-        </>
+        </div>
       )}
     </section>
   )

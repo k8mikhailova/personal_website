@@ -6,7 +6,7 @@ import styles from './Intro.module.css'
 
 export function Intro() {
   return (
-    <section className={styles.intro} aria-labelledby="intro-title">
+    <section id="intro" className={`spy-target ${styles.intro}`} aria-labelledby="intro-title">
       <FlowField className={styles.flow} center={0.8} mobileCenter={0.86} />
 
       <div className={`container ${styles.inner}`}>

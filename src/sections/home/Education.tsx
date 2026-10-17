@@ -8,7 +8,7 @@ export function Education() {
   const [first, second] = education
 
   return (
-    <section className={`container ${styles.section}`} aria-labelledby="education-title">
+    <section id="education" className={`container spy-target ${styles.section}`} aria-labelledby="education-title">
       <h2 id="education-title" className="section-label">
         Education
       </h2>
