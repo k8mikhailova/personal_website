@@ -77,7 +77,10 @@ export const experience: ExperienceItem[] = [
           src: '/images/projects/marketing-hub.jpg',
           alt: 'Marketing Intelligence Hub overview: a dashboard of customer signals, insights, creative tests and experiments',
         },
-        links: { github: 'https://github.com/k8mikhailova/marketing_hub', demo: '' },
+        links: {
+          live: 'https://kate-marketing-intelligence.streamlit.app/',
+          github: 'https://github.com/k8mikhailova/marketing_hub',
+        },
       },
     ],
   },
