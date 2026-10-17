@@ -33,6 +33,18 @@
   transition: translate 0.35s var(--ease-out);
 }
 
+/* Filled button for the main action (e.g. a live app); others stay outlined. */
+.primary {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.primary:hover {
+  border-color: var(--accent-ink);
+  background: var(--accent-ink);
+}
+
 .link:hover .arrow {
   translate: 2px -2px;
 }

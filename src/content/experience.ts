@@ -3,6 +3,8 @@
 // Empty link/video values render as clearly marked placeholders.
 
 export type ProjectLinks = {
+  /** Deployed app, shown first as the primary "Try live demo" button. */
+  live?: string
   /** Demo video URL, shown as "Watch demo". */
   video?: string
   github?: string
@@ -138,7 +140,11 @@ export const experience: ExperienceItem[] = [
           src: '/images/projects/stockadvisor.jpg',
           alt: 'StockAdvisor overview: portfolio simulation chart, strategy comparison table and stock scores',
         },
-        links: { video: 'https://youtu.be/vEshZVmSw44', github: 'https://github.com/k8mikhailova/StockAdvisor' },
+        links: {
+          live: 'https://stockadvisor.streamlit.app/',
+          video: 'https://youtu.be/vEshZVmSw44',
+          github: 'https://github.com/k8mikhailova/StockAdvisor',
+        },
       },
     ],
   },

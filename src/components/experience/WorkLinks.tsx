@@ -2,7 +2,9 @@ import type { ProjectLinks } from '../../content/experience'
 import { ArrowIcon } from '../ui/ArrowIcon'
 import styles from './WorkLinks.module.css'
 
+// Display order. `live` is styled as the primary action.
 const labels: Record<keyof ProjectLinks, string> = {
+  live: 'Try live demo',
   video: 'Watch demo',
   github: 'GitHub',
   demo: 'Demo',
@@ -26,7 +28,7 @@ export function WorkLinks({ links }: { links: ProjectLinks }) {
             {href ? (
               <a
                 href={href}
-                className={styles.link}
+                className={`${styles.link} ${key === 'live' ? styles.primary : ''}`}
                 {...(/^https?:\/\//.test(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               >
                 {labels[key]}
