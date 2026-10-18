@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { AgeCounter } from '../components/about/AgeCounter'
+import { AskKate } from '../components/about/AskKate'
 import { PhotoGrid } from '../components/about/PhotoGrid'
 import { Portrait } from '../components/about/Portrait'
 import { WindField } from '../components/about/WindField'
@@ -54,6 +55,9 @@ export function AboutPage() {
 
       {/* ---------- Q&A: calmer, no animated background ---------- */}
       <AboutQuestions />
+
+      {/* ---------- Ask Kate chatbot ---------- */}
+      <AskKate />
 
       {/* ---------- Photo diary: wider than the reading column ---------- */}
       <section className={`container-wide ${styles.photos}`} aria-labelledby="photos-title">

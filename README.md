@@ -29,3 +29,31 @@ Empty links, dates and photos render as dashed placeholders until real values ar
 ## Deploy
 
 Vercel: import the repo, framework preset "Vite". `vercel.json` rewrites all paths to `index.html` so `/about` and `/contact` work on refresh.
+
+## Ask Kate chatbot
+
+A small AI assistant on the About page that answers questions about Kate's background.
+
+- **UI:** `src/components/about/AskKate.tsx` (text and starter questions in `src/content/askKate.ts`).
+- **API:** `api/chat.ts` is a Vercel serverless function (`POST /api/chat`). Logic lives in `chatbot/`.
+- **Knowledge base:** `chatbot/knowledge.ts` — everything the assistant may say about Kate. Public info only.
+- **Personality and rules:** `chatbot/instructions.ts`.
+- **Limits** (message length, history, output tokens, rate limits): `chatbot/limits.ts`.
+
+Uses the OpenAI Responses API with `store: false`; conversations are not saved anywhere by the site.
+
+### Environment variables
+
+| Name | Required | Notes |
+| --- | --- | --- |
+| `OPENAI_API_KEY` | yes | Server-side only. Never add a `VITE_` prefix. |
+| `OPENAI_MODEL` | no | Defaults to `gpt-5-mini`. |
+| `OPENAI_REASONING_EFFORT` | no | GPT-5 models only. Defaults to `minimal`. |
+| `CHAT_ALLOWED_ORIGINS` | no | Extra allowed origins, comma-separated. |
+
+Locally: copy `.env.example` to `.env.local`, fill in the key, run `npm run dev` (the Vite dev server runs `/api/chat` too).
+On Vercel: Project → Settings → Environment Variables, then redeploy.
+
+### Tests
+
+`npm test` runs the chatbot unit tests (validation, rate limiting, error handling, and the OpenAI request shape against a fake local server). `npm run typecheck` checks app and server code.
