@@ -13,6 +13,7 @@ export type GenerateReply = (args: {
 export type ChatEnv = {
   OPENAI_API_KEY?: string
   OPENAI_MODEL?: string
+  OPENAI_REASONING_EFFORT?: string
   /** Optional comma-separated extra origins allowed to call the endpoint. */
   CHAT_ALLOWED_ORIGINS?: string
 }
@@ -20,7 +21,7 @@ export type ChatEnv = {
 type Deps = {
   env: ChatEnv
   /** Builds the reply generator once a key is known (injected so tests can fake it). */
-  createGenerator: (apiKey: string) => GenerateReply
+  createGenerator: (apiKey: string, env: ChatEnv) => GenerateReply
 }
 
 /** Error codes the front end knows how to explain. Never raw backend details. */
@@ -109,7 +110,7 @@ export async function handleChat(request: Request, deps: Deps): Promise<Response
   }
 
   try {
-    const reply = await deps.createGenerator(apiKey)({
+    const reply = await deps.createGenerator(apiKey, deps.env)({
       model: deps.env.OPENAI_MODEL?.trim() || DEFAULT_MODEL,
       instructions: buildInstructions(),
       messages: result.messages,
@@ -125,7 +126,11 @@ export async function handleChat(request: Request, deps: Deps): Promise<Response
     // Log only the error type and status, never the key or visitor messages.
     const status = (error as { status?: number }).status
     const name = (error as { name?: string }).name ?? 'Error'
-    console.error(`[ask-kate] model request failed: ${name}${status ? ` (status ${status})` : ''}`)
+    if (status === 401 || status === 403) {
+      console.error(`[ask-kate] OpenAI rejected the request (status ${status}): check OPENAI_API_KEY and the key's project permissions`)
+    } else {
+      console.error(`[ask-kate] model request failed: ${name}${status ? ` (status ${status})` : ''}`)
+    }
 
     if (status === 429) return fail(503, 'busy')
     if (status === 401 || status === 403) return fail(503, 'not_configured')
