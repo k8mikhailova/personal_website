@@ -27,18 +27,20 @@ export const suggestionTopics: SuggestionTopic[] = [
     id: 'overture',
     keywords: ['overture', '64%', '83%', 'duckdb', 'conflicting attributes', 'place information'],
     questions: [
-      'What did Kate work on at Overture Maps?',
+      'What’s a real problem Kate has solved with code?',
       'How did her team improve accuracy from 64% to 83%?',
       'Where can I see the Overture project code?',
+      'What did Kate work on at Overture Maps?',
     ],
   },
   {
     id: 'mih',
-    keywords: ['intelligence hub', 'customer signals', 'simulated'],
+    keywords: ['intelligence hub', 'customer signals', 'customer feedback', 'simulated'],
     questions: [
-      'What is the Marketing Intelligence Hub?',
+      'What has Kate actually built with AI?',
       'Is the Marketing Intelligence Hub built on real data?',
       'Can I try the Marketing Intelligence Hub?',
+      'What is the Marketing Intelligence Hub?',
     ],
   },
   {
@@ -53,7 +55,11 @@ export const suggestionTopics: SuggestionTopic[] = [
   {
     id: 'interests',
     keywords: ['interested', 'looking for', 'experimentation'],
-    questions: ['What kind of work is Kate interested in?', 'How can I get in touch with Kate?'],
+    questions: [
+      'What makes Kate different from a typical CS graduate?',
+      'What kind of work is Kate interested in?',
+      'How can I get in touch with Kate?',
+    ],
   },
   {
     id: 'antforce',
@@ -62,10 +68,10 @@ export const suggestionTopics: SuggestionTopic[] = [
   },
   {
     id: 'infomomentum',
-    keywords: ['infomomentum', 'zapier', 'crm', 'sms', 'founded', 'ontraport', 'gohighlevel', 'meta ads'],
+    keywords: ['infomomentum', 'zapier', 'crm', 'sms', 'founded', 'ontraport', 'gohighlevel', 'meta ads', 'small business'],
     questions: [
+      'How did Kate end up combining computer science and marketing?',
       'What is InfoMomentum?',
-      'How did Kate get into automation and marketing?',
       'What kinds of automations has Kate built?',
     ],
   },
@@ -91,7 +97,8 @@ export const suggestionTopics: SuggestionTopic[] = [
   },
 ]
 
-export const starterTopics = ['overture', 'mih', 'stockadvisor', 'interests']
+// Starters, in display order: the first question of each of these topics.
+export const starterTopics = ['infomomentum', 'overture', 'mih', 'interests']
 
 /** Friendly messages for each error code the /api/chat endpoint can return. */
 export const askKateErrors: Record<string, string> = {

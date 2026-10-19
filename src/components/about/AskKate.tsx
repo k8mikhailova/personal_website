@@ -57,6 +57,7 @@ export function AskKate() {
   }
 
   async function request(history: Message[], topic?: string) {
+    const question = [...history].reverse().find((m) => m.role === 'user')?.content ?? ''
     abortRef.current?.abort()
     const controller = new AbortController()
     abortRef.current = controller
@@ -76,12 +77,13 @@ export function AskKate() {
       }
       const reply = data.reply
       setMessages((current) => [...current, { id: nextId.current++, role: 'assistant', content: reply }])
-      const question = [...history].reverse().find((m) => m.role === 'user')?.content ?? ''
       refreshSuggestions(question, reply, topic)
     } catch (err) {
       if (controller.signal.aborted) return
       const code = !navigator.onLine ? 'offline' : (err as Error).message
       setError(askKateErrors[code] ?? askKateErrors.default)
+      // Keep 3–4 suggestions on screen even when a request fails.
+      refreshSuggestions(question, '', topic)
     } finally {
       if (abortRef.current === controller) {
         abortRef.current = null

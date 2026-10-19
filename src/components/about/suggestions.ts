@@ -66,9 +66,20 @@ export function nextSuggestions(args: {
     return [...candidates].sort((a, b) => score(a) - score(b))
   }
 
+  const primary = contextTopics[0]
   const hasRelated = () => slots.some((s) => s && contextTopics.includes(s.topic))
+  const hasPrimary = () => slots.some((s) => s && s.topic === primary)
 
-  // 1. Make sure one suggestion follows up on what was just discussed.
+  // 1. Make sure one suggestion follows up on what was just discussed, preferring
+  //    the main topic (the clicked question's own topic) over side mentions.
+  if (primary && !hasPrimary()) {
+    const follow = available().find((q) => q.topic === primary)
+    if (follow) {
+      const empty = slots.indexOf(null)
+      if (empty !== -1) slots[empty] = follow
+      else if (!hasRelated() && slots.length > 0) slots[slots.length - 1] = follow
+    }
+  }
   if (!hasRelated()) {
     const follow = related()[0]
     if (follow) {

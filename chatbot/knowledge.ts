@@ -65,6 +65,7 @@ Before she started InfoMomentum, Kate researched ways she could help small busin
 ### Marketing Intelligence Hub — independent AI marketing prototype
 - An independent Streamlit/Python project designed to explore one question: how can AI help a marketing team learn from customer signals and campaign results faster, while keeping people in charge of decisions?
 - Brings together simulated ad performance data, customer-language signals, creative examples, and AI-assisted analysis. The demonstration data is simulated; do not suggest it is connected to live client accounts or has delivered measured revenue growth.
+- Uses AI agent workflows to help turn those findings into suggested experiments worth testing.
 - Pages include Overview, Customer Signals, Intelligence Brief, Creative Lab, and Experiments.
 - Overview provides a quick picture of performance and the items worth investigating. Customer Signals looks for recurring themes in what people are saying. Intelligence Brief identifies possible emerging opportunities, messaging gaps, performance patterns, and saturated themes. Creative Lab develops possible messaging directions and creative concepts. Experiments organizes test ideas.
 - Examples in the demo involve water-filtration/dispenser marketing, including topics such as water taste and odor, convenience, and frustration with bottled water. These are example signals, not findings from a real deployment.

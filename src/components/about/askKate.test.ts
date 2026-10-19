@@ -61,7 +61,13 @@ describe('suggestions', () => {
   const starters = starterSuggestions(suggestionTopics, starterTopics)
   const asked = (...texts: string[]) => new Set(texts.map(normalizeQuestion))
 
-  it('starts with four questions from different topics', () => {
+  it('starts with the four chosen questions, in order, from different topics', () => {
+    expect(starters.map((s) => s.text)).toEqual([
+      'How did Kate end up combining computer science and marketing?',
+      'What’s a real problem Kate has solved with code?',
+      'What has Kate actually built with AI?',
+      'What makes Kate different from a typical CS graduate?',
+    ])
     expect(starters).toHaveLength(4)
     expect(new Set(starters.map((s) => s.topic)).size).toBe(4)
   })
@@ -73,6 +79,19 @@ describe('suggestions', () => {
     expect(next[0].topic).toBe(clicked.topic)
     expect(next[0].text).not.toBe(clicked.text)
     expect(next.slice(1)).toEqual(starters.slice(1))
+  })
+
+  it('refills the clicked slot from its own topic even when the answer mentions another topic already shown', () => {
+    const clicked = starters[2] // the AI question (Marketing Intelligence Hub topic)
+    const next = nextSuggestions({
+      topics: suggestionTopics,
+      current: starters,
+      asked: asked(clicked.text),
+      // The answer also mentioned InfoMomentum, whose starter is still on screen.
+      contextTopics: [clicked.topic, 'infomomentum', 'antforce'],
+    })
+    expect(next[2].topic).toBe(clicked.topic)
+    expect(next[2].text).not.toBe(clicked.text)
   })
 
   it('adds a related question when the visitor types their own question', () => {
