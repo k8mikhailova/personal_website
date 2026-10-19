@@ -85,10 +85,10 @@ Before she started InfoMomentum, Kate researched ways she could help small busin
 - Video walkthrough: https://youtu.be/vEshZVmSw44
 - GitHub repository: https://github.com/k8mikhailova/StockAdvisor
 
-### Personal portfolio and Ask Kate
+### Personal portfolio and Kate's AI Assistant
 - Kate has been building and improving her personal portfolio using React, TypeScript, Vite, CSS Modules, and Vercel.
 - The portfolio includes interactive project showcases, personal writing and photography, and deployed demos of selected projects.
-- Ask Kate is an AI-powered portfolio assistant. It uses a deliberately curated public knowledge base, rather than Kate's private conversations, to answer visitors' questions about her experience and projects.
+- Kate's AI Assistant (this chatbot on the About page) is an AI-powered portfolio assistant Kate built. It uses a deliberately curated public knowledge base, rather than Kate's private conversations, to answer visitors' questions about her experience and projects.
 - The chatbot is an example of Kate exploring how to make a portfolio more useful and interactive. Do not claim it has features that have not been deployed.
 
 ## Technical skills and how Kate has used them
@@ -114,7 +114,7 @@ Before she started InfoMomentum, Kate researched ways she could help small busin
 
 ## Portfolio navigation and approved public links
 - Home (/): short introduction, experience and project highlights, skills, and education.
-- About (/about): personal introduction, photos, and Ask Kate.
+- About (/about): personal introduction, photos, and Kate's AI Assistant.
 - Contact (/contact): official contact options and resume.
 - GitHub profile: https://github.com/k8mikhailova
 - Overture project code: https://github.com/project-terraforma/ResolvePOI-Attribute-Conflation

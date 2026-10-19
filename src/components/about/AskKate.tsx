@@ -17,7 +17,7 @@ const SUGGESTION_COUNT = 4
 const initialSuggestions = () => starterSuggestions(suggestionTopics, starterTopics)
 
 /**
- * "Ask Kate": a small chat about Kate's background, backed by /api/chat.
+ * Kate's AI Assistant: a small chat about Kate's background, backed by /api/chat.
  * Nothing is stored; the conversation lives only in this component's state.
  */
 export function AskKate() {
@@ -149,7 +149,7 @@ export function AskKate() {
             </ul>
           </div>
         ) : (
-          <div ref={logRef} className={styles.log} role="log" aria-live="polite" aria-relevant="additions" tabIndex={0} aria-label="Conversation">
+          <div ref={logRef} className={styles.log} role="log" aria-live="polite" aria-relevant="additions" tabIndex={0} aria-label="Conversation with Kate’s AI assistant">
             {messages.map((message) =>
               message.role === 'user' ? (
                 <div key={message.id} className={styles.user}>
@@ -215,7 +215,7 @@ export function AskKate() {
 
         <form className={styles.form} onSubmit={onSubmit}>
           <label htmlFor={inputId} className="sr-only">
-            Ask a question about Kate
+            Your question for Kate’s AI assistant
           </label>
           <input
             ref={inputRef}

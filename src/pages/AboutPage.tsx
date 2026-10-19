@@ -56,7 +56,7 @@ export function AboutPage() {
       {/* ---------- Q&A: calmer, no animated background ---------- */}
       <AboutQuestions />
 
-      {/* ---------- Ask Kate chatbot ---------- */}
+      {/* ---------- Kate's AI Assistant (chatbot) ---------- */}
       <AskKate />
 
       {/* ---------- Photo diary: wider than the reading column ---------- */}

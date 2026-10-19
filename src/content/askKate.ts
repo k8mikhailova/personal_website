@@ -1,13 +1,13 @@
-// Text for the "Ask Kate" chatbot on the About page.
+// Text for Kate's AI Assistant (the chatbot on the About page).
 // The chatbot's knowledge and personality live server-side in /chatbot.
 
 export const askKate = {
-  title: 'Ask Kate',
+  title: 'Kate’s AI Assistant',
   description:
-    'Curious about my experience, projects, or what I’m looking for next? Ask my AI portfolio assistant.',
-  placeholder: 'Ask about Kate’s experience, projects, or interests',
+    'Curious about my projects or experience? I built this AI assistant to answer questions about my work, background, and interests.',
+  placeholder: 'Ask a question about me…',
   disclaimer: 'AI-generated answers based on Kate’s portfolio. They can be wrong, and conversations aren’t saved.',
-  assistantLabel: 'Kate’s assistant',
+  assistantLabel: 'Kate’s AI assistant',
 }
 
 export type SuggestionTopic = {
@@ -87,7 +87,7 @@ export const suggestionTopics: SuggestionTopic[] = [
   },
   {
     id: 'portfolio',
-    keywords: ['portfolio', 'ask kate', 'this chatbot', 'react', 'vercel'],
+    keywords: ['portfolio', 'ai assistant', 'this chatbot', 'react', 'vercel'],
     questions: ['How was this site and chatbot built?'],
   },
   {

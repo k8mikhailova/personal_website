@@ -30,7 +30,7 @@ Empty links, dates and photos render as dashed placeholders until real values ar
 
 Vercel: import the repo, framework preset "Vite". `vercel.json` rewrites all paths to `index.html` so `/about` and `/contact` work on refresh.
 
-## Ask Kate chatbot
+## Kate's AI Assistant (chatbot)
 
 A small AI assistant on the About page that answers questions about Kate's background.
 

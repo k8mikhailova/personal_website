@@ -93,7 +93,7 @@ describe('handleChat', () => {
 
     const args = generate.mock.calls[0][0]
     expect(args.model).toBe('gpt-5-mini')
-    expect(args.instructions).toContain('Ask Kate')
+    expect(args.instructions).toContain('Kate\'s AI Assistant')
     expect(args.instructions).toContain('64% to 83%')
     expect(args.maxOutputTokens).toBe(limits.maxOutputTokens)
   })
