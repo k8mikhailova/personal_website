@@ -23,6 +23,12 @@ describe('parseChatText', () => {
     expect(pieces.map((p) => p.text).join('')).toContain('Try the live demo, video')
   })
 
+  it('labels a GitHub profile differently from a repository', () => {
+    expect(parseChatText('https://github.com/k8mikhailova')).toEqual([
+      { type: 'link', text: 'Kate’s GitHub profile', href: 'https://github.com/k8mikhailova', internal: false },
+    ])
+  })
+
   it('turns site paths into internal links', () => {
     expect(parseChatText('Reach out via [the Contact page](/contact) or see /about.')).toEqual([
       { type: 'text', text: 'Reach out via ' },

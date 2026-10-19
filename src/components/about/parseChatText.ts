@@ -28,8 +28,11 @@ const TOKEN =
 
 function labelForUrl(url: string): string {
   try {
-    const { hostname } = new URL(url)
-    if (hostname === 'github.com' || hostname.endsWith('.github.com')) return 'View the project on GitHub'
+    const { hostname, pathname } = new URL(url)
+    if (hostname === 'github.com' || hostname.endsWith('.github.com')) {
+      // github.com/<user> is a profile; github.com/<user>/<repo> is a project.
+      return pathname.split('/').filter(Boolean).length <= 1 ? 'Kate’s GitHub profile' : 'View the project on GitHub'
+    }
     if (hostname.endsWith('.streamlit.app')) return 'Try the live demo'
     if (hostname === 'youtu.be' || hostname.endsWith('youtube.com')) return 'Watch the video demo'
     return hostname.replace(/^www\./, '')

@@ -62,8 +62,12 @@ export const suggestionTopics: SuggestionTopic[] = [
   },
   {
     id: 'infomomentum',
-    keywords: ['infomomentum', 'zapier', 'crm', 'sms', 'founded'],
-    questions: ['What is InfoMomentum?', 'What kinds of automations has Kate built?'],
+    keywords: ['infomomentum', 'zapier', 'crm', 'sms', 'founded', 'ontraport', 'gohighlevel', 'meta ads'],
+    questions: [
+      'What is InfoMomentum?',
+      'How did Kate get into automation and marketing?',
+      'What kinds of automations has Kate built?',
+    ],
   },
   {
     id: 'education',
@@ -74,6 +78,11 @@ export const suggestionTopics: SuggestionTopic[] = [
     id: 'skills',
     keywords: ['skills', 'tech stack', 'programming languages', 'tools does'],
     questions: ['What tools and languages does Kate use?', 'What experience does Kate have with AI agents?'],
+  },
+  {
+    id: 'portfolio',
+    keywords: ['portfolio', 'ask kate', 'this chatbot', 'react', 'vercel'],
+    questions: ['How was this site and chatbot built?'],
   },
   {
     id: 'volunteering',

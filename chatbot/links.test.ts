@@ -7,6 +7,7 @@ describe('approved links', () => {
     expect(isApprovedHref('https://stockadvisor.streamlit.app/')).toBe(true)
     expect(isApprovedHref('https://stockadvisor.streamlit.app')).toBe(true)
     expect(isApprovedHref('/contact')).toBe(true)
+    expect(isApprovedHref('https://github.com/k8mikhailova')).toBe(true)
     expect(isApprovedHref('/secret')).toBe(false)
     expect(isApprovedHref('https://github.com/k8mikhailova/made-up-repo')).toBe(false)
     expect(isApprovedHref('javascript:alert(1)')).toBe(false)
