@@ -8,70 +8,23 @@ export const about = {
     focus: '50% 40%',
   },
 
-  // Short line under the age counter.
-  intro: 'A few things about me that don’t really fit on a resume.',
+  // Large line at the top of the page.
+  statement: 'Curious, reliable, spontaneous.',
 
-  // Shown under "From the photo diary", above the grid.
-  photoDiaryIntro:
-    'I’m usually the one taking pictures when I’m with friends. I’ve always had a strangely specific memory for little details, even from years ago, and looking through old photos takes me right back to those days. Here are a few moments from my photo diary.',
+  // Short introduction under the statement.
+  intro:
+    'I studied computer science, started a small business while I was in college, and somewhere along the way got interested in marketing and AI. I like figuring out how things work, building things that are actually useful, and trying something new whenever I get the chance.',
+
+  // Photo gallery section.
+  outside: {
+    title: 'Outside the screen.',
+    intro:
+      'Most of this website is about the things I’ve worked on, but I wanted to include a little of what life looks like outside my laptop. I’m usually the one taking pictures when I’m with friends, and I love having these moments to look back on. Here are a few favorites from my camera roll.',
+  },
 
   // Drives the live age counter (local midnight, since no birth time is given). Not shown on the page.
   birthDate: '2003-12-28T00:00:00',
 }
-
-/**
- * How a question sits in the Q&A layout:
- * - 'statement': full width, the answer set large (best for a very short answer)
- * - 'wide': full width, question beside a longer answer
- * - 'half': half width; two in a row sit side by side
- */
-export type QuestionLayout = 'statement' | 'wide' | 'half'
-
-export type Question = {
-  question: string
-  /** Supports **bold** and [link text](https://url). */
-  answer: string
-  layout: QuestionLayout
-}
-
-// Draft answers, still being refined.
-export const questions: Question[] = [
-  {
-    question: 'Three words to describe myself?',
-    answer: 'Curious, reliable, spontaneous.',
-    layout: 'statement',
-  },
-  {
-    question: 'How did marketing fit into computer science?',
-    answer:
-      'I started a small marketing business while I was in college. A lot of my work eventually involved building automations, connecting different platforms, and figuring out how to make the systems behind campaigns work better. It gave me a chance to use my CS skills on real business problems, and I found myself much more interested in that technical side of the work.',
-    layout: 'wide',
-  },
-  {
-    question: 'What’s my favorite thing I’ve built?',
-    answer:
-      'Probably my [Marketing Intelligence Hub](https://github.com/k8mikhailova/marketing_hub). I wanted to see what would happen if customer feedback, advertising performance, and ideas for new experiments could all be brought into one place. I built a prototype to explore that, and it turned into one of my favorite projects to work on.',
-    layout: 'half',
-  },
-  {
-    question: 'What am I like to work with?',
-    answer:
-      'I like working with people and being part of a team where everyone can share ideas and ask questions. I’m pretty detail-oriented, and if I say I’ll take care of something, I make sure I follow through.',
-    layout: 'half',
-  },
-  {
-    question: 'Something people might not expect about me?',
-    answer:
-      'I plan out pretty much every day, but I’m also really spontaneous. I like having a schedule, but I’m always up for something last-minute.',
-    layout: 'half',
-  },
-  {
-    question: 'What do I enjoy most about building something?',
-    answer:
-      'Seeing something go from an idea to something that actually works. I like figuring out how all the pieces fit together, and it’s even better when someone else gets to use what I’ve built.',
-    layout: 'half',
-  },
-]
 
 export type Photo = {
   /** Path under /public. Empty shows a placeholder. */

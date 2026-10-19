@@ -8,6 +8,9 @@ export const askKate = {
   placeholder: 'Ask a question about me…',
   disclaimer: 'AI-generated answers based on Kate’s portfolio. They can be wrong, and conversations aren’t saved.',
   assistantLabel: 'Kate’s AI assistant',
+  /** First message in the chat, so it's clear an AI is answering, not Kate. */
+  welcome:
+    'Hi! I’m an AI assistant Kate built for her portfolio. I can answer questions about her projects, experience, and background, using what she’s shared here.',
 }
 
 export type SuggestionTopic = {

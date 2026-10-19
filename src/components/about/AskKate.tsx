@@ -1,5 +1,5 @@
 import { useReducedMotion } from 'motion/react'
-import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
+import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode, type Ref } from 'react'
 import { askKate, askKateErrors, starterTopics, suggestionTopics } from '../../content/askKate'
 import { ArrowIcon } from '../ui/ArrowIcon'
 import { Reveal } from '../ui/Reveal'
@@ -32,7 +32,8 @@ export function AskKate() {
   const [asked, setAsked] = useState<ReadonlySet<string>>(() => new Set())
   const reduceMotion = useReducedMotion()
 
-  const logRef = useRef<HTMLDivElement>(null)
+  const bodyRef = useRef<HTMLDivElement>(null)
+  const lastReplyRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const abortRef = useRef<AbortController | null>(null)
   const nextId = useRef(0)
@@ -41,10 +42,18 @@ export function AskKate() {
 
   useEffect(() => () => abortRef.current?.abort(), [])
 
-  // Keep the newest message in view, scrolling only inside the conversation box.
+  // Scroll only inside the conversation area. A new reply is shown from its first
+  // line (so long answers aren't half scrolled past); otherwise jump to the bottom.
   useEffect(() => {
-    const log = logRef.current
-    if (log) log.scrollTo({ top: log.scrollHeight, behavior: reduceMotion ? 'auto' : 'smooth' })
+    const body = bodyRef.current
+    if (!body || messages.length === 0) return
+    const behavior = reduceMotion ? 'auto' : 'smooth'
+    const reply = lastReplyRef.current
+    if (!pending && !error && messages.at(-1)?.role === 'assistant' && reply) {
+      body.scrollTo({ top: Math.max(0, reply.offsetTop - 16), behavior })
+    } else {
+      body.scrollTo({ top: body.scrollHeight, behavior })
+    }
   }, [messages, pending, error, reduceMotion])
 
   /** After an answer: refresh suggestions around what was just discussed. */
@@ -125,31 +134,36 @@ export function AskKate() {
   const visibleSuggestions = suggestions.filter((s) => !asked.has(normalizeQuestion(s.text)))
   const nearLimit = input.length > MAX_CHARS - 80
 
+  const lastAssistantId = [...messages].reverse().find((m) => m.role === 'assistant')?.id
+
   return (
     <section className={`container ${styles.section}`} aria-labelledby={titleId}>
-      <Reveal>
-        <h2 id={titleId} className={styles.title}>
-          {askKate.title}
-        </h2>
-        <p className={styles.description}>{askKate.description}</p>
-      </Reveal>
-
-      <Reveal delay={0.08} className={styles.panel}>
-        {!started ? (
-          <div className={styles.starters}>
-            <p className={styles.startersLabel}>Try asking</p>
-            <ul className={styles.starterList}>
-              {visibleSuggestions.map((suggestion) => (
-                <li key={suggestion.text}>
-                  <button type="button" className={styles.starter} onClick={() => send(suggestion.text, suggestion)}>
-                    {suggestion.text}
-                  </button>
-                </li>
-              ))}
-            </ul>
+      <Reveal className={styles.panel}>
+        {/* ---------- Header ---------- */}
+        <header className={styles.header}>
+          <span className={styles.icon} aria-hidden="true">
+            <SparkIcon />
+          </span>
+          <div className={styles.headerText}>
+            <h2 id={titleId} className={styles.title}>
+              {askKate.title}
+            </h2>
+            <p className={styles.description}>{askKate.description}</p>
           </div>
-        ) : (
-          <div ref={logRef} className={styles.log} role="log" aria-live="polite" aria-relevant="additions" tabIndex={0} aria-label="Conversation with Kate’s AI assistant">
+          {started && (
+            <button type="button" className={styles.startOver} onClick={startOver}>
+              Start over
+            </button>
+          )}
+        </header>
+
+        {/* ---------- Conversation (scrolls past a comfortable height) ---------- */}
+        <div ref={bodyRef} className={styles.body} tabIndex={0} role="region" aria-label="Conversation with Kate’s AI assistant">
+          <div className={styles.log} role="log" aria-live="polite" aria-relevant="additions">
+            <AssistantMessage>
+              <p>{askKate.welcome}</p>
+            </AssistantMessage>
+
             {messages.map((message) =>
               message.role === 'user' ? (
                 <div key={message.id} className={styles.user}>
@@ -157,27 +171,25 @@ export function AskKate() {
                   {message.content}
                 </div>
               ) : (
-                <div key={message.id} className={styles.assistant}>
-                  <span className={styles.assistantLabel}>{askKate.assistantLabel}</span>
+                <AssistantMessage key={message.id} ref={message.id === lastAssistantId ? lastReplyRef : undefined}>
                   {message.content.split(/\n{2,}/).map((paragraph, i) => (
                     <p key={i}>
                       <ChatText text={paragraph} />
                     </p>
                   ))}
-                </div>
+                </AssistantMessage>
               ),
             )}
 
             {pending && (
-              <div className={styles.assistant}>
-                <span className={styles.assistantLabel}>{askKate.assistantLabel}</span>
+              <AssistantMessage>
                 <span className={styles.typing} aria-hidden="true">
                   <span />
                   <span />
                   <span />
                 </span>
                 <span className="sr-only">Thinking…</span>
-              </div>
+              </AssistantMessage>
             )}
 
             {error && (
@@ -189,65 +201,81 @@ export function AskKate() {
               </div>
             )}
           </div>
-        )}
 
-        {started && visibleSuggestions.length > 0 && (
-          <div className={styles.next}>
-            <p className={styles.nextLabel} id={`${inputId}-next`}>
-              Ask next
-            </p>
-            <ul className={styles.nextList} aria-labelledby={`${inputId}-next`}>
-              {visibleSuggestions.map((suggestion) => (
-                <li key={suggestion.text}>
-                  <button
-                    type="button"
-                    className={styles.nextButton}
-                    onClick={() => send(suggestion.text, suggestion)}
-                    disabled={pending}
-                  >
-                    {suggestion.text}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        <form className={styles.form} onSubmit={onSubmit}>
-          <label htmlFor={inputId} className="sr-only">
-            Your question for Kate’s AI assistant
-          </label>
-          <input
-            ref={inputRef}
-            id={inputId}
-            className={styles.input}
-            type="text"
-            value={input}
-            onChange={(event) => setInput(event.target.value)}
-            placeholder={askKate.placeholder}
-            maxLength={MAX_CHARS}
-            autoComplete="off"
-            enterKeyHint="send"
-          />
-          {nearLimit && (
-            <span className={styles.counter} aria-live="polite">
-              {MAX_CHARS - input.length}
-            </span>
+          {/* Suggestions sit in the flow of the chat, like quick replies under the latest answer. */}
+          {!pending && visibleSuggestions.length > 0 && (
+            <div className={styles.suggestions}>
+              <p className={styles.suggestionsLabel} id={`${inputId}-suggestions`}>
+                {started ? 'Ask next' : 'Try asking'}
+              </p>
+              <ul className={styles.suggestionList} aria-labelledby={`${inputId}-suggestions`}>
+                {visibleSuggestions.map((suggestion) => (
+                  <li key={suggestion.text}>
+                    <button type="button" className={styles.suggestion} onClick={() => send(suggestion.text, suggestion)}>
+                      {suggestion.text}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
-          <button type="submit" className={styles.send} disabled={pending || !input.trim()} aria-label="Send">
-            <ArrowIcon direction="up" />
-          </button>
-        </form>
-      </Reveal>
+        </div>
 
-      <div className={styles.footer}>
-        <p>{askKate.disclaimer}</p>
-        {started && (
-          <button type="button" className={styles.textButton} onClick={startOver}>
-            Start over
-          </button>
-        )}
-      </div>
+        {/* ---------- Input ---------- */}
+        <div className={styles.footer}>
+          <form className={styles.form} onSubmit={onSubmit}>
+            <label htmlFor={inputId} className="sr-only">
+              Your question for Kate’s AI assistant
+            </label>
+            <input
+              ref={inputRef}
+              id={inputId}
+              className={styles.input}
+              type="text"
+              value={input}
+              onChange={(event) => setInput(event.target.value)}
+              placeholder={askKate.placeholder}
+              maxLength={MAX_CHARS}
+              autoComplete="off"
+              enterKeyHint="send"
+            />
+            {nearLimit && (
+              <span className={styles.counter} aria-live="polite">
+                {MAX_CHARS - input.length}
+              </span>
+            )}
+            <button type="submit" className={styles.send} disabled={pending || !input.trim()} aria-label="Send">
+              <ArrowIcon direction="up" />
+            </button>
+          </form>
+          <p className={styles.disclaimer}>{askKate.disclaimer}</p>
+        </div>
+      </Reveal>
     </section>
+  )
+}
+
+/** One reply from the assistant: small icon + label, then the message bubble. */
+function AssistantMessage({ children, ref }: { children: ReactNode; ref?: Ref<HTMLDivElement> }) {
+  return (
+    <div ref={ref} className={styles.assistant}>
+      <span className={styles.assistantLabel}>
+        <span className={styles.avatar} aria-hidden="true">
+          <SparkIcon />
+        </span>
+        {askKate.assistantLabel}
+      </span>
+      <div className={styles.bubble}>{children}</div>
+    </div>
+  )
+}
+
+/** Small four-point spark used as the assistant's icon. */
+function SparkIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true">
+      <path d="M12 2.5c.6 5.1 2.9 7.4 8 8-5.1.6-7.4 2.9-8 8-.6-5.1-2.9-7.4-8-8 5.1-.6 7.4-2.9 8-8Z" fill="currentColor" />
+      <path d="M19 15.5c.25 2 1.1 2.85 3 3.1-1.9.25-2.75 1.1-3 3.1-.25-2-1.1-2.85-3-3.1 1.9-.25 2.75-1.1 3-3.1Z" fill="currentColor" opacity="0.6" />
+    </svg>
   )
 }

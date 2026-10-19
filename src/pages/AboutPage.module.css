@@ -1,10 +1,10 @@
-/* ---------- Intro ---------- */
+/* ---------- 1. Introduction ---------- */
 
 /* Full-width band so the field can spread past the narrow text column. */
 .heroWrap {
   position: relative;
   overflow: hidden;
-  padding-bottom: clamp(3rem, 2rem + 4vw, 6rem);
+  padding-bottom: clamp(2.5rem, 1.5rem + 3vw, 4rem);
 }
 
 .field {
@@ -17,24 +17,39 @@
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 16rem minmax(0, 1fr);
+  grid-template-columns: 15rem minmax(0, 1fr);
   gap: clamp(2rem, 1rem + 4vw, 3.5rem);
   align-items: center;
-  padding-top: calc(var(--nav-height) + clamp(3.5rem, 2rem + 5vw, 6.5rem));
+  padding-top: calc(var(--nav-height) + clamp(3rem, 2rem + 4vw, 5.5rem));
 }
 
 .portrait {
-  max-width: 16rem;
+  max-width: 15rem;
 }
 
 .introText {
   display: grid;
-  gap: 1rem;
+  gap: 1.1rem;
 }
 
-.title {
-  font-size: var(--text-h2);
+.label {
+  margin-bottom: 0;
+}
+
+.statement {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.5rem + 2vw, 2.875rem);
+  font-weight: 500;
   letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.intro {
+  max-width: 30rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
 }
 
 .age {
@@ -42,40 +57,39 @@
   color: var(--muted);
 }
 
-.intro {
-  max-width: 24rem;
-  color: var(--ink-soft);
-}
-
-/* ---------- Photos ---------- */
+/* ---------- 3. Outside the screen ---------- */
 
 .photos {
-  margin-top: clamp(2rem, 1rem + 4vw, 4.5rem);
+  margin-top: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
 }
 
+/* Heading and intro line up with the text column above; the grid is wider. */
 .photosHead {
   max-width: var(--column);
   margin-inline: auto;
-  margin-bottom: 2.5rem;
+  margin-bottom: clamp(2rem, 1.5rem + 2vw, 3rem);
 }
 
-/* Sits close under the label, at a comfortable reading width. */
-.photosHead :global(.section-label) {
-  margin-bottom: 1rem;
+.photosTitle {
+  margin-bottom: 0.85rem;
+  font-size: var(--text-h2);
+  letter-spacing: -0.04em;
 }
 
 .photosIntro {
-  max-width: 34rem;
+  max-width: 36rem;
   color: var(--ink-soft);
+  line-height: 1.7;
 }
 
 @media (max-width: 640px) {
   .hero {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
 
   .portrait {
-    max-width: 14rem;
+    max-width: 13rem;
     margin-left: 0.5rem;
   }
 }
