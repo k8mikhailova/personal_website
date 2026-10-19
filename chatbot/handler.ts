@@ -1,5 +1,6 @@
 import { buildInstructions } from './instructions.js'
 import { limits } from './limits.js'
+import { sanitizeReplyLinks } from './links.js'
 import { checkRateLimit } from './rateLimit.js'
 import { validateBody, type ChatMessage } from './validate.js'
 
@@ -116,7 +117,7 @@ export async function handleChat(request: Request, deps: Deps): Promise<Response
       messages: result.messages,
       maxOutputTokens: limits.maxOutputTokens,
     })
-    const text = reply.trim()
+    const text = sanitizeReplyLinks(reply).trim()
     if (!text) {
       console.error('[ask-kate] empty reply from model')
       return fail(502, 'upstream_error')

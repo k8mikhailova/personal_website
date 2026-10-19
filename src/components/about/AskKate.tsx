@@ -1,16 +1,20 @@
 import { useReducedMotion } from 'motion/react'
 import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
-import { askKate, askKateErrors } from '../../content/askKate'
+import { askKate, askKateErrors, starterTopics, suggestionTopics } from '../../content/askKate'
 import { ArrowIcon } from '../ui/ArrowIcon'
 import { Reveal } from '../ui/Reveal'
-import { RichText } from '../ui/RichText'
 import styles from './AskKate.module.css'
+import { ChatText } from './ChatText'
+import { detectTopics, nextSuggestions, normalizeQuestion, starterSuggestions, type Suggestion } from './suggestions'
 
 type Message = { id: number; role: 'user' | 'assistant'; content: string }
 
 /** Matches the server's limits in chatbot/limits.ts. */
 const MAX_CHARS = 500
 const HISTORY = 8
+const SUGGESTION_COUNT = 4
+
+const initialSuggestions = () => starterSuggestions(suggestionTopics, starterTopics)
 
 /**
  * "Ask Kate": a small chat about Kate's background, backed by /api/chat.
@@ -21,6 +25,11 @@ export function AskKate() {
   const [input, setInput] = useState('')
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [suggestions, setSuggestions] = useState<Suggestion[]>(initialSuggestions)
+  // Questions already asked in this conversation (normalized). The ref is read when
+  // an answer arrives; the state copy drives rendering.
+  const askedRef = useRef<Set<string>>(new Set())
+  const [asked, setAsked] = useState<ReadonlySet<string>>(() => new Set())
   const reduceMotion = useReducedMotion()
 
   const logRef = useRef<HTMLDivElement>(null)
@@ -38,7 +47,16 @@ export function AskKate() {
     if (log) log.scrollTo({ top: log.scrollHeight, behavior: reduceMotion ? 'auto' : 'smooth' })
   }, [messages, pending, error, reduceMotion])
 
-  async function request(history: Message[]) {
+  /** After an answer: refresh suggestions around what was just discussed. */
+  function refreshSuggestions(question: string, reply: string, topic?: string) {
+    const contextTopics = [...new Set([...(topic ? [topic] : []), ...detectTopics(`${question} ${reply}`, suggestionTopics)])]
+    const askedNow = new Set(askedRef.current)
+    setSuggestions((current) =>
+      nextSuggestions({ topics: suggestionTopics, current, asked: askedNow, contextTopics, size: SUGGESTION_COUNT }),
+    )
+  }
+
+  async function request(history: Message[], topic?: string) {
     abortRef.current?.abort()
     const controller = new AbortController()
     abortRef.current = controller
@@ -58,6 +76,8 @@ export function AskKate() {
       }
       const reply = data.reply
       setMessages((current) => [...current, { id: nextId.current++, role: 'assistant', content: reply }])
+      const question = [...history].reverse().find((m) => m.role === 'user')?.content ?? ''
+      refreshSuggestions(question, reply, topic)
     } catch (err) {
       if (controller.signal.aborted) return
       const code = !navigator.onLine ? 'offline' : (err as Error).message
@@ -70,13 +90,15 @@ export function AskKate() {
     }
   }
 
-  function send(text: string) {
+  function send(text: string, suggestion?: Suggestion) {
     const question = text.trim().slice(0, MAX_CHARS)
     if (!question || pending) return
     const history = [...messages, { id: nextId.current++, role: 'user' as const, content: question }]
     setMessages(history)
+    askedRef.current.add(normalizeQuestion(question))
+    setAsked(new Set(askedRef.current))
     setInput('')
-    void request(history)
+    void request(history, suggestion?.topic)
     inputRef.current?.focus()
   }
 
@@ -91,10 +113,14 @@ export function AskKate() {
     setPending(false)
     setMessages([])
     setError(null)
+    setSuggestions(initialSuggestions())
+    askedRef.current = new Set()
+    setAsked(new Set())
     inputRef.current?.focus()
   }
 
   const started = messages.length > 0
+  const visibleSuggestions = suggestions.filter((s) => !asked.has(normalizeQuestion(s.text)))
   const nearLimit = input.length > MAX_CHARS - 80
 
   return (
@@ -111,10 +137,10 @@ export function AskKate() {
           <div className={styles.starters}>
             <p className={styles.startersLabel}>Try asking</p>
             <ul className={styles.starterList}>
-              {askKate.starters.map((starter) => (
-                <li key={starter}>
-                  <button type="button" className={styles.starter} onClick={() => send(starter)}>
-                    {starter}
+              {visibleSuggestions.map((suggestion) => (
+                <li key={suggestion.text}>
+                  <button type="button" className={styles.starter} onClick={() => send(suggestion.text, suggestion)}>
+                    {suggestion.text}
                   </button>
                 </li>
               ))}
@@ -133,7 +159,7 @@ export function AskKate() {
                   <span className={styles.assistantLabel}>{askKate.assistantLabel}</span>
                   {message.content.split(/\n{2,}/).map((paragraph, i) => (
                     <p key={i}>
-                      <RichText text={paragraph} />
+                      <ChatText text={paragraph} />
                     </p>
                   ))}
                 </div>
@@ -160,6 +186,28 @@ export function AskKate() {
                 </button>
               </div>
             )}
+          </div>
+        )}
+
+        {started && visibleSuggestions.length > 0 && (
+          <div className={styles.next}>
+            <p className={styles.nextLabel} id={`${inputId}-next`}>
+              Ask next
+            </p>
+            <ul className={styles.nextList} aria-labelledby={`${inputId}-next`}>
+              {visibleSuggestions.map((suggestion) => (
+                <li key={suggestion.text}>
+                  <button
+                    type="button"
+                    className={styles.nextButton}
+                    onClick={() => send(suggestion.text, suggestion)}
+                    disabled={pending}
+                  >
+                    {suggestion.text}
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
 
