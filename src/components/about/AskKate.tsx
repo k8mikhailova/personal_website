@@ -20,7 +20,16 @@ const initialSuggestions = () => starterSuggestions(suggestionTopics, starterTop
  * Kate's AI Assistant: a small chat about Kate's background, backed by /api/chat.
  * Nothing is stored; the conversation lives only in this component's state.
  */
-export function AskKate() {
+type AskKateProps = {
+  /**
+   * Embedded: the page supplies the section heading and description, so the
+   * panel shows a slim title bar instead and renders no <section> of its own.
+   */
+  embedded?: boolean
+  className?: string
+}
+
+export function AskKate({ embedded = false, className }: AskKateProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [pending, setPending] = useState(false)
@@ -137,18 +146,24 @@ export function AskKate() {
   const lastAssistantId = [...messages].reverse().find((m) => m.role === 'assistant')?.id
 
   return (
-    <section className={`container ${styles.section}`} aria-labelledby={titleId}>
-      <Reveal className={styles.panel}>
+    <Wrapper embedded={embedded} className={className} titleId={titleId}>
+      <Reveal className={`${styles.panel} ${embedded ? styles.embedded : ''}`}>
         {/* ---------- Header ---------- */}
         <header className={styles.header}>
           <span className={styles.icon} aria-hidden="true">
             <SparkIcon />
           </span>
           <div className={styles.headerText}>
-            <h2 id={titleId} className={styles.title}>
-              {askKate.title}
-            </h2>
-            <p className={styles.description}>{askKate.description}</p>
+            {embedded ? (
+              <p className={styles.title}>{askKate.title}</p>
+            ) : (
+              <>
+                <h2 id={titleId} className={styles.title}>
+                  {askKate.title}
+                </h2>
+                <p className={styles.description}>{askKate.description}</p>
+              </>
+            )}
           </div>
           {started && (
             <button type="button" className={styles.startOver} onClick={startOver}>
@@ -251,6 +266,19 @@ export function AskKate() {
           <p className={styles.disclaimer}>{askKate.disclaimer}</p>
         </div>
       </Reveal>
+    </Wrapper>
+  )
+}
+
+/** Standalone: its own <section> in the text column. Embedded: a plain region inside the page's section. */
+function Wrapper({ embedded, className, titleId, children }: { embedded: boolean; className?: string; titleId: string; children: ReactNode }) {
+  return embedded ? (
+    <div className={className} role="region" aria-label="Chat with Kate’s AI assistant">
+      {children}
+    </div>
+  ) : (
+    <section className={`container ${styles.section} ${className ?? ''}`} aria-labelledby={titleId}>
+      {children}
     </section>
   )
 }

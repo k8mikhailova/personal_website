@@ -1,116 +1,138 @@
-// About page content. Anything left empty renders as a clearly marked placeholder.
+// About page content. Edit the words here; layout lives in the components.
 
 export const about = {
-  photo: {
-    src: '/images/about-photo.jpg',
-    alt: 'Kate',
-    // Crop focus as CSS object-position. Adjust if the crop cuts off the wrong part.
-    focus: '50% 40%',
-  },
-
-  // Large line at the top of the page.
-  statement: 'Curious, reliable, spontaneous.',
-
-  // Short introduction under the statement.
+  // ---------- Opening ----------
+  greeting: { small: 'Hi, I’m', large: 'Kate.' },
   intro:
-    'I studied computer science, started a small business while I was in college, and somewhere along the way got interested in marketing and AI. I like figuring out how things work, building things that are actually useful, and trying something new whenever I get the chance.',
+    'I spend a lot of my time building software and AI tools. This page is the less formal side: an assistant you can ask about my work, and a few photos from when I’m away from the laptop.',
+  portrait: {
+    image: { base: '/images/about/web/portrait', widths: [640, 1024, 1600], width: 2048, height: 1536 },
+    alt: 'Kate holding a magnifying glass up to one eye and sticking her tongue out in a colorful shop',
+    // Crop focus as CSS object-position.
+    focus: '52% 42%',
+  },
+  // Drives the live age counter (local midnight, since no birth time is given). The date itself isn't shown.
+  birthDate: '2003-12-28T00:00:00',
 
-  // Photo gallery section.
-  outside: {
-    title: 'Outside the screen.',
-    intro:
-      'Most of this website is about the things I’ve worked on, but I wanted to include a little of what life looks like outside my laptop. I’m usually the one taking pictures when I’m with friends, and I love having these moments to look back on. Here are a few favorites from my camera roll.',
+  // ---------- AI assistant section ----------
+  assistant: {
+    eyebrow: 'Ask about my work',
+    facts: [
+      'Answers from a knowledge base I wrote about my projects and experience',
+      'Links you to live demos, videos, and code',
+      'Conversations aren’t saved',
+    ],
   },
 
-  // Drives the live age counter (local midnight, since no birth time is given). Not shown on the page.
-  birthDate: '2003-12-28T00:00:00',
+  // ---------- Photos ----------
+  photosTitle: { small: 'A few things I’ve', large: 'gotten myself into.' },
 }
+
+export type ResponsiveImage = {
+  /** Path prefix of the WebP set: `${base}-${width}.webp`. */
+  base: string
+  widths: number[]
+  /** Full-size dimensions (aspect ratio). */
+  width: number
+  height: number
+}
+
+/** Where a photo sits in the composition (see PhotoStory.module.css). */
+export type PhotoSlot = 'rafting' | 'surfing' | 'sailing' | 'hiking' | 'camping' | 'running' | 'whales' | 'reading'
 
 export type Photo = {
-  /** Path under /public. Empty shows a placeholder. */
-  src: string
-  alt: string
+  slot: PhotoSlot
+  /** Short label shown on the page. */
+  label: string
+  /** Kate's original caption, shown in the enlarged view. */
   caption: string
-  /** Pixel size of the web image, so the grid reserves the right space before it loads. */
-  width?: number
-  height?: number
-  /** Placeholder shape and label, used only while `src` is empty. */
-  shape: 'tall' | 'wide' | 'square'
-  placeholder: string
+  alt: string
+  image: ResponsiveImage
+  /** Original web-sized JPEG (kept as the fallback source). */
+  src: string
+  /** Crop focus as CSS object-position. */
+  focus?: string
 }
 
-// Ordered so the four grid columns come out roughly the same height on desktop.
+const set = (name: string, widths: number[], width: number, height: number): ResponsiveImage => ({
+  base: `/images/about/web/${name}`,
+  widths,
+  width,
+  height,
+})
+
+// In the order they appear on the page.
 export const photos: Photo[] = [
   {
-    src: '/images/about/surfing.jpg',
-    alt: 'Kate in a wetsuit, seen from behind, carrying a surfboard on her head',
-    caption: "You can't live in Santa Cruz and not give surfing a try",
-    width: 1050,
-    height: 1400,
-    shape: 'tall',
-    placeholder: 'Surfing',
-  },
-  {
-    src: '/images/about/camping.jpg',
-    alt: 'Kate and a friend sitting in the doorway of a tent at a campsite',
-    caption: 'Camping in the middle of nowhere',
-    width: 1400,
-    height: 1050,
-    shape: 'wide',
-    placeholder: 'Camping',
-  },
-  {
-    src: '/images/about/sailing.jpg',
-    alt: 'View from a small sailboat with a green and white sail, other dinghies on the water',
-    caption: 'Learning to sail a dinghy.',
-    width: 1050,
-    height: 1400,
-    shape: 'tall',
-    placeholder: 'Sailing',
-  },
-  {
-    src: '/images/about/reading.jpg',
-    alt: 'An open book held up on a sandy beach, with a coffee cup in the sand',
-    caption: 'Brought a book to the beach and actually read it',
-    width: 1400,
-    height: 1050,
-    shape: 'wide',
-    placeholder: 'Reading',
-  },
-  {
-    src: '/images/about/whales.jpg',
-    alt: 'People on a boat watching a whale surface in Monterey Bay',
-    caption: 'Saying hi to the whales in Monterey',
-    width: 1050,
-    height: 1400,
-    shape: 'tall',
-    placeholder: 'Whales',
-  },
-  {
-    src: '/images/about/running.jpg',
-    alt: 'Kate and friends in matching race shirts on a lawn after a 5K, one friend lying in front in a banana costume',
-    caption: 'First 5K in the books',
-    width: 1050,
-    height: 1400,
-    shape: 'tall',
-    placeholder: 'Running',
-  },
-  {
-    src: '/images/about/rafting.jpg',
-    alt: 'Kate and friends in helmets and life jackets sitting in a raft on a river, smiling at the camera',
+    slot: 'rafting',
+    label: 'Class III rafting',
     caption: 'Class III rafting. Would absolutely do it again',
-    width: 788,
-    height: 1400,
-    shape: 'tall',
-    placeholder: 'Rafting',
+    alt: 'Kate and friends in helmets and life jackets sitting in a raft on a river, smiling at the camera',
+    image: set('rafting', [640, 1024, 1536], 1536, 2730),
+    src: '/images/about/rafting.jpg',
+    focus: '50% 60%',
   },
   {
-    src: '/images/about/hiking.jpg',
-    alt: 'A hiker on a forest trail in Yosemite with granite cliffs behind',
+    slot: 'surfing',
+    label: 'Surfing, Santa Cruz',
+    caption: "You can't live in Santa Cruz and not give surfing a try",
+    alt: 'Kate in a wetsuit, seen from behind, carrying a surfboard on her head',
+    image: set('surfing', [640, 1024, 1600], 3024, 4032),
+    src: '/images/about/surfing.jpg',
+    focus: '50% 35%',
+  },
+  {
+    slot: 'sailing',
+    label: 'Dinghy sailing',
+    caption: 'Learning to sail a dinghy.',
+    alt: 'View from a small sailboat with a green and white sail, other dinghies on the water',
+    image: set('sailing', [640, 1024, 1600], 3024, 4032),
+    src: '/images/about/sailing.jpg',
+    focus: '50% 45%',
+  },
+  {
+    slot: 'hiking',
+    label: 'Yosemite',
     caption: 'Exploring Yosemite on foot',
-    width: 1400,
-    height: 788,
-    shape: 'wide',
-    placeholder: 'Hiking',
+    alt: 'A hiker on a forest trail in Yosemite with granite cliffs behind',
+    image: set('hiking', [640, 1024, 1600, 2400], 2730, 1536),
+    src: '/images/about/hiking.jpg',
+    focus: '50% 58%',
+  },
+  {
+    slot: 'camping',
+    label: 'Camping',
+    caption: 'Camping in the middle of nowhere',
+    alt: 'Kate and a friend sitting in the doorway of a tent at a campsite',
+    image: set('camping', [640, 1024, 1600], 2048, 1536),
+    src: '/images/about/camping.jpg',
+    focus: '55% 55%',
+  },
+  {
+    slot: 'running',
+    label: 'First 5K',
+    caption: 'First 5K in the books',
+    alt: 'Kate and friends in matching race shirts on a lawn after a 5K, one friend lying in front in a banana costume',
+    image: set('running', [640, 1024, 1600], 3024, 4032),
+    src: '/images/about/running.jpg',
+    focus: '45% 62%',
+  },
+  {
+    slot: 'whales',
+    label: 'Whale watching, Monterey',
+    caption: 'Saying hi to the whales in Monterey',
+    alt: 'People on a boat watching a whale surface in Monterey Bay',
+    image: set('whales', [640, 1024, 1600], 3024, 4032),
+    src: '/images/about/whales.jpg',
+    focus: '50% 60%',
+  },
+  {
+    slot: 'reading',
+    label: 'Beach reading',
+    caption: 'Brought a book to the beach and actually read it',
+    alt: 'An open book held up on a sandy beach, with a coffee cup in the sand',
+    image: set('reading', [640, 1024, 1600], 4032, 3024),
+    src: '/images/about/reading.jpg',
+    focus: '50% 60%',
   },
 ]

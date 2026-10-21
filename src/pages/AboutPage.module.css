@@ -1,55 +1,56 @@
-/* ---------- 1. Introduction ---------- */
-
-/* Full-width band so the field can spread past the narrow text column. */
-.heroWrap {
-  position: relative;
-  overflow: hidden;
-  padding-bottom: clamp(2.5rem, 1.5rem + 3vw, 4rem);
+/* About: the page widens beyond the 720px reading column used elsewhere. */
+.wide {
+  width: 100%;
+  max-width: calc(1240px + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
 }
 
-.field {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
+/* ---------- 1. Opening ---------- */
 
-.hero {
-  position: relative;
-  z-index: 1;
+.opening {
   display: grid;
-  grid-template-columns: 15rem minmax(0, 1fr);
-  gap: clamp(2rem, 1rem + 4vw, 3.5rem);
-  align-items: center;
-  padding-top: calc(var(--nav-height) + clamp(3rem, 2rem + 4vw, 5.5rem));
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.75rem;
+  padding-top: calc(var(--nav-height) + clamp(2rem, 1rem + 4vw, 4rem));
 }
 
-.portrait {
-  max-width: 15rem;
-}
-
-.introText {
+.name {
   display: grid;
-  gap: 1.1rem;
-}
-
-.label {
-  margin-bottom: 0;
-}
-
-.statement {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 1.5rem + 2vw, 2.875rem);
+  margin: 0;
   font-weight: 500;
+  line-height: 0.85;
+}
+
+.nameSmall {
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.75rem);
+  font-weight: 400;
   letter-spacing: -0.04em;
-  line-height: 1.05;
+  color: var(--ink-soft);
+}
+
+.nameLarge {
+  margin-top: 0.05em;
+  font-size: clamp(5.25rem, 2.5rem + 11vw, 14rem);
+  letter-spacing: -0.065em;
+  line-height: 0.82;
   color: var(--ink);
-  text-wrap: balance;
+}
+
+.portraitFrame {
+  aspect-ratio: 4 / 3;
+}
+
+.introBlock {
+  display: grid;
+  gap: 1rem;
+  max-width: 30rem;
 }
 
 .intro {
-  max-width: 30rem;
+  font-size: var(--text-lg);
+  line-height: 1.6;
   color: var(--ink-soft);
-  line-height: 1.7;
 }
 
 .age {
@@ -57,39 +58,179 @@
   color: var(--muted);
 }
 
-/* ---------- 3. Outside the screen ---------- */
+/* Phones: the portrait runs edge to edge. */
+@media (max-width: 699px) {
+  .portrait {
+    margin-inline: calc(var(--gutter) * -1);
+  }
 
-.photos {
-  margin-top: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
+  .portraitFrame {
+    border-radius: 0;
+  }
 }
 
-/* Heading and intro line up with the text column above; the grid is wider. */
-.photosHead {
-  max-width: var(--column);
-  margin-inline: auto;
-  margin-bottom: clamp(2rem, 1.5rem + 2vw, 3rem);
-}
-
-.photosTitle {
-  margin-bottom: 0.85rem;
-  font-size: var(--text-h2);
-  letter-spacing: -0.04em;
-}
-
-.photosIntro {
-  max-width: 36rem;
-  color: var(--ink-soft);
-  line-height: 1.7;
-}
-
-@media (max-width: 640px) {
-  .hero {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+/* Desktop: a wide, cinematic portrait; the oversized name sits over its lower-left
+   corner and hangs just below the edge; the intro answers it on the right. */
+@media (min-width: 1100px) {
+  .opening {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 1.5rem;
+    row-gap: 0;
   }
 
   .portrait {
-    max-width: 13rem;
-    margin-left: 0.5rem;
+    grid-column: 3 / 13;
+    grid-row: 1;
   }
+
+  .portraitFrame {
+    aspect-ratio: 16 / 10;
+  }
+
+  .name {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    align-self: end;
+    justify-self: start;
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
+    /* Hang the name just below the photo's bottom edge. */
+    translate: 0 clamp(2rem, 1rem + 1.6vw, 3rem);
+  }
+
+  .introBlock {
+    grid-column: 8 / 13;
+    grid-row: 2;
+    padding-top: 2.25rem;
+  }
+}
+
+/* ---------- 2. AI assistant: a structured band on a faint working grid ---------- */
+
+.assistantBand {
+  position: relative;
+  margin-top: clamp(3.5rem, 2rem + 5vw, 7rem);
+  padding-block: clamp(3rem, 2rem + 4vw, 6rem);
+  isolation: isolate;
+}
+
+/* Graph-paper lines that fade in at the top and dissolve at the bottom into the photos. */
+.assistantBand::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--accent) 13%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 13%, transparent) 1px, transparent 1px);
+  background-size: 44px 44px;
+  background-position: center top;
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 62%, transparent);
+  pointer-events: none;
+}
+
+.assistant {
+  display: grid;
+  gap: 2rem;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 1.75rem;
+  height: 1px;
+  background: var(--accent);
+}
+
+.assistantTitle {
+  font-size: var(--text-h2);
+  letter-spacing: -0.045em;
+}
+
+.assistantDescription {
+  margin-top: 0.9rem;
+  max-width: 28rem;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.facts {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  max-width: 26rem;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.facts li {
+  display: grid;
+  grid-template-columns: 1rem minmax(0, 1fr);
+  gap: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line));
+}
+
+.facts li::before {
+  content: '';
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: 0.42em;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: 0.7;
+}
+
+@media (min-width: 1000px) {
+  .assistant {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 1.5rem;
+    align-items: start;
+  }
+
+  .assistantText {
+    grid-column: 1 / 5;
+    position: sticky;
+    top: calc(var(--nav-height) + 2rem);
+  }
+
+  .chat {
+    grid-column: 6 / 13;
+  }
+}
+
+/* ---------- 3. Photo story ---------- */
+
+.photos {
+  margin-top: clamp(2rem, 1rem + 3vw, 4rem);
+}
+
+.photosTitle {
+  display: grid;
+  margin: 0;
+  line-height: 0.95;
+}
+
+.photosTitleSmall {
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.4rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  color: var(--ink-soft);
+}
+
+.photosTitleLarge {
+  margin-top: 0.1em;
+  font-size: clamp(2.6rem, 1.2rem + 5.4vw, 5.5rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  color: var(--ink);
 }

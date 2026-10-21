@@ -1,0 +1,50 @@
+.frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--bg-sunken);
+  isolation: isolate;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The lens: a round, slightly raised window onto the magnified photo. */
+.lens {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--surface) 92%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--ink) 18%, transparent),
+    0 18px 40px -12px rgba(20, 18, 14, 0.55);
+  opacity: 0;
+  scale: 0.6;
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    scale 0.35s var(--ease-out);
+  will-change: transform;
+}
+
+.frame[data-loupe='on'] {
+  cursor: none;
+}
+
+.frame[data-loupe='on'] .lens {
+  opacity: 1;
+  scale: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lens {
+    transition: opacity 0.15s linear;
+    scale: 1;
+  }
+}

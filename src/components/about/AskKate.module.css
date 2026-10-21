@@ -352,6 +352,35 @@
   color: var(--muted);
 }
 
+/* ---------- Embedded (wide About layout): app-style window ---------- */
+
+.embedded .header {
+  align-items: center;
+  padding: 0.85rem 1.1rem;
+}
+
+.embedded .icon {
+  width: 2.1rem;
+  height: 2.1rem;
+  padding: 0.45rem;
+  border-radius: 10px;
+}
+
+.embedded .title {
+  font-size: 1.05rem;
+}
+
+.embedded .body {
+  max-height: min(36rem, 68vh);
+}
+
+/* Beside the section text on wide screens, keep the window a steady height. */
+@media (min-width: 1000px) {
+  .embedded .body {
+    min-height: 26rem;
+  }
+}
+
 /* ---------- Small screens ---------- */
 
 @media (max-width: 600px) {
