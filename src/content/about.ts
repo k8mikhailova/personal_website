@@ -4,7 +4,7 @@ export const about = {
   // ---------- Opening ----------
   greeting: { small: 'Hi, I’m', large: 'Kate.' },
   intro:
-    'I spend a lot of my time building software and AI tools. This page is the less formal side: an assistant you can ask about my work, and a few photos from when I’m away from the laptop.',
+    'I’m proud of what I’ve done so far, but there’s a lot more to me than what fits on a resume. I wanted this page to be a little more personal. If you’re curious about my work, my experiences, or what I’m like outside of it all, you can ask my AI assistant below.',
   portrait: {
     image: { base: '/images/about/web/portrait', widths: [640, 1024, 1600], width: 2048, height: 1536 },
     alt: 'Kate holding a magnifying glass up to one eye and sticking her tongue out in a colorful shop',
@@ -16,16 +16,12 @@ export const about = {
 
   // ---------- AI assistant section ----------
   assistant: {
-    eyebrow: 'Ask about my work',
-    facts: [
-      'Answers from a knowledge base I wrote about my projects and experience',
-      'Links you to live demos, videos, and code',
-      'Conversations aren’t saved',
-    ],
+    title: 'Want to know more?',
+    description: 'I built an AI assistant that knows about my projects, experience, and interests. Give it a try.',
   },
 
   // ---------- Photos ----------
-  photosTitle: { small: 'A few things I’ve', large: 'gotten myself into.' },
+  photosTitle: { small: 'What you’d catch me doing', large: 'outside of work.' },
 }
 
 export type ResponsiveImage = {

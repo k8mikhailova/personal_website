@@ -229,6 +229,60 @@
   color: var(--ink);
 }
 
+/* ---------- Leave-a-question option (inside an unanswered reply) ---------- */
+
+.leave {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin-top: 0.15rem;
+  padding-top: 0.7rem;
+  border-top: 1px dashed color-mix(in srgb, var(--accent) 30%, transparent);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.leaveButton {
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: var(--accent-ink);
+  color: var(--bg);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  transition: background-color 0.18s ease;
+}
+
+.leaveButton:hover:not(:disabled) {
+  background: var(--ink);
+}
+
+.leaveButton:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.leaveDone {
+  color: var(--accent-ink);
+}
+
+.check {
+  width: 0.55rem;
+  height: 0.9rem;
+  margin: 0 0.15rem 0.2rem 0.1rem;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  rotate: 45deg;
+}
+
+.honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* ---------- Suggestions (quick replies under the latest answer) ---------- */
 
 .suggestions {
@@ -374,12 +428,6 @@
   max-height: min(36rem, 68vh);
 }
 
-/* Beside the section text on wide screens, keep the window a steady height. */
-@media (min-width: 1000px) {
-  .embedded .body {
-    min-height: 26rem;
-  }
-}
 
 /* ---------- Small screens ---------- */
 

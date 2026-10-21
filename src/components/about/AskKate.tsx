@@ -7,7 +7,15 @@ import styles from './AskKate.module.css'
 import { ChatText } from './ChatText'
 import { detectTopics, nextSuggestions, normalizeQuestion, starterSuggestions, type Suggestion } from './suggestions'
 
-type Message = { id: number; role: 'user' | 'assistant'; content: string }
+type LeaveState = 'idle' | 'saving' | 'saved' | 'failed' | 'rate_limited'
+
+type Message = {
+  id: number
+  role: 'user' | 'assistant'
+  content: string
+  /** Set when the assistant couldn't answer and saving questions is configured. */
+  leave?: { question: string; token: string; state: LeaveState }
+}
 
 /** Matches the server's limits in chatbot/limits.ts. */
 const MAX_CHARS = 500
@@ -89,12 +97,14 @@ export function AskKate({ embedded = false, className }: AskKateProps) {
         body: JSON.stringify({ messages: history.slice(-HISTORY).map(({ role, content }) => ({ role, content })) }),
         signal: controller.signal,
       })
-      const data = (await res.json().catch(() => ({}))) as { reply?: unknown; error?: unknown }
+      const data = (await res.json().catch(() => ({}))) as { reply?: unknown; error?: unknown; questionToken?: unknown }
       if (!res.ok || typeof data.reply !== 'string') {
         throw new Error(typeof data.error === 'string' ? data.error : 'default')
       }
       const reply = data.reply
-      setMessages((current) => [...current, { id: nextId.current++, role: 'assistant', content: reply }])
+      const leave =
+        typeof data.questionToken === 'string' ? { question, token: data.questionToken, state: 'idle' as const } : undefined
+      setMessages((current) => [...current, { id: nextId.current++, role: 'assistant', content: reply, leave }])
       refreshSuggestions(question, reply, topic)
     } catch (err) {
       if (controller.signal.aborted) return
@@ -107,6 +117,26 @@ export function AskKate({ embedded = false, className }: AskKateProps) {
         abortRef.current = null
         setPending(false)
       }
+    }
+  }
+
+  /** Saves one unanswered question, only after the visitor clicks to leave it. */
+  async function leaveQuestion(messageId: number, honeypot: string) {
+    const target = messages.find((m) => m.id === messageId)?.leave
+    if (!target || target.state === 'saving' || target.state === 'saved') return
+    const setState = (state: LeaveState) =>
+      setMessages((current) => current.map((m) => (m.id === messageId && m.leave ? { ...m, leave: { ...m.leave, state } } : m)))
+
+    setState('saving')
+    try {
+      const res = await fetch('/api/questions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: target.question, token: target.token, website: honeypot }),
+      })
+      setState(res.ok ? 'saved' : res.status === 429 ? 'rate_limited' : 'failed')
+    } catch {
+      setState('failed')
     }
   }
 
@@ -192,6 +222,7 @@ export function AskKate({ embedded = false, className }: AskKateProps) {
                       <ChatText text={paragraph} />
                     </p>
                   ))}
+                  {message.leave && <LeaveQuestion state={message.leave.state} onLeave={(hp) => void leaveQuestion(message.id, hp)} />}
                 </AssistantMessage>
               ),
             )}
@@ -295,6 +326,37 @@ function AssistantMessage({ children, ref }: { children: ReactNode; ref?: Ref<HT
       </span>
       <div className={styles.bubble}>{children}</div>
     </div>
+  )
+}
+
+/** "Leave it for Kate" option under an answer the assistant couldn't give. */
+function LeaveQuestion({ state, onLeave }: { state: LeaveState; onLeave: (honeypot: string) => void }) {
+  const text = askKate.leaveQuestion
+  if (state === 'saved' || state === 'failed' || state === 'rate_limited') {
+    const message = state === 'saved' ? text.saved : state === 'failed' ? text.failed : text.rateLimited
+    return (
+      <p className={`${styles.leave} ${state === 'saved' ? styles.leaveDone : ''}`} role="status">
+        {state === 'saved' && <span className={styles.check} aria-hidden="true" />}
+        {message}
+      </p>
+    )
+  }
+  return (
+    <form
+      className={styles.leave}
+      onSubmit={(event) => {
+        event.preventDefault()
+        const honeypot = new FormData(event.currentTarget).get('website')
+        onLeave(typeof honeypot === 'string' ? honeypot : '')
+      }}
+    >
+      <span>{text.prompt}</span>
+      {/* Hidden from people; bots that fill every field get ignored. */}
+      <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className={styles.honeypot} />
+      <button type="submit" className={styles.leaveButton} disabled={state === 'saving'}>
+        {state === 'saving' ? text.saving : text.button}
+      </button>
+    </form>
   )
 }
 

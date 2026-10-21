@@ -25,3 +25,6 @@ dist-ssr
 
 # Original full-size photos (large, with camera/GPS metadata). Web versions live in public/images.
 photos-original/
+
+# Questions saved by the local dev server (leave-a-question testing).
+.local-data/

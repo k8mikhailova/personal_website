@@ -2,6 +2,9 @@ import { buildInstructions } from './instructions.js'
 import { limits } from './limits.js'
 import { sanitizeReplyLinks } from './links.js'
 import { checkRateLimit } from './rateLimit.js'
+import { questionsEnabled, type QuestionsEnv } from './questions/handler.js'
+import { issueQuestionToken } from './questions/token.js'
+import { clientKey, originAllowed } from './request.js'
 import { validateBody, type ChatMessage } from './validate.js'
 
 export type GenerateReply = (args: {
@@ -11,7 +14,7 @@ export type GenerateReply = (args: {
   maxOutputTokens: number
 }) => Promise<string>
 
-export type ChatEnv = {
+export type ChatEnv = QuestionsEnv & {
   OPENAI_API_KEY?: string
   OPENAI_MODEL?: string
   OPENAI_REASONING_EFFORT?: string
@@ -41,6 +44,8 @@ export type ChatErrorCode =
 
 export const DEFAULT_MODEL = 'gpt-5-mini'
 
+export const UNANSWERED_MARKER = '[[UNANSWERED]]'
+
 const baseHeaders = {
   'Content-Type': 'application/json; charset=utf-8',
   'Cache-Control': 'no-store',
@@ -53,30 +58,6 @@ function json(status: number, body: object, extraHeaders: Record<string, string>
 
 function fail(status: number, error: ChatErrorCode, extraHeaders?: Record<string, string>) {
   return json(status, { error }, extraHeaders)
-}
-
-/** Only same-origin browser requests (plus any explicitly allowed origins). */
-function originAllowed(request: Request, env: ChatEnv) {
-  const origin = request.headers.get('origin')
-  if (!origin) return false
-  let originHost: string
-  try {
-    originHost = new URL(origin).host
-  } catch {
-    return false
-  }
-  const requestHost = request.headers.get('x-forwarded-host') ?? request.headers.get('host') ?? new URL(request.url).host
-  if (originHost === requestHost) return true
-  const extra = (env.CHAT_ALLOWED_ORIGINS ?? '')
-    .split(',')
-    .map((s) => s.trim())
-    .filter(Boolean)
-  return extra.includes(origin)
-}
-
-function clientKey(request: Request) {
-  const forwarded = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-  return forwarded || request.headers.get('x-real-ip') || 'unknown'
 }
 
 export async function handleChat(request: Request, deps: Deps): Promise<Response> {
@@ -117,12 +98,18 @@ export async function handleChat(request: Request, deps: Deps): Promise<Response
       messages: result.messages,
       maxOutputTokens: limits.maxOutputTokens,
     })
-    const text = sanitizeReplyLinks(reply).trim()
+    // The model marks answers it couldn't give from the knowledge base (see instructions).
+    const unanswered = reply.includes(UNANSWERED_MARKER)
+    const text = sanitizeReplyLinks(reply.split(UNANSWERED_MARKER).join('')).trim()
     if (!text) {
       console.error('[ask-kate] empty reply from model')
       return fail(502, 'upstream_error')
     }
-    return json(200, { reply: text })
+    // Offer "leave this question" only when saving is actually configured.
+    const question = result.messages[result.messages.length - 1].content
+    const questionToken =
+      unanswered && questionsEnabled(deps.env) ? issueQuestionToken(deps.env.QUESTIONS_ADMIN_TOKEN!, question) : undefined
+    return json(200, { reply: text, unanswered, ...(questionToken ? { questionToken } : {}) })
   } catch (error) {
     // Log only the error type and status, never the key or visitor messages.
     const status = (error as { status?: number }).status

@@ -6,7 +6,16 @@ export const askKate = {
   description:
     'Curious about my projects or experience? I built this AI assistant to answer questions about my work, background, and interests.',
   placeholder: 'Ask a question about me…',
-  disclaimer: 'AI-generated answers based on Kate’s portfolio. They can be wrong, and conversations aren’t saved.',
+  disclaimer:
+    'AI-generated answers based on Kate’s portfolio. They can be wrong. Conversations aren’t saved; a question is only saved if you choose to leave it for Kate.',
+  leaveQuestion: {
+    prompt: 'Want Kate to see this question?',
+    button: 'Leave it for Kate',
+    saving: 'Saving…',
+    saved: 'Saved for Kate to review. She might add the answer here later.',
+    failed: 'Couldn’t save that right now. Please try again later.',
+    rateLimited: 'You’ve left a few questions already. Please try again later.',
+  },
   assistantLabel: 'Kate’s AI assistant',
   /** First message in the chat, so it's clear an AI is answering, not Kate. */
   welcome:

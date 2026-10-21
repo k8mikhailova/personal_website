@@ -1,4 +1,27 @@
 {
-  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/" }],
-  "functions": { "api/chat.ts": { "maxDuration": 30 } }
+  "rewrites": [
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/"
+    }
+  ],
+  "functions": {
+    "api/chat.ts": {
+      "maxDuration": 30
+    },
+    "api/questions.ts": {
+      "maxDuration": 10
+    }
+  },
+  "headers": [
+    {
+      "source": "/admin/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ]
 }

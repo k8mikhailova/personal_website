@@ -89,7 +89,7 @@ describe('handleChat', () => {
     const res = await handleChat(chatRequest(ask()), deps(generate))
     expect(res.status).toBe(200)
     expect(res.headers.get('cache-control')).toBe('no-store')
-    expect(await res.json()).toEqual({ reply: 'StockAdvisor is a Streamlit app.' })
+    expect(await res.json()).toEqual({ reply: 'StockAdvisor is a Streamlit app.', unanswered: false })
 
     const args = generate.mock.calls[0][0]
     expect(args.model).toBe('gpt-5-mini')

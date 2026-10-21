@@ -4,7 +4,6 @@ import { LoupePortrait } from '../components/about/LoupePortrait'
 import { PhotoStory } from '../components/about/PhotoStory'
 import { Reveal } from '../components/ui/Reveal'
 import { about, photos } from '../content/about'
-import { askKate } from '../content/askKate'
 import { site } from '../content/site'
 import styles from './AboutPage.module.css'
 
@@ -46,20 +45,14 @@ export function AboutPage() {
         </Reveal>
       </section>
 
-      {/* ---------- 2. The AI assistant, on a faint working grid ---------- */}
+      {/* ---------- 2. The AI assistant: centered, the chat is the focus ---------- */}
       <section className={styles.assistantBand} aria-labelledby="assistant-title">
         <div className={`${styles.wide} ${styles.assistant}`}>
           <Reveal className={styles.assistantText}>
-            <p className={styles.eyebrow}>{about.assistant.eyebrow}</p>
             <h2 id="assistant-title" className={styles.assistantTitle}>
-              {askKate.title}
+              {about.assistant.title}
             </h2>
-            <p className={styles.assistantDescription}>{askKate.description}</p>
-            <ul className={styles.facts}>
-              {about.assistant.facts.map((fact) => (
-                <li key={fact}>{fact}</li>
-              ))}
-            </ul>
+            <p className={styles.assistantDescription}>{about.assistant.description}</p>
           </Reveal>
           <AskKate embedded className={styles.chat} />
         </div>

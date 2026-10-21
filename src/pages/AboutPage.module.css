@@ -132,80 +132,32 @@
 
 .assistant {
   display: grid;
-  gap: 2rem;
+  justify-items: center;
+  gap: clamp(1.75rem, 1.25rem + 1.5vw, 2.5rem);
 }
 
-.eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-  font-size: var(--text-sm);
-  color: var(--muted);
-}
-
-.eyebrow::before {
-  content: '';
-  width: 1.75rem;
-  height: 1px;
-  background: var(--accent);
+.assistantText {
+  max-width: 38rem;
+  text-align: center;
 }
 
 .assistantTitle {
-  font-size: var(--text-h2);
-  letter-spacing: -0.045em;
+  font-size: clamp(2.5rem, 1.5rem + 4vw, 4.25rem);
+  letter-spacing: -0.05em;
+  line-height: 1;
 }
 
 .assistantDescription {
-  margin-top: 0.9rem;
-  max-width: 28rem;
-  color: var(--ink-soft);
-  line-height: 1.65;
-}
-
-.facts {
-  display: grid;
-  gap: 0.6rem;
-  margin-top: 1.5rem;
-  max-width: 26rem;
-  font-size: var(--text-sm);
+  margin-top: 1rem;
+  font-size: var(--text-lg);
+  line-height: 1.6;
   color: var(--ink-soft);
 }
 
-.facts li {
-  display: grid;
-  grid-template-columns: 1rem minmax(0, 1fr);
-  gap: 0.6rem;
-  padding-top: 0.6rem;
-  border-top: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line));
-}
-
-.facts li::before {
-  content: '';
-  width: 0.55rem;
-  height: 0.55rem;
-  margin-top: 0.42em;
-  border-radius: 2px;
-  background: var(--accent);
-  opacity: 0.7;
-}
-
-@media (min-width: 1000px) {
-  .assistant {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: 1.5rem;
-    align-items: start;
-  }
-
-  .assistantText {
-    grid-column: 1 / 5;
-    position: sticky;
-    top: calc(var(--nav-height) + 2rem);
-  }
-
-  .chat {
-    grid-column: 6 / 13;
-  }
+/* The chat window itself is the centerpiece. */
+.chat {
+  width: 100%;
+  max-width: 50rem;
 }
 
 /* ---------- 3. Photo story ---------- */

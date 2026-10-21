@@ -4,6 +4,7 @@ import { Layout } from './components/layout/Layout'
 import { AboutPage } from './pages/AboutPage'
 import { ContactPage } from './pages/ContactPage'
 import { HomePage } from './pages/HomePage'
+import { QuestionsAdminPage } from './pages/QuestionsAdminPage'
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
             <Route index element={<HomePage />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="contact" element={<ContactPage />} />
+            <Route path="admin/questions" element={<QuestionsAdminPage />} />
             <Route path="*" element={<HomePage />} />
           </Route>
         </Routes>
