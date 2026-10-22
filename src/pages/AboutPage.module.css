@@ -219,3 +219,8 @@
   letter-spacing: -0.055em;
   color: var(--ink);
 }
+
+/* Focus moves here when arriving via /about#ask-ai; no outline around the whole band. */
+.assistantBand:focus {
+  outline: none;
+}

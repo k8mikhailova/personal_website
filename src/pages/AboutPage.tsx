@@ -57,7 +57,7 @@ export function AboutPage() {
       </div>
 
       {/* ---------- 3. The AI assistant: centered, the chat is the focus ---------- */}
-      <section className={styles.assistantBand} aria-labelledby="assistant-title">
+      <section id="ask-ai" className={styles.assistantBand} aria-labelledby="assistant-title">
         <div className={`${styles.wide} ${styles.assistant}`}>
           <Reveal className={styles.assistantText}>
             <h2 id="assistant-title" className={styles.assistantTitle}>

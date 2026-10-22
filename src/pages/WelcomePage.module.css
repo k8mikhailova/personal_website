@@ -1,0 +1,315 @@
+/* /welcome: a full-screen scene with captions and a menu over it. */
+
+.stage {
+  --scene-ink: #f4f0e8;
+  --scene-muted: rgba(244, 240, 232, 0.66);
+  --scene-line: rgba(244, 240, 232, 0.2);
+  --pad: clamp(1.25rem, 0.75rem + 2.5vw, 3.5rem);
+
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: #151411;
+  color: var(--scene-ink);
+}
+
+/* ---------- Scene ---------- */
+
+.media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* A still placeholder drifts very slightly so the scene doesn't feel frozen. */
+.stillImage {
+  animation: drift 16s ease-out both;
+}
+
+@keyframes drift {
+  from {
+    scale: 1.06;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+/* Constant, light shade for caption legibility (top for the bar, bottom for text). */
+.shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(10, 9, 8, 0.45), transparent 18%),
+    linear-gradient(to top, rgba(10, 9, 8, 0.55), transparent 45%);
+}
+
+/* Deeper shade on the menu's side, faded in with the menu. */
+.menuShade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.menuShade.left {
+  background: linear-gradient(to right, rgba(10, 9, 8, 0.62), rgba(10, 9, 8, 0.25) 45%, transparent 70%);
+}
+
+.menuShade.right {
+  background: linear-gradient(to left, rgba(10, 9, 8, 0.62), rgba(10, 9, 8, 0.25) 45%, transparent 70%);
+}
+
+.menuOpen .menuShade {
+  opacity: 1;
+}
+
+/* ---------- Top bar ---------- */
+
+.topBar {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem var(--pad);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--scene-ink);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+}
+
+.control {
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--scene-line);
+  border-radius: 999px;
+  background: rgba(15, 14, 12, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: var(--text-sm);
+  color: var(--scene-ink);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.control:hover {
+  background: rgba(15, 14, 12, 0.5);
+  border-color: rgba(244, 240, 232, 0.45);
+}
+
+/* ---------- Captions + menu ---------- */
+
+.content {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 0.75rem + 1.5vw, 2rem);
+  padding: 5rem var(--pad) clamp(2rem, 1.25rem + 3vw, 4rem);
+  pointer-events: none;
+}
+
+.content > * {
+  pointer-events: auto;
+}
+
+.content.bottom {
+  justify-content: flex-end;
+}
+
+.content.center {
+  justify-content: center;
+}
+
+.content.left {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.content.right {
+  align-items: flex-end;
+  text-align: right;
+}
+
+/* Reserves the caption's height so the menu never jumps when the caption changes. */
+.captionSlot {
+  min-height: 1.2em;
+  font-size: clamp(1.75rem, 1rem + 2.6vw, 3.25rem);
+  max-width: min(18ch, 100%);
+}
+
+.caption {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: inherit;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  text-wrap: balance;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+}
+
+.word {
+  display: inline-block;
+}
+
+/* ---------- Menu ---------- */
+
+.menu {
+  width: min(26rem, 100%);
+}
+
+/* Before the menu's turn: keeps its space, invisible to people and assistive tech. */
+.menuHidden {
+  visibility: hidden;
+  transition: visibility 0s linear 0.5s;
+}
+
+.menuList {
+  border-top: 1px solid var(--scene-line);
+}
+
+.menuList li {
+  border-bottom: 1px solid var(--scene-line);
+}
+
+.menuLink {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 0.25rem;
+  color: var(--scene-ink);
+  text-align: left;
+}
+
+/* A thin accent line that sweeps across the row on hover/focus. */
+.menuLink::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--accent-wash);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.menuNumber {
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--scene-muted);
+}
+
+.menuText {
+  display: grid;
+  gap: 0.1rem;
+  transition: translate 0.45s var(--ease-out);
+}
+
+.menuLabel {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 1.1rem + 0.9vw, 1.9rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.menuSubtitle {
+  font-size: var(--text-sm);
+  color: var(--scene-muted);
+}
+
+.menuArrow {
+  opacity: 0;
+  translate: -6px 0;
+  transition:
+    opacity 0.3s ease,
+    translate 0.45s var(--ease-out);
+}
+
+.menuLink:hover .menuText,
+.menuLink:focus-visible .menuText {
+  translate: 6px 0;
+}
+
+.menuLink:hover .menuArrow,
+.menuLink:focus-visible .menuArrow {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.menuLink:hover::before,
+.menuLink:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.menuLink:hover .menuLabel,
+.menuLink:focus-visible .menuLabel {
+  color: var(--accent-wash);
+}
+
+.menuLink:focus-visible,
+.control:focus-visible,
+.wordmark:focus-visible {
+  outline: 2px solid var(--accent-wash);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* Right-side layout mirrors the row. */
+.right .menuLink {
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .content {
+    padding-bottom: 1.75rem;
+  }
+
+  .menu {
+    width: 100%;
+  }
+
+  .menuLink {
+    padding-block: 0.75rem;
+  }
+
+  /* On phones the menu shade comes from the bottom so the full width stays legible. */
+  .menuShade.left,
+  .menuShade.right {
+    background: linear-gradient(to top, rgba(10, 9, 8, 0.72), rgba(10, 9, 8, 0.3) 55%, transparent 80%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stillImage {
+    animation: none;
+  }
+
+  .menuText,
+  .menuArrow,
+  .menuLink::before,
+  .menuShade {
+    transition: none;
+  }
+}

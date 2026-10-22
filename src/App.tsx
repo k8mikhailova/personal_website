@@ -5,6 +5,7 @@ import { AboutPage } from './pages/AboutPage'
 import { ContactPage } from './pages/ContactPage'
 import { HomePage } from './pages/HomePage'
 import { QuestionsAdminPage } from './pages/QuestionsAdminPage'
+import { WelcomePage } from './pages/WelcomePage'
 
 export default function App() {
   return (
@@ -12,6 +13,8 @@ export default function App() {
     <MotionConfig reducedMotion="user">
       <BrowserRouter>
         <Routes>
+          {/* Experimental standalone intro, outside the normal page shell (no nav or footer). */}
+          <Route path="welcome" element={<WelcomePage />} />
           <Route element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route path="about" element={<AboutPage />} />
