@@ -9,7 +9,12 @@
 /* ---------- 1. Opening ---------- */
 
 .opening {
+  /* The opening fills at least the first screen (nav included), so the Q&A
+     starts below the fold. If the content is taller it just grows. */
+  box-sizing: border-box;
+  min-height: 100svh;
   padding-top: calc(var(--nav-height) + clamp(1.5rem, 1rem + 2vw, 2.5rem));
+  padding-bottom: 1.5rem;
 }
 
 .stage,
@@ -83,6 +88,10 @@
     --photo-h: clamp(360px, calc(100svh - var(--nav-height) - 1.5rem - 13.5rem), 600px);
     /* How far the name reaches left of the photo. */
     --lead: calc(var(--photo-h) * 0.33);
+    /* Desktop: centre the composition in the space below the nav. */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding-top: calc(var(--nav-height) + 1.5rem);
   }
 
@@ -193,19 +202,19 @@
 .photosTitle {
   display: grid;
   margin: 0;
-  line-height: 0.95;
+  line-height: 1;
 }
 
 .photosTitleSmall {
-  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.4rem);
+  font-size: clamp(1.125rem, 0.85rem + 1.1vw, 1.6rem);
   font-weight: 400;
   letter-spacing: -0.035em;
   color: var(--ink-soft);
 }
 
 .photosTitleLarge {
-  margin-top: 0.1em;
-  font-size: clamp(2.6rem, 1.2rem + 5.4vw, 5.5rem);
+  margin-top: 0.12em;
+  font-size: clamp(1.9rem, 1rem + 3.4vw, 3.65rem);
   font-weight: 500;
   letter-spacing: -0.055em;
   color: var(--ink);
