@@ -45,7 +45,7 @@ export function AboutPage() {
           <Reveal y={16} delay={0.2} className={styles.introBlock}>
             <p className={styles.intro}>{about.intro}</p>
             <p className={styles.age}>
-              <AgeCounter birthDate={about.birthDate} /> years old
+              I’m <AgeCounter birthDate={about.birthDate} /> years old
             </p>
           </Reveal>
         </div>
