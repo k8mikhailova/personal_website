@@ -1,0 +1,38 @@
+/* Local preview tool: floats bottom-left, clear of the intro paragraph. */
+.picker {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 50;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 24px rgba(29, 28, 26, 0.08);
+  font-size: var(--text-xs);
+}
+
+.label {
+  padding-inline: 0.6rem 0.25rem;
+  color: var(--muted);
+}
+
+.option {
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  color: var(--ink-soft);
+}
+
+.option:hover {
+  background: var(--bg-sunken);
+}
+
+.option[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--bg);
+}

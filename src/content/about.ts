@@ -3,9 +3,9 @@
 export const about = {
   // ---------- Opening ----------
   greeting: { small: 'Hi, I’m', large: 'Kate.' },
-  // {age} marks where the live age counter goes.
+  // {age} = the live age counter, **text** = semibold, [text](#id) = link to a section on this page.
   intro:
-    'I’m {age} years old, and I’m proud of what I’ve done so far. But there’s only so much you can fit on a resume. I wanted to share a little more about how I got here, the things I’ve enjoyed working on, and a few moments outside of work. If there’s something else you’re curious about, you can ask my AI assistant.',
+    'I’m {age} years old, and I’m **proud of what I’ve done so far**. But there’s only so much you can fit on a resume. I wanted to share a little more about **how I got here**, the things I’ve enjoyed working on, and a few moments outside of work. If there’s something else you’re curious about, you can [ask my AI assistant](#ask-ai).',
   portrait: {
     image: { base: '/images/about/web/portrait', widths: [640, 1024, 1600], width: 2048, height: 1536 },
     alt: 'Kate holding a magnifying glass up to one eye and sticking her tongue out in a colorful shop',
