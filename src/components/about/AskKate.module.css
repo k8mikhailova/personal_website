@@ -425,7 +425,7 @@
 }
 
 .embedded .body {
-  max-height: min(36rem, 68vh);
+  max-height: min(32rem, 62vh);
 }
 
 

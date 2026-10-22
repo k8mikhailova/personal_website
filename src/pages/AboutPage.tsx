@@ -19,35 +19,40 @@ export function AboutPage() {
 
       {/* ---------- 1. Opening: oversized name overlapping a large portrait ---------- */}
       <section className={`${styles.wide} ${styles.opening}`} aria-labelledby="about-title">
-        <h1 id="about-title" className={styles.name}>
-          <Reveal as="span" y={16} className={styles.nameSmall}>
-            {about.greeting.small}
-          </Reveal>
-          <Reveal as="span" y={28} delay={0.08} className={styles.nameLarge}>
-            {about.greeting.large}
-          </Reveal>
-        </h1>
+        {/* The stage is sized from the viewport height so the whole opening fits on the first screen. */}
+        <div className={styles.stage}>
+          <div className={styles.photoArea}>
+            <h1 id="about-title" className={styles.name}>
+              <Reveal as="span" y={16} className={styles.nameSmall}>
+                {about.greeting.small}
+              </Reveal>
+              <Reveal as="span" y={28} delay={0.08} className={styles.nameLarge}>
+                {about.greeting.large}
+              </Reveal>
+            </h1>
 
-        <Reveal y={24} delay={0.05} className={styles.portrait}>
-          <LoupePortrait
-            image={about.portrait.image}
-            alt={about.portrait.alt}
-            focus={about.portrait.focus}
-            sizes="(min-width: 1100px) 760px, 100vw"
-            className={styles.portraitFrame}
-          />
-        </Reveal>
+            <Reveal y={24} delay={0.05} className={styles.portrait}>
+              <LoupePortrait
+                image={about.portrait.image}
+                alt={about.portrait.alt}
+                focus={about.portrait.focus}
+                sizes="(min-width: 1100px) 960px, 100vw"
+                className={styles.portraitFrame}
+              />
+            </Reveal>
+          </div>
 
-        <Reveal y={16} delay={0.2} className={styles.introBlock}>
-          <p className={styles.intro}>{about.intro}</p>
-          <p className={styles.age}>
-            <AgeCounter birthDate={about.birthDate} /> years old
-          </p>
-        </Reveal>
+          <Reveal y={16} delay={0.2} className={styles.introBlock}>
+            <p className={styles.intro}>{about.intro}</p>
+            <p className={styles.age}>
+              <AgeCounter birthDate={about.birthDate} /> years old
+            </p>
+          </Reveal>
+        </div>
       </section>
 
       {/* ---------- 2. Q&A: a few questions in my own words ---------- */}
-      <div className={styles.wide}>
+      <div className="container">
         <AboutQuestions />
       </div>
 
