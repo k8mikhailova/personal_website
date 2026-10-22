@@ -24,6 +24,60 @@ export const about = {
   photosTitle: { small: 'What you’d catch me doing', large: 'outside of work.' },
 }
 
+/**
+ * How a question sits in the Q&A section:
+ * - 'statement': full width, the answer set large (best for a very short answer)
+ * - 'wide': full width, question in the margin beside a longer answer
+ * - 'half': half width; two in a row sit side by side
+ */
+export type QuestionLayout = 'statement' | 'wide' | 'half'
+
+export type Question = {
+  question: string
+  /** Supports **bold** and [link text](https://url). */
+  answer: string
+  layout: QuestionLayout
+}
+
+// Kate's own answers (restored from the earlier About page). Keep 'half' items in pairs.
+export const questions: Question[] = [
+  {
+    question: 'Three words to describe myself?',
+    answer: 'Curious, reliable, resourceful.',
+    layout: 'statement',
+  },
+  {
+    question: 'How did marketing fit into computer science?',
+    answer:
+      'I started a small business while I was in college. A lot of my work eventually involved building automations, connecting different platforms, and figuring out how to make the systems behind campaigns work better. It gave me a chance to use my CS skills on real business problems, and I found myself much more interested in that technical side of the work.',
+    layout: 'wide',
+  },
+  {
+    question: 'What’s my favorite thing I’ve built?',
+    answer:
+      'Probably my [Marketing Intelligence Hub](https://github.com/k8mikhailova/marketing_hub). I wanted to see what would happen if customer feedback, advertising performance, and ideas for new experiments could all be brought into one place. I built a prototype to explore that, and it turned into one of my favorite projects to work on.',
+    layout: 'half',
+  },
+  {
+    question: 'What am I like to work with?',
+    answer:
+      'I like working with people and being part of a team where everyone can share ideas and ask questions. I’m pretty detail-oriented, and if I say I’ll take care of something, I make sure I follow through.',
+    layout: 'half',
+  },
+  {
+    question: 'Something people might not expect about me?',
+    answer:
+      'I usually like having my days planned out, but I’m also pretty open to last-minute plans when something interesting comes up.',
+    layout: 'half',
+  },
+  {
+    question: 'What do I enjoy most about building something?',
+    answer:
+      'Seeing something go from an idea to something that actually works. I like figuring out how all the pieces fit together, and it’s even better when someone else gets to use what I’ve built.',
+    layout: 'half',
+  },
+]
+
 export type ResponsiveImage = {
   /** Path prefix of the WebP set: `${base}-${width}.webp`. */
   base: string

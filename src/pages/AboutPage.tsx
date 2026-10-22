@@ -5,11 +5,12 @@ import { PhotoStory } from '../components/about/PhotoStory'
 import { Reveal } from '../components/ui/Reveal'
 import { about, photos } from '../content/about'
 import { site } from '../content/site'
+import { AboutQuestions } from '../sections/about/AboutQuestions'
 import styles from './AboutPage.module.css'
 
 /**
- * About, in three movements that loosen as you scroll:
- * a close-up opening → a structured "workbench" for the AI assistant → an open photo story.
+ * About, in four movements that loosen as you scroll:
+ * a close-up opening → a few questions in Kate's words → the AI assistant → an open photo story.
  */
 export function AboutPage() {
   return (
@@ -45,7 +46,12 @@ export function AboutPage() {
         </Reveal>
       </section>
 
-      {/* ---------- 2. The AI assistant: centered, the chat is the focus ---------- */}
+      {/* ---------- 2. Q&A: a few questions in my own words ---------- */}
+      <div className={styles.wide}>
+        <AboutQuestions />
+      </div>
+
+      {/* ---------- 3. The AI assistant: centered, the chat is the focus ---------- */}
       <section className={styles.assistantBand} aria-labelledby="assistant-title">
         <div className={`${styles.wide} ${styles.assistant}`}>
           <Reveal className={styles.assistantText}>
@@ -58,7 +64,7 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* ---------- 3. Photo story: wider, looser, hand-placed ---------- */}
+      {/* ---------- 4. Photo story: wider, looser, hand-placed ---------- */}
       <section className={styles.photos} aria-labelledby="photos-title">
         <PhotoStory
           photos={photos}

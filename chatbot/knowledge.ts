@@ -107,6 +107,14 @@ Before she started InfoMomentum, Kate researched ways she could help small busin
 - Her experiences often involve both technical execution and communicating with people who use the resulting tools.
 - She values practical results, honest communication, careful testing, and learning from feedback. When talking about her work, prioritize specific examples over generic adjectives.
 
+## In Kate's own words (the Q&A on her About page)
+- Three words she uses for herself: curious, reliable, resourceful.
+- On how marketing fit into computer science: she started a small business in college, and much of the work involved building automations, connecting different platforms, and improving the systems behind campaigns. It let her use her CS skills on real business problems, and she found herself more interested in the technical side. (The business began from automation for small businesses; marketing was not her original motivation; see "Who Kate is" above.)
+- Her favorite thing she's built is probably the Marketing Intelligence Hub, because she wanted to see what would happen if customer feedback, advertising performance, and ideas for new experiments were brought into one place.
+- What she's like to work with: she likes working with people and being part of a team where everyone can share ideas and ask questions. She's detail-oriented, and if she says she'll take care of something, she follows through.
+- Something people might not expect: she usually likes having her days planned out, but she's also open to last-minute plans when something interesting comes up.
+- What she enjoys most about building something: seeing it go from an idea to something that actually works, figuring out how the pieces fit together, and especially when someone else gets to use it.
+
 ## Outside work: interests and what Kate is like
 - Kate enjoys trying new things and having experiences outside her usual routine, including activities she doesn't have much previous experience with. She likes learning new things this way.
 - She likes spending time with friends, exploring, traveling, and being outdoors.
