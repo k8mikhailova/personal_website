@@ -8,6 +8,8 @@ import { site } from '../content/site'
 import { AboutQuestions } from '../sections/about/AboutQuestions'
 import styles from './AboutPage.module.css'
 
+const [introBefore, introAfter = ''] = about.intro.split('{age}')
+
 /**
  * About, in four movements that loosen as you scroll:
  * a close-up opening → a few questions in Kate's words → the AI assistant → an open photo story.
@@ -43,9 +45,10 @@ export function AboutPage() {
           </div>
 
           <Reveal y={16} delay={0.2} className={styles.introBlock}>
-            <p className={styles.intro}>{about.intro}</p>
-            <p className={styles.age}>
-              I’m <AgeCounter birthDate={about.birthDate} /> years old
+            <p className={styles.intro}>
+              {introBefore}
+              <AgeCounter birthDate={about.birthDate} />
+              {introAfter}
             </p>
           </Reveal>
         </div>

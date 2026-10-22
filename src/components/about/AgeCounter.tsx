@@ -2,7 +2,8 @@ import { useReducedMotion } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
 import styles from './AgeCounter.module.css'
 
-const DECIMALS = 8
+/** Enough to show it moving (the last digit turns over about every 53 minutes) while still reading as a number in a sentence. */
+const DECIMALS = 4
 
 /**
  * Exact fractional age: whole years since the last birthday, plus how far the
@@ -23,8 +24,8 @@ function ageInYears(birth: Date, now = new Date()) {
 }
 
 /**
- * Live age in years, ticking through the decimals every frame.
- * With reduced motion it updates once a minute instead.
+ * Live age in years. It checks once a second (once a minute with reduced
+ * motion) and only touches the DOM when the shown value changes.
  */
 export function AgeCounter({ birthDate }: { birthDate: string }) {
   const ref = useRef<HTMLSpanElement>(null)
@@ -39,22 +40,12 @@ export function AgeCounter({ birthDate }: { birthDate: string }) {
     if (Number.isNaN(birthTime)) return
     const born = new Date(birthTime)
     const update = () => {
-      if (ref.current) ref.current.textContent = ageInYears(born).toFixed(DECIMALS)
+      const text = ageInYears(born).toFixed(DECIMALS)
+      if (ref.current && ref.current.textContent !== text) ref.current.textContent = text
     }
     update()
-
-    if (reduceMotion) {
-      const id = window.setInterval(update, 60_000)
-      return () => window.clearInterval(id)
-    }
-
-    let raf = 0
-    const loop = () => {
-      update()
-      raf = requestAnimationFrame(loop)
-    }
-    raf = requestAnimationFrame(loop)
-    return () => cancelAnimationFrame(raf)
+    const id = window.setInterval(update, reduceMotion ? 60_000 : 1_000)
+    return () => window.clearInterval(id)
   }, [birthTime, reduceMotion])
 
   if (!valid) {

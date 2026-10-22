@@ -1,5 +1,7 @@
 .age {
   display: inline-block;
+  /* Never splits across lines; fixed digit count + tabular numerals keep its width constant. */
+  white-space: nowrap;
   padding: 0 0.35em;
   border-radius: 6px;
   background: var(--accent-wash);

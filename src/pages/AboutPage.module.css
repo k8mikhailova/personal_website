@@ -61,11 +61,6 @@
   color: var(--ink-soft);
 }
 
-.age {
-  font-size: var(--text-sm);
-  color: var(--muted);
-}
-
 /* Phones: the portrait runs edge to edge. */
 @media (max-width: 699px) {
   .portrait {
@@ -127,8 +122,9 @@
     font-size: calc(var(--photo-h) * 0.31);
   }
 
+  /* Wide enough that the intro (live age included) sets in five lines under the photo's right side. */
   .introBlock {
-    max-width: 28rem;
+    max-width: 34rem;
     margin-left: auto;
     padding-top: 1.35rem;
   }
@@ -136,6 +132,7 @@
   .intro {
     font-size: 1.03rem;
     line-height: 1.6;
+    text-wrap: pretty;
   }
 }
 
