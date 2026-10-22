@@ -56,8 +56,6 @@
 }
 
 .intro {
-  /* --intro-font is only set by the local font preview. */
-  font-family: var(--intro-font, var(--font-sans));
   font-size: var(--text-lg);
   line-height: 1.6;
   color: var(--ink-soft);

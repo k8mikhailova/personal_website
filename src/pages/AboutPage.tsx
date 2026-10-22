@@ -1,8 +1,4 @@
-import type { CSSProperties } from 'react'
-import { useSearchParams } from 'react-router-dom'
 import { AskKate } from '../components/about/AskKate'
-import { IntroFontPicker } from '../components/about/IntroFontPicker'
-import { introFonts } from '../components/about/introFonts'
 import { IntroText } from '../components/about/IntroText'
 import { LoupePortrait } from '../components/about/LoupePortrait'
 import { PhotoStory } from '../components/about/PhotoStory'
@@ -17,15 +13,9 @@ import styles from './AboutPage.module.css'
  * a close-up opening → a few questions in Kate's words → the AI assistant → an open photo story.
  */
 export function AboutPage() {
-  // Local font preview for the intro (?introFont=…); ignored in production builds.
-  const [params] = useSearchParams()
-  const previewFont = import.meta.env.DEV ? introFonts.find((f) => f.id === params.get('introFont')) : undefined
-
   return (
     <>
       <title>{`About · ${site.name}`}</title>
-      {previewFont?.href && <link rel="stylesheet" href={previewFont.href} precedence="default" />}
-      {import.meta.env.DEV && <IntroFontPicker current={previewFont?.id ?? 'geist'} />}
 
       {/* ---------- 1. Opening: oversized name overlapping a large portrait ---------- */}
       <section className={`${styles.wide} ${styles.opening}`} aria-labelledby="about-title">
@@ -53,10 +43,7 @@ export function AboutPage() {
           </div>
 
           <Reveal y={16} delay={0.2} className={styles.introBlock}>
-            <p
-              className={styles.intro}
-              style={previewFont ? ({ '--intro-font': previewFont.family } as CSSProperties) : undefined}
-            >
+            <p className={styles.intro}>
               <IntroText text={about.intro} birthDate={about.birthDate} />
             </p>
           </Reveal>
