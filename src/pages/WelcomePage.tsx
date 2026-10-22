@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import { Fragment, useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowIcon } from '../components/ui/ArrowIcon'
 import { site } from '../content/site'
@@ -39,6 +39,8 @@ export function WelcomePage() {
   const [caption, setCaption] = useState<WelcomeCaption | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [focusMenu, setFocusMenu] = useState(false)
+  // Reduced motion rests on the last frame (as an image) until the visitor presses Replay.
+  const [showStill, setShowStill] = useState(Boolean(reduceMotion))
 
   const stopClock = () => cancelAnimationFrame(rafRef.current)
 
@@ -68,6 +70,7 @@ export function WelcomePage() {
 
   /** Plays the sequence from the beginning. */
   const play = useCallback(() => {
+    setShowStill(false)
     setMenuOpen(false)
     setCaption(null)
     const video = videoRef.current
@@ -94,6 +97,7 @@ export function WelcomePage() {
   // Start once. With reduced motion, open on the final state with no autoplay.
   useEffect(() => {
     if (reduceMotion) {
+      setShowStill(true)
       setCaption(finalCaption)
       setMenuOpen(true)
       return
@@ -125,7 +129,10 @@ export function WelcomePage() {
   const words = caption?.text.split(' ') ?? []
 
   return (
-    <div className={`${styles.stage} ${menuOpen ? styles.menuOpen : ''} ${!hasVideo ? styles.still : ''}`}>
+    <div
+      className={`${styles.stage} ${menuOpen ? styles.menuOpen : ''}`}
+      style={{ '--focus': welcome.media.focus, '--focus-portrait': welcome.media.portraitFocus } as CSSProperties}
+    >
       <title>{`Welcome · ${site.name}`}</title>
 
       {/* ---------- Scene ---------- */}
@@ -133,7 +140,6 @@ export function WelcomePage() {
         <video
           ref={videoRef}
           className={styles.media}
-          style={{ objectPosition: welcome.media.focus }}
           src={videoSrc}
           poster={welcome.media.poster}
           muted
@@ -152,13 +158,9 @@ export function WelcomePage() {
           }}
         />
       ) : (
-        <img
-          className={`${styles.media} ${styles.stillImage}`}
-          style={{ objectPosition: welcome.media.focus }}
-          src={welcome.media.poster}
-          alt=""
-        />
+        <img className={`${styles.media} ${styles.stillImage}`} src={welcome.media.still || welcome.media.poster} alt="" />
       )}
+      {hasVideo && showStill && <img className={styles.media} src={welcome.media.still || welcome.media.poster} alt="" />}
       <div className={styles.shade} aria-hidden="true" />
       <div className={`${styles.menuShade} ${styles[welcome.layout.side]}`} aria-hidden="true" />
 

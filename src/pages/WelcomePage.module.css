@@ -23,7 +23,15 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: var(--focus, 50% 50%);
   display: block;
+}
+
+/* Portrait screens crop the sides of a 16:9 shot; keep the subject in frame. */
+@media (max-aspect-ratio: 1/1) {
+  .media {
+    object-position: var(--focus-portrait, var(--focus, 50% 50%));
+  }
 }
 
 /* A still placeholder drifts very slightly so the scene doesn't feel frozen. */

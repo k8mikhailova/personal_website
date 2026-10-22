@@ -19,22 +19,27 @@ export const welcome = {
      * Video shown on wider screens. Put files in /public/welcome/ and reference
      * them here. Set to '' to run the sequence over the still image only.
      */
-    video: '/welcome/placeholder-1080.mp4',
+    video: '/welcome/cafe-1080.mp4',
     /** Optional lighter file for phones (≤ 900px wide). '' = use `video`. */
-    mobileVideo: '/welcome/placeholder-720.mp4',
-    /** Still image: shown while the video loads, if it can't play, and when there's no video. */
-    poster: '/welcome/placeholder-poster.jpg',
-    /** Crop focus for the footage (CSS object-position), e.g. '50% 40%' keeps the upper middle in view. */
+    mobileVideo: '/welcome/cafe-720.mp4',
+    /** First frame: shown while the video loads, so playback starts without a jump. */
+    poster: '/welcome/cafe-poster.jpg',
+    /** Last frame: the resting image for reduced motion, and the scene if the video can't play. */
+    still: '/welcome/cafe-still.jpg',
+    /** Crop focus (CSS object-position) on landscape screens. */
     focus: '50% 50%',
+    /** Crop focus on portrait screens (phones), where the 16:9 shot loses its sides. Keeps her face in frame. */
+    portraitFocus: '85% 40%',
   },
 
   captions: [
-    { id: 'greeting', text: 'Oh, hey. Thanks for stopping by!', start: 2.5, end: 5.8 },
-    { id: 'invite', text: 'What would you like to see?', start: 6.4 },
+    // Timed to the cafe clip (8s): she looks up at ~3s, waves ~4s, smiles from ~5s.
+    { id: 'greeting', text: 'Oh, hey. Thanks for stopping by!', start: 3.2, end: 5.3 },
+    { id: 'invite', text: 'What would you like to see?', start: 5.7 },
   ] satisfies WelcomeCaption[],
 
   /** Seconds at which the menu fades in. It also appears as soon as the video ends, or on Skip. */
-  menuAt: 8,
+  menuAt: 7,
 
   /** Where things sit, so they stay clear of you in the final shot. */
   layout: {
