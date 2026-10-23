@@ -104,7 +104,7 @@
 
 .institution {
   font-size: var(--text-h3);
-  letter-spacing: -0.035em;
+  letter-spacing: 0;
   line-height: 1.15;
 }
 
