@@ -13,16 +13,13 @@
   --accent-ink: #46604f;
   --accent-wash: #dde4d9;
 
-  /* Typewriter identity: Special Elite for headings and display type, IBM Plex
-     Mono for reading text and small print. */
-  --font-display: 'Special Elite', 'Courier New', ui-monospace, monospace;
-  --font-sans: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: 'Bricolage Grotesque', 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-  /* A notch smaller than a proportional face would need: mono letters are wide. */
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 0.9375rem;
-  --text-lg: clamp(1rem, 0.94rem + 0.25vw, 1.125rem);
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: clamp(1.125rem, 1.02rem + 0.35vw, 1.3125rem);
   --text-h3: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
   --text-h2: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
   --text-display: clamp(2.5rem, 1.6rem + 4vw, 4.25rem);
@@ -70,8 +67,6 @@ body {
   font-size: var(--text-base);
   line-height: 1.6;
   font-weight: 400;
-  /* Special Elite has a single weight; never fake a bold for it. */
-  font-synthesis-weight: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -120,9 +115,10 @@ h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.15;
+  font-weight: 500;
+  font-optical-sizing: auto;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
   text-wrap: balance;
 }
 

@@ -5,7 +5,7 @@
 
 .title {
   font-size: var(--text-h2);
-  letter-spacing: 0;
+  letter-spacing: -0.04em;
 }
 
 .note {

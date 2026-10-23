@@ -140,6 +140,12 @@ export function WelcomePage() {
       style={{ '--focus': welcome.media.focus, '--focus-portrait': welcome.media.portraitFocus } as CSSProperties}
     >
       <title>{`Welcome · ${site.name}`}</title>
+      {/* Welcome-only fonts: Special Elite for the message and menu, Plex Mono for small print. */}
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Special+Elite&display=swap"
+        precedence="default"
+      />
 
       {/* ---------- Scene ---------- */}
       {hasVideo ? (

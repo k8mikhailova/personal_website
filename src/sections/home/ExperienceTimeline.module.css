@@ -72,7 +72,7 @@
 
 .org {
   font-size: var(--text-h3);
-  letter-spacing: 0;
+  letter-spacing: -0.035em;
   line-height: 1.15;
 }
 
