@@ -28,7 +28,8 @@ export const site = {
 }
 
 export const navLinks = [
-  { label: 'Home', to: '/' },
+  { label: 'Home', to: '/home' },
+  { label: 'Welcome', to: '/' },
   { label: 'About', to: '/about' },
   { label: 'Contact', to: '/contact' },
 ]

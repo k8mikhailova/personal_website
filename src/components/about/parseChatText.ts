@@ -18,7 +18,8 @@ export type ChatPiece =
   | { type: 'link'; text: string; href: string; internal: boolean }
 
 const SITE_PAGES: Record<string, string> = {
-  '/': 'Home page',
+  '/': 'Welcome page',
+  '/home': 'Home page',
   '/about': 'About page',
   '/contact': 'Contact page',
 }

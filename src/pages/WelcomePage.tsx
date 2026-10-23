@@ -166,7 +166,7 @@ export function WelcomePage() {
 
       {/* ---------- Top bar ---------- */}
       <header className={styles.topBar}>
-        <Link to="/" className={styles.wordmark}>
+        <Link to="/home" className={styles.wordmark}>
           {site.name}
         </Link>
         {menuOpen ? (

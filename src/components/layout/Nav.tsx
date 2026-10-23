@@ -16,7 +16,7 @@ export function Nav() {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <nav className={`container ${styles.nav}`} aria-label="Main">
-        <Link to="/" className={styles.name}>
+        <Link to="/home" className={styles.name}>
           {site.name}
         </Link>
 

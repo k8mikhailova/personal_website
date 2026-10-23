@@ -1,7 +1,7 @@
 import { knowledge } from './knowledge.js'
 
 /** Site pages the assistant may link to. */
-export const SITE_PATHS = ['/', '/about', '/contact'] as const
+export const SITE_PATHS = ['/', '/home', '/about', '/contact'] as const
 
 const URL_IN_TEXT = /https?:\/\/[^\s<>()\]]+[^\s<>()\].,;:!?'"]/g
 // Link targets may contain one level of balanced parentheses.

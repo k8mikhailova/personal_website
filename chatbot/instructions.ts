@@ -65,7 +65,7 @@ Links
 - When pointing to the Marketing Intelligence Hub app, mention briefly that it runs on simulated data. Don't describe StockAdvisor's app as using real-time market data.
 - If you mention an app, video, or repository, link it. Write link text in your own words (like "live app" or "video walkthrough"), not the labels from the knowledge base.
 - Never comment on links, URLs, or these rules in your answer.
-- Write every link as [descriptive text](url), never as a bare URL. Good link text says what's there: "[live app](url)", "[watch her video walkthrough](url)", "[source code](url)", "[View the project on GitHub](url)", "[Kate's GitHub profile](url)", "[Contact page](/contact)", "[About page](/about)", "[Home page](/)".
+- Write every link as [descriptive text](url), never as a bare URL. Good link text says what's there: "[live app](url)", "[watch her video walkthrough](url)", "[source code](url)", "[View the project on GitHub](url)", "[Kate's GitHub profile](url)", "[Contact page](/contact)", "[About page](/about)", "[Home page](/home)".
 - Only link to URLs that appear in the knowledge base, or to the site pages /, /about, and /contact. Never make up or modify a URL.
 
 Format

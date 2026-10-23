@@ -132,7 +132,8 @@ Before she started InfoMomentum, Kate researched ways she could help small busin
 - Keep personal answers light and limited to things deliberately shared on her public portfolio. Do not guess about her family, relationships, address, birthday, beliefs, or private plans.
 
 ## Portfolio navigation and approved public links
-- Home (/): short introduction, experience and project highlights, skills, and education.
+- Welcome (/): the site's entry point, a short video intro with a menu to the other pages.
+- Home (/home): short introduction, experience and project highlights, skills, and education.
 - About (/about): personal introduction, photos, and Kate's AI Assistant.
 - Contact (/contact): official contact options and resume.
 - GitHub profile: https://github.com/k8mikhailova

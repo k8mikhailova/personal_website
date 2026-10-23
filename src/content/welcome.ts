@@ -50,7 +50,7 @@ export const welcome = {
   },
 
   menu: [
-    { label: 'My work', subtitle: 'Experience & projects', to: '/' },
+    { label: 'My work', subtitle: 'Experience & projects', to: '/home' },
     { label: 'About me', subtitle: 'Get to know me', to: '/about' },
     { label: 'Ask my AI', subtitle: 'Talk to my assistant', to: '/about#ask-ai' },
     { label: 'Get in touch', subtitle: 'Contact', to: '/contact' },
