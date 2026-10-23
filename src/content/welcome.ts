@@ -4,40 +4,6 @@
  * captions and menu sit so they don't cover you.
  */
 
-export type WelcomeFont = {
-  id: string
-  label: string
-  /** CSS font-family stack. */
-  family: string
-  /** Google Fonts stylesheet. */
-  href: string
-}
-
-/**
- * Typewriter candidates for the Welcome page (captions, menu, controls).
- * Compare them locally with ?font=<id> or the switcher shown in dev.
- */
-export const welcomeFonts = [
-  {
-    id: 'courier',
-    label: 'Courier Prime',
-    family: "'Courier Prime', ui-monospace, monospace",
-    href: 'https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap',
-  },
-  {
-    id: 'plex',
-    label: 'IBM Plex Mono',
-    family: "'IBM Plex Mono', ui-monospace, monospace",
-    href: 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap',
-  },
-  {
-    id: 'special',
-    label: 'Special Elite',
-    family: "'Special Elite', ui-monospace, monospace",
-    href: 'https://fonts.googleapis.com/css2?family=Special+Elite&display=swap',
-  },
-] as const satisfies readonly WelcomeFont[]
-
 export const welcome = {
   media: {
     /**
@@ -78,9 +44,6 @@ export const welcome = {
     /** Stands in for the video's length when it can't play (still image or autoplay blocked). */
     fallbackLength: 8,
   },
-
-  /** Default typewriter font (an id from welcomeFonts). */
-  font: 'courier' as (typeof welcomeFonts)[number]['id'],
 
   /** Where things sit, so they stay clear of you in the final shot. */
   layout: {

@@ -1,10 +1,9 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
-import { WelcomeFontPicker } from '../components/welcome/WelcomeFontPicker'
+import { Link } from 'react-router-dom'
 import { ArrowIcon } from '../components/ui/ArrowIcon'
 import { site } from '../content/site'
-import { welcome, welcomeFonts } from '../content/welcome'
+import { welcome } from '../content/welcome'
 import styles from './WelcomePage.module.css'
 import { captionText, finalState, sameState, sequenceAt, startState, type SequenceState } from './welcomeSequence'
 
@@ -26,13 +25,6 @@ export function WelcomePage() {
   const modeRef = useRef<Mode>('timer')
   const timerStartRef = useRef(0)
   const endedAtRef = useRef<number | null>(null)
-
-  // Typewriter font: the default, or a local preview via ?font=<id>.
-  const [params] = useSearchParams()
-  const font =
-    welcomeFonts.find((f) => import.meta.env.DEV && f.id === params.get('font')) ??
-    welcomeFonts.find((f) => f.id === welcome.font) ??
-    welcomeFonts[0]
 
   const isPhone = typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches
   const videoSrc = (isPhone && welcome.media.mobileVideo) || welcome.media.video
@@ -145,18 +137,15 @@ export function WelcomePage() {
   return (
     <div
       className={`${styles.stage} ${menuOpen ? styles.menuOpen : ''}`}
-      data-font={font.id}
-      style={
-        {
-          '--focus': welcome.media.focus,
-          '--focus-portrait': welcome.media.portraitFocus,
-          '--type': font.family,
-        } as CSSProperties
-      }
+      style={{ '--focus': welcome.media.focus, '--focus-portrait': welcome.media.portraitFocus } as CSSProperties}
     >
       <title>{`Welcome · ${site.name}`}</title>
-      <link rel="stylesheet" href={font.href} precedence="default" />
-      {import.meta.env.DEV && <WelcomeFontPicker current={font.id} />}
+      {/* Welcome-only fonts: Special Elite for the message and menu, Plex Mono for small print. */}
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Special+Elite&display=swap"
+        precedence="default"
+      />
 
       {/* ---------- Scene ---------- */}
       {hasVideo ? (
@@ -202,8 +191,8 @@ export function WelcomePage() {
         <div className={styles.captionSlot} aria-live="polite">
           {/* Both captions laid out invisibly in the same cell, so the slot is
               always as tall as the longer one and nothing below it moves. */}
-          {Object.values(captionText).map((sizer) => (
-            <p key={sizer} className={`${styles.caption} ${styles.sizer}`} aria-hidden="true">
+          {Object.entries(captionText).map(([id, sizer]) => (
+            <p key={id} className={`${styles.caption} ${id === 'invite' ? styles.invite : ''} ${styles.sizer}`} aria-hidden="true">
               {sizer}
             </p>
           ))}
@@ -211,7 +200,7 @@ export function WelcomePage() {
             {seq.caption && (
               <motion.p
                 key={seq.caption}
-                className={styles.caption}
+                className={`${styles.caption} ${seq.caption === 'invite' ? styles.invite : ''}`}
                 exit={{ opacity: 0, y: -6, filter: 'blur(3px)', transition: { duration: 0.45, ease } }}
               >
                 {/* The full sentence is laid out from the start (untyped letters
