@@ -5,6 +5,20 @@
   overflow: hidden;
 }
 
+/* Laptops and desktops: the intro fills the first screen (the nav sits inside
+   its top padding), so Experience starts just below the fold. Any extra height
+   is shared above and below the text, and the ribbon stretches with it. Phones
+   and portrait tablets keep their natural height and scroll. */
+@media (min-width: 900px) {
+  .intro {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
 /* The ribbon flows underneath the text, fading out toward the top. */
 .flow {
   position: absolute;
