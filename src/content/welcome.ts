@@ -4,14 +4,39 @@
  * captions and menu sit so they don't cover you.
  */
 
-export type WelcomeCaption = {
+export type WelcomeFont = {
   id: string
-  text: string
-  /** Seconds from the start of the sequence (video time when a video plays). */
-  start: number
-  /** When it fades out. Leave undefined to keep it on screen (it then heads the menu). */
-  end?: number
+  label: string
+  /** CSS font-family stack. */
+  family: string
+  /** Google Fonts stylesheet. */
+  href: string
 }
+
+/**
+ * Typewriter candidates for the Welcome page (captions, menu, controls).
+ * Compare them locally with ?font=<id> or the switcher shown in dev.
+ */
+export const welcomeFonts = [
+  {
+    id: 'courier',
+    label: 'Courier Prime',
+    family: "'Courier Prime', ui-monospace, monospace",
+    href: 'https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap',
+  },
+  {
+    id: 'plex',
+    label: 'IBM Plex Mono',
+    family: "'IBM Plex Mono', ui-monospace, monospace",
+    href: 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap',
+  },
+  {
+    id: 'special',
+    label: 'Special Elite',
+    family: "'Special Elite', ui-monospace, monospace",
+    href: 'https://fonts.googleapis.com/css2?family=Special+Elite&display=swap',
+  },
+] as const satisfies readonly WelcomeFont[]
 
 export const welcome = {
   media: {
@@ -32,14 +57,30 @@ export const welcome = {
     portraitFocus: '85% 40%',
   },
 
-  captions: [
-    // Timed to the cafe clip (8s): she looks up at ~3s, waves ~4s, smiles from ~5s.
-    { id: 'greeting', text: 'Oh, hey. Thanks for stopping by!', start: 3.2, end: 5.3 },
-    { id: 'invite', text: 'What would you like to see?', start: 5.7 },
-  ] satisfies WelcomeCaption[],
+  /** Typed onto the screen while she looks up and waves. */
+  greeting: 'Oh, hey. Thanks for stopping by.',
+  /** Typed after the video ends; heads the menu. */
+  invite: 'What would you like to see?',
 
-  /** Seconds at which the menu fades in. It also appears as soon as the video ends, or on Skip. */
-  menuAt: 7,
+  /**
+   * Caption timing, in seconds of video time (the sequence follows the video's
+   * own clock, so buffering can't knock it out of sync).
+   */
+  timing: {
+    /** When the greeting starts typing: she looks up at the camera around 3s. */
+    greetingAt: 3,
+    /** Typing speed in characters per second. */
+    charsPerSecond: 17,
+    /** After the video ends: the greeting fades out, then the invite starts typing this much later. */
+    inviteDelay: 0.6,
+    /** After the invite is fully typed, the menu fades in this much later. */
+    menuDelay: 0.35,
+    /** Stands in for the video's length when it can't play (still image or autoplay blocked). */
+    fallbackLength: 8,
+  },
+
+  /** Default typewriter font (an id from welcomeFonts). */
+  font: 'courier' as (typeof welcomeFonts)[number]['id'],
 
   /** Where things sit, so they stay clear of you in the final shot. */
   layout: {

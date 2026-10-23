@@ -1,27 +1,22 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { Fragment, useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
-import { Link } from 'react-router-dom'
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
+import { WelcomeFontPicker } from '../components/welcome/WelcomeFontPicker'
 import { ArrowIcon } from '../components/ui/ArrowIcon'
 import { site } from '../content/site'
-import { welcome, type WelcomeCaption } from '../content/welcome'
+import { welcome, welcomeFonts } from '../content/welcome'
 import styles from './WelcomePage.module.css'
+import { captionText, finalState, sameState, sequenceAt, startState, type SequenceState } from './welcomeSequence'
 
 type Mode = 'video' | 'timer'
 
 const ease = [0.22, 1, 0.36, 1] as const
-const finalCaption = [...welcome.captions].reverse().find((c) => c.end === undefined) ?? null
-
-/** Which caption is on screen at time t (seconds), or null. */
-function captionAt(t: number): WelcomeCaption | null {
-  const live = welcome.captions.filter((c) => t >= c.start && (c.end === undefined || t < c.end))
-  return live[live.length - 1] ?? null
-}
 
 /**
- * /welcome: a full-screen scene (video or still) with timed HTML captions and
- * a menu that fades in at the end. The sequence follows the video's own clock
- * when a video plays, and a simple timer otherwise (no video, autoplay
- * blocked, or the file fails), so it never depends on the asset.
+ * / and /welcome: a full-screen scene (video or still) with HTML captions
+ * typed onto it and a menu that fades in at the end. The sequence follows the
+ * video's own clock when a video plays, and a simple timer otherwise (no
+ * video, autoplay blocked, or the file fails), so it never depends on the asset.
  */
 export function WelcomePage() {
   const reduceMotion = useReducedMotion()
@@ -30,33 +25,54 @@ export function WelcomePage() {
   const rafRef = useRef(0)
   const modeRef = useRef<Mode>('timer')
   const timerStartRef = useRef(0)
+  const endedAtRef = useRef<number | null>(null)
+
+  // Typewriter font: the default, or a local preview via ?font=<id>.
+  const [params] = useSearchParams()
+  const font =
+    welcomeFonts.find((f) => import.meta.env.DEV && f.id === params.get('font')) ??
+    welcomeFonts.find((f) => f.id === welcome.font) ??
+    welcomeFonts[0]
 
   const isPhone = typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches
   const videoSrc = (isPhone && welcome.media.mobileVideo) || welcome.media.video
   const [videoFailed, setVideoFailed] = useState(!videoSrc)
   const hasVideo = Boolean(videoSrc) && !videoFailed
 
-  const [caption, setCaption] = useState<WelcomeCaption | null>(null)
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [seq, setSeq] = useState<SequenceState>(startState)
+  const menuOpen = seq.menu
   const [focusMenu, setFocusMenu] = useState(false)
   // Reduced motion rests on the last frame (as an image) until the visitor presses Replay.
   const [showStill, setShowStill] = useState(Boolean(reduceMotion))
 
   const stopClock = () => cancelAnimationFrame(rafRef.current)
 
-  /** Reads the current time and updates captions/menu only when they change. */
+  /**
+   * Reads the sequence time each frame and updates the screen only when the
+   * typed text or menu changes. While the video plays, time is the video's
+   * currentTime; once it has ended, time keeps counting on from its length.
+   */
   const startClock = useCallback(() => {
     stopClock()
     const tick = () => {
       const video = videoRef.current
-      const t =
-        modeRef.current === 'video' && video ? video.currentTime : (performance.now() - timerStartRef.current) / 1000
-      const next = captionAt(t)
-      setCaption((current) => (current?.id === next?.id ? current : next))
-      if (t >= welcome.menuAt) {
-        setMenuOpen(true)
-        return // Sequence done; the menu stays until the visitor chooses.
+      const now = performance.now()
+      let t: number
+      let end: number = welcome.timing.fallbackLength
+      if (modeRef.current === 'video' && video) {
+        if (Number.isFinite(video.duration)) end = video.duration
+        if (video.ended) {
+          endedAtRef.current ??= now
+          t = end + (now - endedAtRef.current) / 1000
+        } else {
+          t = video.currentTime
+        }
+      } else {
+        t = (now - timerStartRef.current) / 1000
       }
+      const next = sequenceAt(t, end)
+      setSeq((current) => (sameState(current, next) ? current : next))
+      if (next.menu) return // Sequence done; the menu stays until the visitor chooses.
       rafRef.current = requestAnimationFrame(tick)
     }
     rafRef.current = requestAnimationFrame(tick)
@@ -71,8 +87,8 @@ export function WelcomePage() {
   /** Plays the sequence from the beginning. */
   const play = useCallback(() => {
     setShowStill(false)
-    setMenuOpen(false)
-    setCaption(null)
+    setSeq(startState)
+    endedAtRef.current = null
     const video = videoRef.current
     if (video && hasVideo) {
       modeRef.current = 'video'
@@ -89,8 +105,7 @@ export function WelcomePage() {
   /** Jumps straight to the menu. */
   const skip = useCallback(() => {
     stopClock()
-    setCaption(finalCaption)
-    setMenuOpen(true)
+    setSeq(finalState)
     setFocusMenu(true)
   }, [])
 
@@ -98,8 +113,7 @@ export function WelcomePage() {
   useEffect(() => {
     if (reduceMotion) {
       setShowStill(true)
-      setCaption(finalCaption)
-      setMenuOpen(true)
+      setSeq(finalState)
       return
     }
     play()
@@ -126,14 +140,23 @@ export function WelcomePage() {
   }, [menuOpen, skip])
 
   const layoutClass = `${styles[welcome.layout.side]} ${styles[welcome.layout.vertical]}`
-  const words = caption?.text.split(' ') ?? []
+  const text = seq.caption ? captionText[seq.caption] : ''
 
   return (
     <div
       className={`${styles.stage} ${menuOpen ? styles.menuOpen : ''}`}
-      style={{ '--focus': welcome.media.focus, '--focus-portrait': welcome.media.portraitFocus } as CSSProperties}
+      data-font={font.id}
+      style={
+        {
+          '--focus': welcome.media.focus,
+          '--focus-portrait': welcome.media.portraitFocus,
+          '--type': font.family,
+        } as CSSProperties
+      }
     >
       <title>{`Welcome · ${site.name}`}</title>
+      <link rel="stylesheet" href={font.href} precedence="default" />
+      {import.meta.env.DEV && <WelcomeFontPicker current={font.id} />}
 
       {/* ---------- Scene ---------- */}
       {hasVideo ? (
@@ -146,12 +169,6 @@ export function WelcomePage() {
           playsInline
           preload="auto"
           aria-hidden="true"
-          onEnded={() => {
-            // Hold the last frame and show the menu.
-            stopClock()
-            setCaption(finalCaption)
-            setMenuOpen(true)
-          }}
           onError={() => {
             setVideoFailed(true)
             if (!menuOpen) runOnTimer()
@@ -183,26 +200,43 @@ export function WelcomePage() {
       {/* ---------- Captions + menu ---------- */}
       <main className={`${styles.content} ${layoutClass}`}>
         <div className={styles.captionSlot} aria-live="polite">
+          {/* Both captions laid out invisibly in the same cell, so the slot is
+              always as tall as the longer one and nothing below it moves. */}
+          {Object.values(captionText).map((sizer) => (
+            <p key={sizer} className={`${styles.caption} ${styles.sizer}`} aria-hidden="true">
+              {sizer}
+            </p>
+          ))}
           <AnimatePresence mode="wait">
-            {caption && (
+            {seq.caption && (
               <motion.p
-                key={caption.id}
+                key={seq.caption}
                 className={styles.caption}
-                exit={{ opacity: 0, y: -8, filter: 'blur(4px)', transition: { duration: 0.45, ease } }}
+                exit={{ opacity: 0, y: -6, filter: 'blur(3px)', transition: { duration: 0.45, ease } }}
               >
-                {words.map((word, i) => (
-                  <Fragment key={`${word}-${i}`}>
-                    {i > 0 && ' '}
-                    <motion.span
-                      className={styles.word}
-                      initial={{ opacity: 0, y: '0.35em', filter: 'blur(6px)' }}
-                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                      transition={{ duration: 0.8, ease, delay: 0.05 + i * 0.07 }}
+                {/* The full sentence is laid out from the start (untyped letters
+                    are invisible), so line breaks never change while typing.
+                    Screen readers get the sentence once, not letter by letter. */}
+                <span aria-hidden="true">
+                  {/* One span per letter, laid out from the start: typing only
+                      flips visibility, so nothing reflows or moves. The cursor
+                      hangs off the last typed letter. */}
+                  {[...text].map((char, i) => (
+                    <span
+                      key={i}
+                      className={
+                        i >= seq.typed
+                          ? styles.untyped
+                          : i === seq.typed - 1 && !menuOpen
+                            ? `${styles.cursor} ${seq.typed < text.length ? styles.typing : ''}`
+                            : undefined
+                      }
                     >
-                      {word}
-                    </motion.span>
-                  </Fragment>
-                ))}
+                      {char}
+                    </span>
+                  ))}
+                </span>
+                <span className="sr-only">{text}</span>
               </motion.p>
             )}
           </AnimatePresence>
